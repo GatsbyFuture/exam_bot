@@ -16,6 +16,8 @@
   "author": "RAXMATOV ELDORBEK",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.10.0",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
