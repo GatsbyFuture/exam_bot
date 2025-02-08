@@ -7,7 +7,7 @@ process.on("rejectionHnadled", (e) => console.log("rejectionHnadled:", e));
 process.env.TZ = "Asia/Tashkent";
 
 const {bot_token} = require("./root/config/config");
-require('./root/core/mongodb/connection');
+require("./root/core/mongodb/connection");
 
 const {Telegraf, session} = require("telegraf");
 const {updateTime} = require("./root/core/middleware/middleware.primary");
@@ -25,7 +25,7 @@ bot.command("start", async (ctx) => {
 });
 
 bot.catch((e) => {
-    console.log(`Bot error for ${ctx}`, e);
-})
+    console.log("Bot error: ", e);
+});
 
 bot.launch();

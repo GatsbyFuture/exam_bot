@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 
 module.exports = {
     group_id: -235113124,
@@ -8,5 +8,5 @@ module.exports = {
     db_pass: process.env.DB_PASS,
 
     bot_token: process.env.BOT_TOKEN,
-    bot_username: 'qwerty',
-}
+    bot_username: "qwerty",
+};
