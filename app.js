@@ -10,12 +10,17 @@ const {bot_token} = require("./root/config/config");
 require('./root/core/mongodb/connection');
 
 const {Telegraf, session} = require("telegraf");
+const {updateTime} = require("./root/core/middleware/middleware.primary");
+
 const bot = new Telegraf(bot_token);
 
 bot.use(session());
 
+// custom middleware
+bot.use(updateTime);
 // main logic
 bot.command("start", async (ctx) => {
+
     await ctx.reply(`Привет, ${ctx.from.first_name}!`);
 });
 
