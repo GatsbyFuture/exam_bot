@@ -25,7 +25,6 @@ class CoreMain {
         });
 
         bot.hears(/^dtm@(admin|user)777$/, async (ctx) => {
-            console.log(ctx.match[1]);
             const userRole = ctx.match[1];
             const {_id, name} = ctx.session.user;
 

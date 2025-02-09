@@ -20,15 +20,15 @@ module.exports = class MiddlewarePrimary {
     static async updateHandler(ctx, next) {
         // all events will pass here
         console.log(ctx.update);
-        if (ctx.update.inline_query && ctx?.session?.user) {
+        if (ctx.update.inline_query && ctx.session?.user) {
             return next();
         }
 
-        if (ctx.update.message && ctx.update.message?.text !== "/start" && ctx?.session?.user) {
+        if (ctx.update.message && ctx.update.message?.text !== "/start" && ctx.session?.user) {
             return next();
         }
 
-        if (ctx.update.callback_query && ctx?.session?.user) {
+        if (ctx.update.callback_query && ctx.session?.user) {
             return next();
         }
 
