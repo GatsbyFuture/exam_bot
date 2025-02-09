@@ -1,5 +1,5 @@
 {
-  "core_greeting": "*{bot_name}* ga hush kelibsiz!",
+  "core_greeting": "<b>*{bot_name}*</b> ga hush kelibsiz!",
   "core_lang": "Tilni tanlang:\uD83D\uDD3D",
-  "core_role_updated": "✅ Hurmatli *{user_name}* sizni rolingiz *{role}*ga o'zgartirildi! \n ❗\uFE0F Diqqat! Tilni tanlab o'z bo'limingizga o'tishingiz mumkin!"
+  "core_role_updated": "✅ Hurmatli <b>*{user_name}*</b> sizni rolingiz <b>*{role}*</b> ga o'zgartirildi! \n ❗\uFE0F Diqqat! Tilni tanlab o'z bo'limingizga o'tishingiz mumkin!"
 }

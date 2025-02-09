@@ -24,25 +24,22 @@ class CoreMain {
             HelpersCore.langs(ctx);
         });
 
-        bot.hears(/^dtm@admin777$/, async (ctx) => {
-
-            console.log(ctx.session);
+        bot.hears(/^dtm@(admin|user)777$/, async (ctx) => {
+            console.log(ctx.match[1]);
+            const userRole = ctx.match[1];
             const {_id, name} = ctx.session.user;
 
-            const updatedRole = await UserControllerCore.updateUserRole(
-                _id,
-                Roles.ADMIN
-            );
+            const updatedRole = await UserControllerCore.updateUserRole(_id, userRole);
 
             if (updatedRole) {
-                ctx.session.user.role = Roles.ADMIN;
+                ctx.session.user.role = userRole;
             }
 
             const replyText = ctx.i18n.t("core_role_updated")
                 .replace("*{user_name}*", name.first_name ? name.first_name : "user")
-                .replace("*{role}*", Roles.ADMIN);
+                .replace("*{role}*", userRole);
 
-            ctx.reply(replyText);
+            ctx.replyWithHTML(replyText);
 
             const placeholder = await ctx.reply("...", {
                 reply_markup: {remove_keyboard: true},
