@@ -3,9 +3,10 @@ const Extra = require("telegraf/extra");
 
 module.exports = class HelpersCore {
     static langs(ctx) {
+        const role = ctx.session.user.role;
         let btns = [
-            [Markup.callbackButton("🇺🇿 O'zbekcha", `lang.oz`)],
-            [Markup.callbackButton("🇺🇿 Ўзбекча", `lang.uz`)],
+            [Markup.callbackButton("🇺🇿 O'zbekcha", `${role}_lang.oz`)],
+            [Markup.callbackButton("🇺🇿 Ўзбекча", `${role}_lang.uz`)],
         ];
 
         ctx.replyWithHTML(

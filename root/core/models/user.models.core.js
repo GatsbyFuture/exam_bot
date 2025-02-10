@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
             type: Boolean,
             default: false,
         },
+        level: String,
         lang: String,
     },
     {

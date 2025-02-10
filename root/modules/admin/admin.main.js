@@ -14,7 +14,7 @@ class AdminMain {
     constructor(bot) {
         bot.use(adminI18n.middleware());
 
-        bot.action(/lang.+/, async (ctx, next) => {
+        bot.action(/admin_lang.+/, async (ctx, next) => {
             if (ctx.session.user.role === Roles.ADMIN) {
                 const [section, lang] = ctx.match[0].split(".");
                 ctx.i18n.locale(lang);

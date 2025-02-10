@@ -14,7 +14,7 @@ class UserMain {
     constructor(bot) {
         bot.use(userI18n.middleware());
 
-        bot.action(/lang.+/, async (ctx, next) => {
+        bot.action(/user_lang.+/, async (ctx, next) => {
             if (ctx.session.user.role === Roles.USER) {
                 const [section, lang] = ctx.match[0].split(".");
                 ctx.i18n.locale(lang);
