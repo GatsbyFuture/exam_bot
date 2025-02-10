@@ -41,6 +41,20 @@ class UserServiceCore {
 
         return true;
     }
+
+    async updateLang(id, lang) {
+        const user = await User.findByIdAndUpdate(
+            id,
+            {$set: {lang}},
+            {new: true}
+        ).lean();
+
+        if (!user) {
+            throw CustomError.UserNotFoundError();
+        }
+
+        return true;
+    }
 }
 
 module.exports = UserServiceCore;

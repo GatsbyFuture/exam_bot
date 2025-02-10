@@ -24,6 +24,10 @@ class UserControllerCore extends UserServiceCore {
     async updateUserRole(id, role) {
         return await this.updateRole(id, role);
     }
+
+    async updateUserLang(id, lang) {
+        return await this.updateLang(id, lang);
+    }
 }
 
 module.exports = new UserControllerCore();

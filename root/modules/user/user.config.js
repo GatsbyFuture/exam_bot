@@ -1,6 +1,5 @@
-const Markup = require("telegraf/markup");
 module.exports = {
-    markup_buttons_structure: {
+    MARKUP_BUTTONS_STRUCTURE: {
         "0": {
             "statistics": "data comes from backend",
             "by_category": {
@@ -25,7 +24,7 @@ module.exports = {
             }
         }
     },
-    markup_buttons_list: [
+    MARKUP_BUTTONS_LIST: [
         // level 0
         {
             name: "statistics",

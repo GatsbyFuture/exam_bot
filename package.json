@@ -13,10 +13,12 @@
     "giveExam",
     "check"
   ],
+  "type": "commonjs",
   "author": "RAXMATOV ELDORBEK",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
+    "lodash": "^4.17.21",
     "mongoose": "^8.10.0",
     "telegraf": "^3.38.0",
     "telegraf-i18n": "^6.6.0",
