@@ -19,8 +19,8 @@ const bot = new Telegraf(bot_token);
 const middlewarePrimary = require("./root/core/middleware/middleware.primary");
 // calling main body of bot
 const CoreMain = require("./root/core/core.main");
-const UserMain = require("./root/modules/user/user.main");
-const AdminMain = require("./root/modules/admin/admin.main");
+const UserMain = require("./root/modules/users/user.main");
+const AdminMain = require("./root/modules/admins/admin.main");
 
 bot.use(middlewarePrimary.errorHandler);
 

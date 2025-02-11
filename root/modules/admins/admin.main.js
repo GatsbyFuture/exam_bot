@@ -25,7 +25,7 @@ class AdminMain {
 
                 await ctx.replyWithHTML(ctx.i18n.t("admin_greeting").replace("*{user_name}*", user_name));
 
-                // ctx.session.user.lang = lang;
+                // ctx.session.users.lang = lang;
             } else {
                 await next();
             }

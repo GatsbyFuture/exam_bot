@@ -45,7 +45,7 @@ module.exports = class MiddlewarePrimary {
         } else {
             throw CustomError.InternalError();
         }
-        // console.log(ctx.session.user);
+        // console.log(ctx.session.users);
         return next();
     }
 };

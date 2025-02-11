@@ -28,7 +28,10 @@ const userSchema = new mongoose.Schema({
             type: Boolean,
             default: false,
         },
-        level: String,
+        level: {
+            type: String,
+            default: "0"
+        },
         lang: String,
     },
     {

@@ -3,14 +3,18 @@ const UserHelpers = require("./user.helpers");
 const config = require("./user.config");
 
 class UserController extends UserService {
-    async generateUserButtons(ctx, data) {
+    async generateUserMarkButtons(ctx, data) {
         const [_id, level] = data;
 
         await this.updateLevel(_id, level);
 
-        const btn_keys = config.MARKUP_BUTTONS_LIST.filter(btn_key => btn_key.level === level);
+        const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
-        return await UserHelpers.generateButtonMarkup(ctx, btn_keys);
+        if (Array.isArray(btn_keys)) {
+            return await UserHelpers.generateMarkupButtons(ctx, btn_keys, level);
+        } else {
+            // get data from db and generate buttons
+        }
     }
 }
 
