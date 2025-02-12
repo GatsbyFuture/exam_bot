@@ -193,7 +193,7 @@ module.exports = {
             },
             {
                 name: "view",
-                position: 1,
+                position: 0,
                 is_child: true,
                 has_child: true,
                 belong: "admin",
@@ -221,7 +221,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "answers",
+                name: "answer",
                 position: 2,
                 is_child: false,
                 has_child: false,

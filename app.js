@@ -24,7 +24,7 @@ const AdminMain = require("./root/modules/admins/admin.main");
 
 bot.use(middlewarePrimary.errorHandler);
 
-bot.use(session({defaultSession: () => ({})}));
+bot.use(session({defaultSession: () => ({user: {}, store: {text: ""}})}));
 // custom middleware
 bot.use(middlewarePrimary.updateHandler);
 // main logic

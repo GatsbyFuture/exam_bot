@@ -1,3 +1,4 @@
 {
-  "admin_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz"
+  "admin_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
+  "0.0.1": "0.0.1"
 }

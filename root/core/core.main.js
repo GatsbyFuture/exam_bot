@@ -20,7 +20,6 @@ class CoreMain {
         bot.command("start", (ctx) => {
             const replyText = ctx.i18n.t("core_greeting").replace("*{bot_name}*", bot_name);
             ctx.replyWithHTML(replyText);
-
             HelpersCore.langs(ctx);
         });
 

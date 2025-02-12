@@ -13,6 +13,10 @@ module.exports = class CustomError extends Error {
         return new CustomError(404, "User not found");
     }
 
+    static CategoryNotFoundError() {
+        return new CustomError(404, "Category not found");
+    }
+
     static InternalError() {
         return new CustomError(500, "Internal Server Error");
     }

@@ -107,9 +107,12 @@ class UserMain {
 
                         break;
                     case ctx.i18n.t("back"):
-                        let decrease_level = level.substring(0, level.lastIndexOf("."));
+                        let decrease_level = level.includes(".") ?
+                            level.substring(0, level.lastIndexOf(".")) :
+                            level;
+
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("user_settings"),
+                            ctx.i18n.t("back"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(

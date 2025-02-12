@@ -1,5 +1,5 @@
 const UserService = require("./user.service");
-const UserHelpers = require("./user.helpers");
+const HelpersCore = require("../../core/helpers/helpers.core");
 const config = require("./user.config");
 
 class UserController extends UserService {
@@ -11,7 +11,7 @@ class UserController extends UserService {
         const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
         if (Array.isArray(btn_keys)) {
-            return await UserHelpers.generateMarkupButtons(ctx, btn_keys, level);
+            return await HelpersCore.generateMarkupButtons(ctx, btn_keys, level);
         } else {
             // get data from db and generate buttons
         }
