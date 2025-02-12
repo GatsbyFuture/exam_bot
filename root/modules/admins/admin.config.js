@@ -287,5 +287,11 @@ module.exports = {
             method: "read",
             collection: "answers"
         }
+    },
+    rules: {
+        category: {
+            title: "#title:",
+            desc:"#desc:"
+        }
     }
 };

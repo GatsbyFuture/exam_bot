@@ -14,7 +14,7 @@ const categorySchema = new mongoose.Schema({
         uz: String,
         oz: String
     },
-    description: {
+    desc: {
         uz: String,
         oz: String
     },

@@ -1,0 +1,1 @@
+*create category must send like this*: #title:Mexanika, #desc:Qiya tekislik:Bloklar.

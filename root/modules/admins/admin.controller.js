@@ -1,6 +1,7 @@
 const AdminService = require("./admin.service");
 const CategoriesService = require("../categories/categories.service");
 const HelpersCore = require("../../core/helpers/helpers.core");
+const AdminHelpers = require("./admin.helpers");
 const btnMethods = require("../../core/enums/btn.method.enum");
 const config = require("./admin.config");
 
@@ -26,18 +27,11 @@ class AdminController extends AdminService {
         return HelpersCore.generateMarkupBtnAgree(ctx);
     }
 
-    async createCategory(ctx, level) {
+    async createCategory(ctx, text, level) {
         const {method, collaction} = config.MARKUP_BUTTONS_LIST[level];
-        let data = {
-            title: {
-                uz: uz_text,
-                oz: oz_text
-            },
-            description: {
-                uz: uz_text,
-                oz: oz_text
-            }
-        };
+
+        const data = await AdminHelpers.polishingCategoryData(text);
+
     }
 }
 
