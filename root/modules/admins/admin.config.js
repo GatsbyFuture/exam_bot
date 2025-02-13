@@ -288,10 +288,4 @@ module.exports = {
             collection: "answers"
         }
     },
-    rules: {
-        category: {
-            title: "#title:",
-            desc:"#desc:"
-        }
-    }
 };

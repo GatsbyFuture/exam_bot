@@ -1,0 +1,20 @@
+class CategoriesHelpers {
+    async polishingCategoryData(text) {
+        const titleMatch = text.match(/#title:\s*([^#]+)/);
+        const descMatch = text.match(/#desc:\s*([^#]+)/);
+        const position = text.match(/#pos:\s*(.+)/);
+        return {
+            title: {
+                oz: titleMatch ? titleMatch[1].trim() : null,
+                uz: "yes"
+            },
+            desc: {
+                oz: descMatch ? descMatch[1].trim() : null,
+                uz: "yes"
+            },
+            position: position ? position[1].trim() : null
+        };
+    }
+}
+
+module.exports = new CategoriesHelpers();

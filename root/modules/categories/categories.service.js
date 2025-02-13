@@ -2,10 +2,8 @@ const Category = require("./categories.model");
 const CustomError = require("../../core/errors/custom.error");
 
 class CategoriesService {
-    async createC(category, position = undefined) {
-        if (position) {
-            category.position = position;
-        } else {
+    async createC(category) {
+        if (!category.position) {
             const count = await this.getCountC();
             category.position = count + 1;
         }

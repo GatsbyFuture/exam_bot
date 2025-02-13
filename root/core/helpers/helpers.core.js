@@ -33,10 +33,8 @@ class HelpersCore {
 
     async generateMarkupBtnAgree(ctx) {
         return [
-            [
-                Markup.button(ctx.i18n.t("agree")),
-                Markup.button(ctx.i18n.t("cancel"))
-            ]
+            [Markup.button(ctx.i18n.t("agree"))],
+            [Markup.button(ctx.i18n.t("cancel"))]
         ];
     }
 }

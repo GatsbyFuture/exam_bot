@@ -144,11 +144,27 @@ class AdminMain {
                         );
                         break;
                     case ctx.i18n.t("agree"):
-
+                        console.log(ctx.session.text);
+                        const category_id = await AdminController.createCategory(
+                            ctx,
+                            ctx.session.text,
+                            level
+                        );
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t(`${level}_created`)
+                                .replace("category_id", category_id),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await AdminController.generateUserMarkButtons(ctx, [_id, level])
+                                    ).resize())
+                        );
+                        ctx.session.text = undefined;
                         break;
                     case ctx.i18n.t("cancel"):
+                        ctx.session.text = undefined;
                         await ctx.replyWithHTML(
-                            ctx.i18n.t(`admin_${level}_text`),
+                            ctx.i18n.t(`${level}_canceled`),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -177,6 +193,8 @@ class AdminMain {
                                 ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
                                 break;
                         }
+                    // ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
+                    // break;
                 }
             } else {
                 await next();

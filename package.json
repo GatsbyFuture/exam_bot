@@ -18,6 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
+    "joi": "^17.13.3",
+    "latin-to-cyrillic": "^1.0.1",
     "lodash": "^4.17.21",
     "mongoose": "^8.10.0",
     "telegraf": "^3.38.0",

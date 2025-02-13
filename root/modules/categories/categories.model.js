@@ -11,12 +11,24 @@ const categorySchema = new mongoose.Schema({
         default: () => Math.floor(Date.now() / 1000) // UNIX timestamp
     },
     title: {
-        uz: String,
-        oz: String
+        oz: {
+            type: String,
+            required: true
+        },
+        uz: {
+            type: String,
+            required: true
+        },
     },
     desc: {
-        uz: String,
-        oz: String
+        oz: {
+            type: String,
+            required: true
+        },
+        uz: {
+            type: String,
+            required: true
+        },
     },
     position: {
         type: Number,
