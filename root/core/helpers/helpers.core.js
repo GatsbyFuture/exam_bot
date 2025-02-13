@@ -1,5 +1,7 @@
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
+const Collections = require("../enums/collections.enum");
+const CategoriesHelpers = require("../../modules/categories/categories.helpers");
 
 class HelpersCore {
     langs(ctx) {
@@ -36,6 +38,12 @@ class HelpersCore {
             [Markup.button(ctx.i18n.t("agree"))],
             [Markup.button(ctx.i18n.t("cancel"))]
         ];
+    }
+
+    async generateMarkupButtonsDynamic(lang, btn_keys) {
+        if (btn_keys["categories"] === Collections.CATEGORIES) {
+            return await CategoriesHelpers.generateCategoriesBtn(lang);
+        }
     }
 }
 

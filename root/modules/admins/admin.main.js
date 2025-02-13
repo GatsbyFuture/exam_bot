@@ -124,6 +124,41 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
+                    //  0.1.1
+                    case ctx.i18n.t("categories"):
+                        ctx.session.user.level = "0.1.1.0";
+                        const {total, btns} = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.0"]);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("view_categories").replace("*{total}*", total),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        btns
+                                    ).resize())
+                        );
+                        break;
+                    case ctx.i18n.t("read_tests"):
+                        ctx.session.user.level = "0.1.1.1";
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("create_test"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"])
+                                    ).resize())
+                        );
+                        break;
+                    case ctx.i18n.t("answers"):
+                        ctx.session.user.level = "0.1.1.2";
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("create_answer"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.2"])
+                                    ).resize())
+                        );
+                        break;
                     // // 0.2
                     // case ctx.i18n.t("settings"):
                     //     ctx.replyWithHTML(ctx.i18n.t("settings"));

@@ -25,7 +25,14 @@ class AdminController extends AdminService {
             return await HelpersCore.generateMarkupButtons(ctx, btn_keys, level);
         } else {
             // get data from db and generate buttons
-            if (btn_keys["method"] === btnMethods.CREATE) {
+            if (btn_keys["method"] === btnMethods.READ) {
+                return await HelpersCore.generateMarkupButtonsDynamic(
+                    ctx.session.user.lang,
+                    btn_keys
+                );
+            } else if (btn_keys["method"] === btnMethods.UPDATE) {
+
+            } else if (btn_keys["method"] === btnMethods.CREATE) {
                 return await HelpersCore.generateMarkupButtons(ctx, [], level);
             }
         }

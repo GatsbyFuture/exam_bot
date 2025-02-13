@@ -253,7 +253,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "tests",
+                name: "read_tests",
                 position: 1,
                 is_child: false,
                 has_child: false,

@@ -1,3 +1,6 @@
+const Markup = require("telegraf/markup");
+const CategoriesService = require("./categories.service");
+
 class CategoriesHelpers {
     async polishingCategoryData(text) {
         const titleMatch = text.match(/#title:\s*([^#]+)/);
@@ -13,6 +16,19 @@ class CategoriesHelpers {
                 uz: "yes"
             },
             position: position ? position[1].trim() : null
+        };
+    }
+
+    async generateCategoriesBtn(lang) {
+        const categories = await CategoriesService.getAllC();
+        const btns = categories.map(category => {
+                return ([Markup.button(`${category.title[lang]} #${category.category_id}.`)]);
+            }
+        );
+        console.log(categories);
+        return {
+            total: 100,
+            btns: btns
         };
     }
 }
