@@ -5,7 +5,7 @@ class CategoriesHelpers {
     async polishingCategoryData(text) {
         const titleMatch = text.match(/#title:\s*([^#]+)/);
         const descMatch = text.match(/#desc:\s*([^#]+)/);
-        const position = text.match(/#pos:\s*(.+)/);
+        const position = text.match(/#pos:\s*([^#]+)/);
         return {
             title: {
                 oz: titleMatch ? titleMatch[1].trim() : null,
@@ -20,9 +20,11 @@ class CategoriesHelpers {
     }
 
     async generateCategoriesBtn(lang) {
-        const categories = await CategoriesService.getAllC();
+        const categories = await CategoriesService.getAllCategories();
         const btns = categories.map(category => {
-                return ([Markup.button(`${category.title[lang]} #${category.category_id}`)]);
+                return (
+                    [Markup.button(`${category.title[lang]} #${category.category_id}`)]
+                );
             }
         );
         // console.log(categories);

@@ -10,6 +10,13 @@ class SheetsService {
         return Sheet.create(sheet);
     }
 
+    async getAllSheets() {
+        return Sheet.find({
+            is_public: true,
+            is_active: true
+        }).sort({position: 1}).lean();
+    }
+
     async getByIdSheet(id) {
         return Sheet.findById(id).lean();
     }

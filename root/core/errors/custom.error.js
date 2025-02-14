@@ -22,6 +22,10 @@ module.exports = class CustomError extends Error {
         return new CustomError(400, message);
     }
 
+    static SaveDocumentsError(message) {
+        return new CustomError(500, message);
+    }
+
     static InternalError() {
         return new CustomError(500, "Internal Server Error");
     }

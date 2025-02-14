@@ -5,7 +5,11 @@ process.on("uncaughtException", (e) => console.log("uncaughtException:", e));
 
 process.on("rejectionHandled", (e) => console.log("rejectionHandled:", e));
 
+const path = require("path");
+
 process.env.TZ = "Asia/Tashkent";
+process.env.STATIC = path.join(__dirname, "root/static/images/sheets/");
+
 // db connection and configuration
 const {bot_token} = require("./root/config/config");
 const Roles = require("./root/core/enums/roles.enum");
@@ -36,4 +40,6 @@ bot.catch((e) => {
     console.log("Bot error: ", e);
 });
 
-bot.launch();
+bot.launch().then(() => {
+    console.log("Bot started...");
+});

@@ -10,4 +10,8 @@ module.exports = {
 
     bot_token: process.env.BOT_TOKEN,
     bot_username: "qwerty",
+
+    bot_file_path: `https://api.telegram.org/file/bot${process.env.BOT_TOKEN}/`,
+
+    static: process.env.STATIC
 };

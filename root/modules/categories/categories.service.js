@@ -2,7 +2,7 @@ const Category = require("./categories.model");
 const CustomError = require("../../core/errors/custom.error");
 
 class CategoriesService {
-    async createC(category) {
+    async createCategory(category) {
         if (!category.position) {
             const count = await this.getCountC();
             category.position = count + 1;
@@ -10,7 +10,7 @@ class CategoriesService {
         return Category.create(category);
     }
 
-    async getAllC() {
+    async getAllCategories() {
         return Category.find({
             is_public: true,
             is_active: true

@@ -47,6 +47,13 @@ class AdminMain {
             }
         });
 
+        bot.on("photo", async (ctx) => {
+            const {file_id} = ctx.message.photo[ctx.message.photo.length - 1];
+            const file = await ctx.telegram.getFile(file_id);
+
+            ctx.session.file = file;
+        });
+
         bot.on("text", async (ctx, next) => {
             if (ctx.session.user.role === Roles.ADMIN) {
                 let text = ctx.message.text;
@@ -127,26 +134,33 @@ class AdminMain {
                     //  0.1.1
                     case ctx.i18n.t("categories"):
                         ctx.session.user.level = "0.1.1.0";
-                        const {total, btns} = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.0"]);
+                        let {
+                            total: total_cats,
+                            btns: cat_btns
+                        } = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.0"]);
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("view_categories").replace("*{total}*", total),
+                            ctx.i18n.t("view_categories").replace("*{total}*", total_cats),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        btns
+                                        cat_btns
                                     ).resize())
                         );
                         break;
                     case ctx.i18n.t("read_tests"):
-                        // ctx.session.user.level = "0.1.1.1";
-                        // await ctx.replyWithHTML(
-                        //     ctx.i18n.t("create_test"),
-                        //     Extra.HTML()
-                        //         .markup(
-                        //             Markup.keyboard(
-                        //                 await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"])
-                        //             ).resize())
-                        // );
+                        ctx.session.user.level = "0.1.1.1";
+                        let {
+                            total: total_sheets,
+                            btns: sheet_btns
+                        } = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"]);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("read_tests").replace("*{total}*", total_sheets),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        sheet_btns
+                                    ).resize())
+                        );
                         break;
                     case ctx.i18n.t("answers"):
                         // ctx.session.user.level = "0.1.1.2";
@@ -193,9 +207,11 @@ class AdminMain {
                                     ).resize())
                         );
                         ctx.session.text = undefined;
+                        ctx.session.file = undefined;
                         break;
                     case ctx.i18n.t("cancel"):
                         ctx.session.text = undefined;
+                        ctx.session.file = undefined;
                         await ctx.replyWithHTML(
                             ctx.i18n.t(`${level}_canceled`),
                             Extra.HTML()
@@ -208,7 +224,6 @@ class AdminMain {
                     default:
                         switch (level) {
                             case "0.1.0.0":
-                            case "0.1.0.1":
                                 ctx.session.text = text;
                                 await ctx.replyWithHTML(
                                     ctx.i18n.t("this_is_right_you_sure"),
@@ -218,6 +233,19 @@ class AdminMain {
                                                 await AdminController.generateAgreeButton(ctx)
                                             ).resize())
                                 );
+                                break;
+                            case "0.1.0.1":
+                                ctx.session.text = text;
+                                if (ctx.session?.file && text) {
+                                    await ctx.replyWithHTML(
+                                        ctx.i18n.t("this_is_right_you_sure"),
+                                        Extra.HTML()
+                                            .markup(
+                                                Markup.keyboard(
+                                                    await AdminController.generateAgreeButton(ctx)
+                                                ).resize())
+                                    );
+                                }
                                 break;
                             case "0.1.0.2":
                             default:

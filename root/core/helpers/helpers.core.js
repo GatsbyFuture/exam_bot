@@ -2,6 +2,7 @@ const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const Collections = require("../enums/collections.enum");
 const CategoriesHelpers = require("../../modules/categories/categories.helpers");
+const SheetsHelpers = require("../../modules/sheets/sheets.helpers");
 
 class HelpersCore {
     langs(ctx) {
@@ -43,6 +44,13 @@ class HelpersCore {
     async generateMarkupButtonsDynamic(ctx, lang, btn_keys) {
         if (btn_keys["collection"] === Collections.CATEGORIES) {
             let buttons = await CategoriesHelpers.generateCategoriesBtn(lang);
+
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
+
+            return buttons;
+        }
+        if (btn_keys["collection"] === Collections.SHEETS) {
+            let buttons = await SheetsHelpers.generateSheetBtn(lang);
 
             buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
 

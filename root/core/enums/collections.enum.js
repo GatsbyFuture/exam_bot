@@ -1,5 +1,5 @@
 module.exports = {
     USERS: "users",
-    TESTS: "tests",
+    SHEETS: "tests",
     CATEGORIES: "categories"
 };
