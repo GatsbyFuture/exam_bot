@@ -8,7 +8,8 @@ const CategoriesService = require("../categories/categories.service");
 const CategoriesHelpers = require("../categories/categories.helpers");
 const {createCategorySchema} = require("../categories/categories.dto");
 
-const btnMethods = require("../../core/enums/btn.method.enum");
+const BtnMethods = require("../../core/enums/btn.method.enum");
+const Collections = require("../../core/enums/collections.enum");
 const config = require("./admin.config");
 const {toCyrillic} = require("../../libs/libs.latin.to.cyril");
 
@@ -25,15 +26,15 @@ class AdminController extends AdminService {
             return await HelpersCore.generateMarkupButtons(ctx, btn_keys, level);
         } else {
             // get data from db and generate buttons
-            if (btn_keys["method"] === btnMethods.READ) {
+            if (btn_keys["method"] === BtnMethods.READ) {
                 return await HelpersCore.generateMarkupButtonsDynamic(
                     ctx,
                     ctx.session.user.lang,
                     btn_keys
                 );
-            } else if (btn_keys["method"] === btnMethods.UPDATE) {
+            } else if (btn_keys["method"] === BtnMethods.UPDATE) {
 
-            } else if (btn_keys["method"] === btnMethods.CREATE) {
+            } else if (btn_keys["method"] === BtnMethods.CREATE) {
                 return await HelpersCore.generateMarkupButtons(ctx, [], level);
             }
         }
@@ -43,19 +44,30 @@ class AdminController extends AdminService {
         return HelpersCore.generateMarkupBtnAgree(ctx);
     }
 
-    async createCategory(ctx, text, level) {
-        const data = await CategoriesHelpers.polishingCategoryData(text);
-        const {error} = createCategorySchema.validate(data);
+    async createData(ctx, level) {
+        const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
-        if (error) {
-            throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+        if (btn_keys["collection"] === Collections.CATEGORIES) {
+            const text = ctx.message.text;
+            const data = await CategoriesHelpers.polishingCategoryData(text);
+            const {error} = createCategorySchema.validate(data);
+
+            if (error) {
+                throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+            }
+            data.title.uz = toCyrillic(data.title.oz);
+            data.desc.uz = toCyrillic(data.desc.oz);
+
+            const newCategory = await CategoriesService.createC(data);
+
+            return {
+                key: "category", // detect for which collection...
+                id: newCategory.category_id
+            };
         }
-        data.title.uz = toCyrillic(data.title.oz);
-        data.desc.uz = toCyrillic(data.desc.oz);
-
-        const newCategory = await CategoriesService.createC(data);
-
-        return newCategory.category_id;
+        if (btn_keys["collection"] === Collections.TESTS) {
+            // code for creating test
+        }
     }
 }
 

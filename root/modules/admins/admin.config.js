@@ -32,7 +32,7 @@ module.exports = {
                             "categories": {
                                 "0.1.1.0": {
                                     "all_categories": {
-                                        // [category_num/category_name : tests(nums)]
+                                        // [category_num/category_name : sheets(nums)]
                                         "0.1.1.0.x": {
                                             "category_tests": "[test_num/test_name : answer(status)]",
                                         },

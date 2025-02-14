@@ -138,26 +138,26 @@ class AdminMain {
                         );
                         break;
                     case ctx.i18n.t("read_tests"):
-                        ctx.session.user.level = "0.1.1.1";
-                        await ctx.replyWithHTML(
-                            ctx.i18n.t("create_test"),
-                            Extra.HTML()
-                                .markup(
-                                    Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"])
-                                    ).resize())
-                        );
+                        // ctx.session.user.level = "0.1.1.1";
+                        // await ctx.replyWithHTML(
+                        //     ctx.i18n.t("create_test"),
+                        //     Extra.HTML()
+                        //         .markup(
+                        //             Markup.keyboard(
+                        //                 await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"])
+                        //             ).resize())
+                        // );
                         break;
                     case ctx.i18n.t("answers"):
-                        ctx.session.user.level = "0.1.1.2";
-                        await ctx.replyWithHTML(
-                            ctx.i18n.t("create_answer"),
-                            Extra.HTML()
-                                .markup(
-                                    Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.2"])
-                                    ).resize())
-                        );
+                        // ctx.session.user.level = "0.1.1.2";
+                        // await ctx.replyWithHTML(
+                        //     ctx.i18n.t("create_answer"),
+                        //     Extra.HTML()
+                        //         .markup(
+                        //             Markup.keyboard(
+                        //                 await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.2"])
+                        //             ).resize())
+                        // );
                         break;
                     // // 0.2
                     // case ctx.i18n.t("settings"):
@@ -179,15 +179,13 @@ class AdminMain {
                         );
                         break;
                     case ctx.i18n.t("agree"):
-                        console.log(ctx.session.text);
-                        const category_id = await AdminController.createCategory(
+                        const {key, id} = await AdminController.createData(
                             ctx,
-                            ctx.session.text,
                             level
                         );
                         await ctx.replyWithHTML(
                             ctx.i18n.t(`${level}_created`)
-                                .replace("category_id", category_id),
+                                .replace(key, id),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -210,6 +208,7 @@ class AdminMain {
                     default:
                         switch (level) {
                             case "0.1.0.0":
+                            case "0.1.0.1":
                                 ctx.session.text = text;
                                 await ctx.replyWithHTML(
                                     ctx.i18n.t("this_is_right_you_sure"),
@@ -219,9 +218,6 @@ class AdminMain {
                                                 await AdminController.generateAgreeButton(ctx)
                                             ).resize())
                                 );
-                                break;
-                            case "0.1.0.1":
-                                ctx.replyWithHTML(ctx.i18n.t("admin_create_test_message"));
                                 break;
                             case "0.1.0.2":
                             default:

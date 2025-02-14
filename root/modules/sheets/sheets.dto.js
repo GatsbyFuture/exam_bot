@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const CreateCategoryDto = {
+const CreateSheetDto = {
     title: {
         oz: "string",
         uz: "string"
@@ -9,10 +9,11 @@ const CreateCategoryDto = {
         oz: "string",
         uz: "string"
     },
+    category_id: 0, // position is optional
     position: 0 // position is optional
 };
 
-const createCategorySchema = Joi.object({
+const createSheetSchema = Joi.object({
     title: {
         oz: Joi.string().required(),
         uz: Joi.string()
@@ -21,10 +22,6 @@ const createCategorySchema = Joi.object({
         oz: Joi.string().required(),
         uz: Joi.string()
     },
+    category_id: Joi.optional(),
     position: Joi.optional()
 });
-
-module.exports = {
-    CreateCategoryDto,
-    createCategorySchema
-};
