@@ -40,9 +40,13 @@ class HelpersCore {
         ];
     }
 
-    async generateMarkupButtonsDynamic(lang, btn_keys) {
-        if (btn_keys["categories"] === Collections.CATEGORIES) {
-            return await CategoriesHelpers.generateCategoriesBtn(lang);
+    async generateMarkupButtonsDynamic(ctx, lang, btn_keys) {
+        if (btn_keys["collection"] === Collections.CATEGORIES) {
+            let buttons = await CategoriesHelpers.generateCategoriesBtn(lang);
+
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
+
+            return buttons;
         }
     }
 }

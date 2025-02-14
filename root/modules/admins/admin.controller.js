@@ -27,6 +27,7 @@ class AdminController extends AdminService {
             // get data from db and generate buttons
             if (btn_keys["method"] === btnMethods.READ) {
                 return await HelpersCore.generateMarkupButtonsDynamic(
+                    ctx,
                     ctx.session.user.lang,
                     btn_keys
                 );

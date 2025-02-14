@@ -22,12 +22,12 @@ class CategoriesHelpers {
     async generateCategoriesBtn(lang) {
         const categories = await CategoriesService.getAllC();
         const btns = categories.map(category => {
-                return ([Markup.button(`${category.title[lang]} #${category.category_id}.`)]);
+                return ([Markup.button(`${category.title[lang]} #${category.category_id}`)]);
             }
         );
-        console.log(categories);
+        // console.log(categories);
         return {
-            total: 100,
+            total: btns.length,
             btns: btns
         };
     }
