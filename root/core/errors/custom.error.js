@@ -23,6 +23,11 @@ module.exports = class CustomError extends Error {
         return new CustomError(404, message);
     }
 
+    // answer
+    static AnswersNotFoundError() {
+        return new CustomError(404, "Answers not found");
+    }
+
     static InCorrectDtoError(message) {
         return new CustomError(400, message);
     }

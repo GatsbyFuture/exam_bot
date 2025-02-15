@@ -111,6 +111,10 @@ class AdminController extends AdminService {
                 id: newSheet.sheet_id// replace with real id
             };
         }
+
+        if (btn_keys["collection"] === Collections.ANSWER) {
+
+        }
     }
 
     async sendTestDocument(ctx, id) {

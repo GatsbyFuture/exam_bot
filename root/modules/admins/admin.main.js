@@ -275,6 +275,16 @@ class AdminMain {
                                 }
                                 break;
                             case "0.1.0.2":
+                                ctx.session.text = text;
+                                await ctx.replyWithHTML(
+                                    ctx.i18n.t("this_is_right_you_sure"),
+                                    Extra.HTML()
+                                        .markup(
+                                            Markup.keyboard(
+                                                await AdminController.generateAgreeButton(ctx)
+                                            ).resize())
+                                );
+                                break;
                             default:
                                 ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
                                 break;
