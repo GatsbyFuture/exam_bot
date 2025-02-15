@@ -10,15 +10,15 @@ class SheetsService {
         return Sheet.create(sheet);
     }
 
-    async getAllSheets() {
-        return Sheet.find({
-            is_public: true,
-            is_active: true
-        }).sort({position: 1}).lean();
+    async getAllSheets(query) {
+        return Sheet.find(query).sort({position: 1}).lean();
     }
 
     async getByIdSheet(id) {
-        return Sheet.findById(id).lean();
+        console.log(id, typeof id);
+        return Sheet.findOne({
+            sheet_id: id
+        }).lean();
     }
 
 

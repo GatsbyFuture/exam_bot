@@ -30,8 +30,8 @@ const sheetSchema = mongoose.Schema({
             required: true
         },
     },
-    category_id: String,
-    img_url: String,
+    category_id: Number,
+    file_path: String,
     position: {
         type: Number,
         default: 0

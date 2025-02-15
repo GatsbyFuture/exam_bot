@@ -34,7 +34,7 @@ class AdminMain {
                 }
 
                 // generate admin main buttons
-                const btns = await AdminController.generateUserMarkButtons(ctx, [_id, "0"]);
+                const btns = await AdminController.generateAdminMarkButtons(ctx, [_id, "0"]);
 
                 await ctx.replyWithHTML(
                     ctx.i18n.t("user_greeting").replace("*{user_name}*", user_name),
@@ -54,6 +54,32 @@ class AdminMain {
             ctx.session.file = file;
         });
 
+        bot.hears(/#\d{10}$/, async (ctx) => {
+            const {_id, level} = ctx.session.user;
+            const match = ctx.message.text.match(/#(\d{10})$/);
+            if (match) {
+                console.log(level);
+                ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+                if (level === "0.1.1.1" || level === "0.1.1.0.x") {
+                    await AdminController.sendTestDocument(ctx, +match[1]);
+                } else if (level === "0.1.1.0") {
+                    ctx.session.user.level = "0.1.1.0.x";
+                    let {
+                        total: total_sheets,
+                        btns: sheet_btns
+                    } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0.x"], +match[1]);
+                    await ctx.replyWithHTML(
+                        ctx.i18n.t("read_tests").replace("*{total}*", total_sheets),
+                        Extra.HTML()
+                            .markup(
+                                Markup.keyboard(
+                                    sheet_btns
+                                ).resize())
+                    );
+                }
+            }
+        });
+
         bot.on("text", async (ctx, next) => {
             if (ctx.session.user.role === Roles.ADMIN) {
                 let text = ctx.message.text;
@@ -71,7 +97,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1"])
                                     ).resize())
                         );
                         break;
@@ -82,7 +108,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.0"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.0"])
                                     ).resize())
                         );
                         break;
@@ -94,7 +120,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.0.0"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.0.0"])
                                     ).resize())
                         );
                         break;
@@ -105,7 +131,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.0.1"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.0.1"])
                                     ).resize())
                         );
                         break;
@@ -116,7 +142,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.0.2"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.0.2"])
                                     ).resize())
                         );
                         break;
@@ -127,7 +153,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1"])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1"])
                                     ).resize())
                         );
                         break;
@@ -137,7 +163,7 @@ class AdminMain {
                         let {
                             total: total_cats,
                             btns: cat_btns
-                        } = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.0"]);
+                        } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0"]);
                         await ctx.replyWithHTML(
                             ctx.i18n.t("view_categories").replace("*{total}*", total_cats),
                             Extra.HTML()
@@ -152,7 +178,7 @@ class AdminMain {
                         let {
                             total: total_sheets,
                             btns: sheet_btns
-                        } = await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.1"]);
+                        } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.1"]);
                         await ctx.replyWithHTML(
                             ctx.i18n.t("read_tests").replace("*{total}*", total_sheets),
                             Extra.HTML()
@@ -169,7 +195,7 @@ class AdminMain {
                         //     Extra.HTML()
                         //         .markup(
                         //             Markup.keyboard(
-                        //                 await AdminController.generateUserMarkButtons(ctx, [_id, "0.1.1.2"])
+                        //                 await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.2"])
                         //             ).resize())
                         // );
                         break;
@@ -180,15 +206,16 @@ class AdminMain {
                     case ctx.i18n.t("back"):
                         let decrease_level = level === "0" ? level : level.substring(0, level.lastIndexOf("."));
                         ctx.session.user.level = decrease_level;
+                        const back_btns = await AdminController.generateAdminMarkButtons(
+                            ctx,
+                            [_id, decrease_level]
+                        );
                         await ctx.replyWithHTML(
                             ctx.i18n.t("back"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(
-                                            ctx,
-                                            [_id, decrease_level]
-                                        )
+                                        back_btns.btns ? back_btns.btns : back_btns
                                     ).resize())
                         );
                         break;
@@ -203,7 +230,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, level])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, level])
                                     ).resize())
                         );
                         ctx.session.text = undefined;
@@ -217,7 +244,7 @@ class AdminMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await AdminController.generateUserMarkButtons(ctx, [_id, level])
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, level])
                                     ).resize())
                         );
                         break;

@@ -18,6 +18,11 @@ module.exports = class CustomError extends Error {
         return new CustomError(404, "Category not found");
     }
 
+    // test
+    static TestNotFoundError(message) {
+        return new CustomError(404, message);
+    }
+
     static InCorrectDtoError(message) {
         return new CustomError(400, message);
     }

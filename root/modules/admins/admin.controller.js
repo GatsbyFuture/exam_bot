@@ -16,10 +16,11 @@ const BtnMethods = require("../../core/enums/btn.method.enum");
 const Collections = require("../../core/enums/collections.enum");
 const config = require("./admin.config");
 const {toCyrillic} = require("../../libs/libs.latin.to.cyril");
+const {cap} = require("lodash/fp/_falseOptions");
 
 
 class AdminController extends AdminService {
-    async generateUserMarkButtons(ctx, data) {
+    async generateAdminMarkButtons(ctx, data, cat_id = 0) {
         const [_id, level] = data;
 
         await this.updateLevel(_id, level);
@@ -27,19 +28,29 @@ class AdminController extends AdminService {
         const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
         if (Array.isArray(btn_keys)) {
-            return await HelpersCore.generateMarkupButtons(ctx, btn_keys, level);
+            // get static buttons from config
+            return await HelpersCore.generateMarkupButtons(
+                ctx,
+                btn_keys,
+                level
+            );
         } else {
             // get data from db and generate buttons
             if (btn_keys["method"] === BtnMethods.READ) {
                 return await HelpersCore.generateMarkupButtonsDynamic(
                     ctx,
                     ctx.session.user.lang,
-                    btn_keys
+                    btn_keys,
+                    cat_id
                 );
             } else if (btn_keys["method"] === BtnMethods.UPDATE) {
 
             } else if (btn_keys["method"] === BtnMethods.CREATE) {
-                return await HelpersCore.generateMarkupButtons(ctx, [], level);
+                return await HelpersCore.generateMarkupButtons(
+                    ctx,
+                    [],
+                    level
+                );
             }
         }
     }
@@ -52,8 +63,9 @@ class AdminController extends AdminService {
         const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
         if (btn_keys["collection"] === Collections.CATEGORIES) {
-            const text = ctx.message.text;
+            const text = ctx.session.text;
             const data = await CategoriesHelpers.polishingCategoryData(text);
+
             const {error} = createCategorySchema.validate(data);
 
             if (error) {
@@ -69,6 +81,7 @@ class AdminController extends AdminService {
                 id: newCategory.category_id
             };
         }
+
         if (btn_keys["collection"] === Collections.SHEETS) {
             // code for creating test
             const {text, file} = ctx.session;
@@ -97,6 +110,30 @@ class AdminController extends AdminService {
                 key: "sheet", // detect for which collection...
                 id: newSheet.sheet_id// replace with real id
             };
+        }
+    }
+
+    async sendTestDocument(ctx, id) {
+        const {level, lang} = ctx.session.user;
+        const btn_keys = config.MARKUP_BUTTONS_LIST[level];
+
+        if (btn_keys["method"] === BtnMethods.READ) {
+            const sheet = await SheetsService.getByIdSheet(id);
+
+            if (!sheet) {
+                throw CustomError.TestNotFoundError(ctx.i18n.t("test_not_found"));
+            }
+
+            const filePath = sheet.file_path;
+            const caption = ctx.i18n.t("test_caption")
+                .replace("*{ID}*", sheet.sheet_id)
+                .replace("*{title}*", sheet.title[lang])
+                .replace("*{desc}*", sheet.desc[lang]);
+
+            await ctx.replyWithPhoto(
+                {source: filePath},
+                {caption: caption}
+            );
         }
     }
 }

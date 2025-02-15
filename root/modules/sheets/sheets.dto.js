@@ -26,3 +26,7 @@ const createSheetSchema = Joi.object({
     position: Joi.optional()
 });
 
+module.exports = {
+    CreateSheetDto,
+    createSheetSchema
+};

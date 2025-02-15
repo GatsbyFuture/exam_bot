@@ -20,13 +20,13 @@ class SheetsHelpers {
                 oz: descMatch ? descMatch[1].trim() : null,
                 uz: "yes"
             },
-            category_id: category_id ? category_id[1].trim() : null,
-            position: position ? position[1].trim() : null
+            category_id: category_id ? +category_id[1].trim() : null,
+            position: position ? +position[1].trim() : null
         };
     }
 
-    async generateSheetBtn(lang) {
-        const sheets = await SheetsService.getAllSheets();
+    async generateSheetBtn(lang, query) {
+        const sheets = await SheetsService.getAllSheets(query);
         const btns = sheets.map(sheet => {
                 return (
                     [Markup.button(`${sheet.title[lang]} #${sheet.sheet_id}`)]

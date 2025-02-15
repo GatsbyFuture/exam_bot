@@ -7,6 +7,7 @@ const SheetsHelpers = require("../../modules/sheets/sheets.helpers");
 class HelpersCore {
     langs(ctx) {
         const role = ctx.session.user.role;
+
         let btns = [
             [Markup.callbackButton("🇺🇿 O'zbekcha", `${role}_lang.oz`)],
             [Markup.callbackButton("🇺🇿 Ўзбекча", `${role}_lang.uz`)],
@@ -41,16 +42,26 @@ class HelpersCore {
         ];
     }
 
-    async generateMarkupButtonsDynamic(ctx, lang, btn_keys) {
+    async generateMarkupButtonsDynamic(ctx, lang, btn_keys, cat_id) {
         if (btn_keys["collection"] === Collections.CATEGORIES) {
+            // console.log(btn_keys);
             let buttons = await CategoriesHelpers.generateCategoriesBtn(lang);
 
             buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
-
+            // console.log("__", buttons);
             return buttons;
         }
         if (btn_keys["collection"] === Collections.SHEETS) {
-            let buttons = await SheetsHelpers.generateSheetBtn(lang);
+            const query = {
+                is_public: true,
+                is_active: true
+            };
+
+            if (cat_id) {
+                query.category_id = cat_id;
+            }
+
+            let buttons = await SheetsHelpers.generateSheetBtn(lang, query);
 
             buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
 
