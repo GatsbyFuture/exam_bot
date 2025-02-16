@@ -7,12 +7,13 @@ const answersSchema = mongoose.Schema({
         default: uuid
     },
     answers_id: String,
-    answer: [
+    answers: [
         {
             num: Number,
             key: String
         }
     ],
+    sheet_id: String,
     position: {
         type: Number,
         default: 0

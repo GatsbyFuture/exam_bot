@@ -12,6 +12,10 @@ const SheetsService = require("../sheets/sheets.service");
 const SheetsHelpers = require("../sheets/sheets.helpers");
 const {createSheetSchema} = require("../sheets/sheets.dto");
 
+const AnswersService = require("../answers/answers.service");
+const AnswersHelpers = require("../answers/answers.helpers");
+const {createAnswersSchema} = require("../answers/answers.dto");
+
 const BtnMethods = require("../../core/enums/btn.method.enum");
 const Collections = require("../../core/enums/collections.enum");
 const config = require("./admin.config");
@@ -113,7 +117,22 @@ class AdminController extends AdminService {
         }
 
         if (btn_keys["collection"] === Collections.ANSWER) {
+            const text = ctx.session.text;
+            const data = await AnswersHelpers.polishingAnswersData(text);
+            console.log("answers =>", data);
+            const {error} = createAnswersSchema.validate(data);
 
+            if (error) {
+                throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+            }
+
+            console.log("...");
+            const newAnswers = await AnswersService.createAnswer(data);
+
+            return {
+                key: "answers", // detect for which collection...
+                id: newAnswers.answers_id
+            };
         }
     }
 

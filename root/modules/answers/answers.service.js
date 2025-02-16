@@ -42,3 +42,5 @@ class AnswersService {
         }
     }
 }
+
+module.exports = new AnswersService();
