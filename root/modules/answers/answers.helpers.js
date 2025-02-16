@@ -1,4 +1,5 @@
 const Markup = require("telegraf/markup");
+const AnswersService = require(".//answers.service");
 
 class AnswersHelpers {
     async polishingAnswersData(text) {
@@ -18,6 +19,36 @@ class AnswersHelpers {
         }).filter(Boolean);
 
         return {sheet_id, answers, position};
+    }
+
+    async generateAnswersBtn(lang) {
+        const answers = await AnswersService.getAllAnswers();
+        console.log(answers);
+        const btns = answers.map(answer => {
+            return (
+                [Markup.button(
+                    `${answer.sheet_id?.title[lang]} #${answer.answers_id}`
+                )]
+            );
+        });
+
+        return {
+            total: btns.length,
+            btns: btns
+        };
+    }
+
+    async generateAnswersShow(answers, lang) {
+        const sheet_title = answers.sheet_id?.title[lang] || "No title";
+        const answersText = answers.answers
+            .map(item => `${item.num}. ${item.key}`)
+            .join("\n");
+
+        return {
+            sheet_title: sheet_title,
+            answers_id: answers.answers_id,
+            answers_text: answersText
+        };
     }
 }
 

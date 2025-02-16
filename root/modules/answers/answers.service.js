@@ -11,11 +11,25 @@ class AnswersService {
     }
 
     async getAllAnswers() {
-        return Answers.find().lean();
+        return Answers.find()
+            .populate({
+                path: "sheet_id",
+                select: "title"
+            })
+            .lean();
     }
 
     async getByIdAnswer(id) {
         return Answers.findById(id).lean();
+    }
+
+    async getAnswersOne(answers_id) {
+        return Answers.findOne({
+            answers_id: answers_id
+        }).populate({
+            path: "sheet_id",
+            select: "title"
+        }).lean();
     }
 
     async getCountAnswers() {

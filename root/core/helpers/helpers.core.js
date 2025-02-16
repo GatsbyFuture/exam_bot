@@ -3,6 +3,7 @@ const Extra = require("telegraf/extra");
 const Collections = require("../enums/collections.enum");
 const CategoriesHelpers = require("../../modules/categories/categories.helpers");
 const SheetsHelpers = require("../../modules/sheets/sheets.helpers");
+const AnswersHelpers = require("../../modules/answers/answers.helpers");
 
 class HelpersCore {
     langs(ctx) {
@@ -51,6 +52,7 @@ class HelpersCore {
             // console.log("__", buttons);
             return buttons;
         }
+
         if (btn_keys["collection"] === Collections.SHEETS) {
             const query = {
                 is_public: true,
@@ -62,6 +64,14 @@ class HelpersCore {
             }
 
             let buttons = await SheetsHelpers.generateSheetBtn(lang, query);
+
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
+
+            return buttons;
+        }
+
+        if (btn_keys["collection"] === Collections.ANSWER) {
+            let buttons = await AnswersHelpers.generateAnswersBtn(lang);
 
             buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
 

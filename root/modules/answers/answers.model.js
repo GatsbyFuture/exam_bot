@@ -6,14 +6,20 @@ const answersSchema = mongoose.Schema({
         type: String,
         default: uuid
     },
-    answers_id: String,
+    answers_id: {
+        type: Number,
+        default: () => Math.floor(Date.now() / 1000) // UNIX timestamp
+    },
     answers: [
         {
             num: Number,
             key: String
         }
     ],
-    sheet_id: String,
+    sheet_id: {
+        type: String,
+        ref: "sheets"
+    },
     position: {
         type: Number,
         default: 0

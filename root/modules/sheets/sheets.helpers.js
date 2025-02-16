@@ -33,6 +33,7 @@ class SheetsHelpers {
                 );
             }
         );
+
         return {
             total: btns.length,
             btns: btns

@@ -119,14 +119,15 @@ class AdminController extends AdminService {
         if (btn_keys["collection"] === Collections.ANSWER) {
             const text = ctx.session.text;
             const data = await AnswersHelpers.polishingAnswersData(text);
-            console.log("answers =>", data);
+
             const {error} = createAnswersSchema.validate(data);
 
             if (error) {
                 throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
             }
-
-            console.log("...");
+            // get uuid of sheet
+            const sheet = await SheetsService.getByIdSheet(data.sheet_id);
+            data.sheet_id = sheet._id;
             const newAnswers = await AnswersService.createAnswer(data);
 
             return {
@@ -158,6 +159,27 @@ class AdminController extends AdminService {
                 {caption: caption}
             );
         }
+    }
+
+    async viewTestAnswers(ctx, id, lang) {
+        const answers = await AnswersService.getAnswersOne(id);
+
+        if (!answers) {
+            throw CustomError.TestNotFoundError(ctx.i18n.t("test_not_found"));
+        }
+
+        const {
+            sheet_title,
+            answers_id,
+            answers_text
+        } = await AnswersHelpers.generateAnswersShow(answers, lang);
+
+        const answersList = ctx.i18n.t("sheet_answers_list")
+            .replace("*{sheet_title}*", sheet_title)
+            .replace("*{answers_id}*", answers_id)
+            .replace("*{answers_text}*", answers_text);
+
+        await ctx.replyWithHTML(answersList);
     }
 }
 

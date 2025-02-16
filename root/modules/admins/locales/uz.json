@@ -1,3 +1,4 @@
 {
-  "admin_greeting": "Ҳуш келибсиз <b>*{user_name}*</b>! қандай хизматларимиздан фойдаланишни хоҳлайсиз"
+  "admin_greeting": "Ҳуш келибсиз <b>*{user_name}*</b>! қандай хизматларимиздан фойдаланишни хоҳлайсиз",
+  "sheet_answers_list": "\uD83D\uDCCB Test nomi :*{sheet_title}*\n\uD83D\uDD11 Javob id :*{answers_id}*\n\n*{answers_text}*"
 }

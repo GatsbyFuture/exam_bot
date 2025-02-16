@@ -15,12 +15,10 @@ class SheetsService {
     }
 
     async getByIdSheet(id) {
-        console.log(id, typeof id);
         return Sheet.findOne({
             sheet_id: id
         }).lean();
     }
-
 
     async getCountSheets() {
         return Sheet.countDocuments();

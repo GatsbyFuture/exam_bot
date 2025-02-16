@@ -55,14 +55,16 @@ class AdminMain {
         });
 
         bot.hears(/#\d{10}$/, async (ctx) => {
-            const {_id, level} = ctx.session.user;
+            const {_id, level, lang} = ctx.session.user;
             const match = ctx.message.text.match(/#(\d{10})$/);
             if (match) {
-                console.log(level);
                 ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+
                 if (level === "0.1.1.1" || level === "0.1.1.0.x") {
                     await AdminController.sendTestDocument(ctx, +match[1]);
-                } else if (level === "0.1.1.0") {
+                }
+
+                if (level === "0.1.1.0") {
                     ctx.session.user.level = "0.1.1.0.x";
                     let {
                         total: total_sheets,
@@ -76,6 +78,10 @@ class AdminMain {
                                     sheet_btns
                                 ).resize())
                     );
+                }
+
+                if (level === "0.1.1.2") {
+                    await AdminController.viewTestAnswers(ctx, +match[1], lang);
                 }
             }
         });
@@ -189,15 +195,19 @@ class AdminMain {
                         );
                         break;
                     case ctx.i18n.t("answers"):
-                        // ctx.session.user.level = "0.1.1.2";
-                        // await ctx.replyWithHTML(
-                        //     ctx.i18n.t("create_answer"),
-                        //     Extra.HTML()
-                        //         .markup(
-                        //             Markup.keyboard(
-                        //                 await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.2"])
-                        //             ).resize())
-                        // );
+                        ctx.session.user.level = "0.1.1.2";
+                        let {
+                            total: total_answers,
+                            btns: answer_btns
+                        } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.2"]);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("create_answer").replace("*{total}*", total_answers),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        answer_btns
+                                    ).resize())
+                        );
                         break;
                     // // 0.2
                     // case ctx.i18n.t("settings"):
