@@ -1,6 +1,7 @@
 const CustomError = require("../../core/errors/custom.error");
 const AdminService = require("./admin.service");
 const AdminHelpers = require("./admin.helpers");
+const {checkDeleteSchema} = require("./admin.dto");
 
 const HelpersCore = require("../../core/helpers/helpers.core");
 
@@ -24,6 +25,18 @@ const {cap} = require("lodash/fp/_falseOptions");
 
 
 class AdminController extends AdminService {
+    async statistics() {
+        const total_categories = await CategoriesService.getCountCategories();
+        const total_sheets = await SheetsService.getCountSheets();
+        const total_answers = await AnswersService.getCountAnswers();
+
+        return {
+            total_categories,
+            total_sheets,
+            total_answers
+        };
+    }
+
     async generateAdminMarkButtons(ctx, data, cat_id = 0) {
         const [_id, level] = data;
 
@@ -47,9 +60,13 @@ class AdminController extends AdminService {
                     btn_keys,
                     cat_id
                 );
-            } else if (btn_keys["method"] === BtnMethods.UPDATE) {
-
             } else if (btn_keys["method"] === BtnMethods.CREATE) {
+                return await HelpersCore.generateMarkupButtons(
+                    ctx,
+                    [],
+                    level
+                );
+            } else if (btn_keys["method"] === BtnMethods.DELETE) {
                 return await HelpersCore.generateMarkupButtons(
                     ctx,
                     [],
@@ -73,7 +90,7 @@ class AdminController extends AdminService {
             const {error} = createCategorySchema.validate(data);
 
             if (error) {
-                throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+                throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
             data.title.uz = toCyrillic(data.title.oz);
             data.desc.uz = toCyrillic(data.desc.oz);
@@ -89,19 +106,19 @@ class AdminController extends AdminService {
         if (btn_keys["collection"] === Collections.SHEETS) {
             // code for creating test
             const {text, file} = ctx.session;
-            console.log(text, file);
+            // console.log(text, file);
 
             const data = await SheetsHelpers.polishingSheetData(text);
             const {error} = createSheetSchema.validate(data);
 
             if (error) {
-                throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+                throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
 
             const {success, file_path} = await SheetsHelpers.createSheetDocument(file);
 
             if (!success) {
-                throw CustomError.SaveDocumentsError(ctx.i18n.t(`${level}_error`));
+                throw CustomError.SaveDocumentsError(ctx.i18n.t("admin_saved_data_error"));
             }
 
             data.file_path = file_path;
@@ -122,8 +139,14 @@ class AdminController extends AdminService {
 
             const {error} = createAnswersSchema.validate(data);
 
+            const hasSheet = await SheetsService.getByIdSheet(data.sheet_id);
+
+            if (!hasSheet) {
+                throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
+            }
+
             if (error) {
-                throw CustomError.InCorrectDtoError(ctx.i18n.t(`${level}_dto_error`));
+                throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
             // get uuid of sheet
             const sheet = await SheetsService.getByIdSheet(data.sheet_id);
@@ -145,7 +168,7 @@ class AdminController extends AdminService {
             const sheet = await SheetsService.getByIdSheet(id);
 
             if (!sheet) {
-                throw CustomError.TestNotFoundError(ctx.i18n.t("test_not_found"));
+                throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
             }
 
             const filePath = sheet.file_path;
@@ -156,7 +179,7 @@ class AdminController extends AdminService {
 
             await ctx.replyWithPhoto(
                 {source: filePath},
-                {caption: caption}
+                {caption: caption, protect_content: true},
             );
         }
     }
@@ -165,7 +188,7 @@ class AdminController extends AdminService {
         const answers = await AnswersService.getAnswersOne(id);
 
         if (!answers) {
-            throw CustomError.TestNotFoundError(ctx.i18n.t("test_not_found"));
+            throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
         }
 
         const {
@@ -180,6 +203,48 @@ class AdminController extends AdminService {
             .replace("*{answers_text}*", answers_text);
 
         await ctx.replyWithHTML(answersList);
+    }
+
+    async deleteData(ctx, level) {
+        const text = ctx.session.text;
+        const data = await AdminHelpers.polishingDeleteData(text);
+
+        const {error} = checkDeleteSchema.validate(data);
+
+        if (error) {
+            throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
+        }
+        const {type, id} = data;
+
+        if (type === Collections.CATEGORIES) {
+            await CategoriesService.deleteCategory(id);
+            return {
+                key: "category", // detect for which collection...
+                id: id
+            };
+        }
+
+        if (type === Collections.SHEETS) {
+            await SheetsService.deleteSheet(id);
+            return {
+                key: "sheet", // detect for which collection...
+                id: id
+            };
+        }
+
+        if (type === Collections.ANSWER) {
+            await AnswersService.deleteAnswers(id);
+            return {
+                key: "answers", // detect for which collection...
+                id: id
+            };
+        }
+
+        throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
+    }
+
+    async changeLang(ctx) {
+        HelpersCore.langs(ctx);
     }
 }
 

@@ -1,6 +1,6 @@
 module.exports = {
     USERS: "users",
-    SHEETS: "tests",
+    SHEETS: "sheets",
     ANSWER: "answers",
     CATEGORIES: "categories"
 };

@@ -4,7 +4,7 @@ const CustomError = require("../../core/errors/custom.error");
 class CategoriesService {
     async createCategory(category) {
         if (!category.position) {
-            const count = await this.getCountC();
+            const count = await this.getCountCategories();
             category.position = count + 1;
         }
         return Category.create(category);
@@ -17,15 +17,15 @@ class CategoriesService {
         }).sort({position: 1}).lean();
     }
 
-    async getByIdC(id) {
+    async getByIdCategory(id) {
         return Category.findById(id).lean();
     }
 
-    async getCountC() {
+    async getCountCategories() {
         return Category.countDocuments();
     }
 
-    async updateC(id, data) {
+    async updateCategory(id, data) {
         const updated = await Category.findByIdAndUpdate(
             id,
             data,
@@ -37,10 +37,12 @@ class CategoriesService {
         }
     }
 
-    async deleteC(id) {
-        const deleted = await Category.findByIdAndDelete(id).lean();
+    async deleteCategory(id) {
+        const deleted = await Category.deleteOne({
+            category_id: id
+        });
 
-        if (!deleted) {
+        if (deleted.deletedCount === 0) {
             throw CustomError.CategoryNotFoundError();
         }
     }

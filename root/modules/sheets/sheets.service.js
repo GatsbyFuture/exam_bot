@@ -37,9 +37,11 @@ class SheetsService {
     }
 
     async deleteSheet(id) {
-        const deleted = await Sheet.findByIdAndDelete(id).lean();
+        const deleted = await Sheet.deleteOne({
+            sheet_id: id
+        });
 
-        if (!deleted) {
+        if (deleted.deletedCount === 0) {
             throw CustomError.CategoryNotFoundError();
         }
     }

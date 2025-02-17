@@ -49,9 +49,11 @@ class AnswersService {
     }
 
     async deleteAnswers(id) {
-        const deleted = await Answers.findByIdAndDelete(id).lean();
+        const deleted = await Answers.deleteOne({
+            answers_id: id
+        });
 
-        if (!deleted) {
+        if (deleted.deletedCount === 0) {
             throw CustomError.AnswersNotFoundError();
         }
     }

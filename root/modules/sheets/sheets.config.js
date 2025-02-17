@@ -3,7 +3,7 @@ module.exports = {
         create: {
             title: "#title:",
             desc: "#desc:",
-            category_id: "#category:", // optional
+            category_id: "#cat_id:", // optional
             img_url: "#img_url:", // optional
             position: "#pos:" // optional
         }

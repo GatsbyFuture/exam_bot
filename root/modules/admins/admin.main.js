@@ -5,6 +5,7 @@ const path = require("path");
 const Roles = require("../../core/enums/roles.enum");
 const UserControllerCore = require("../../core/controller/user.controller.core");
 const AdminController = require("./admin.controller");
+const BtnMethods = require("../../core/enums/btn.method.enum");
 const UserController = require("../users/user.controller");
 const config = require("./admin.config");
 const btnMethods = require("../../core/enums/btn.method.enum");
@@ -24,7 +25,7 @@ class AdminMain {
             if (ctx.session.user.role === Roles.ADMIN) {
                 const [section, lang] = ctx.match[0].split(".");
 
-                const {_id, user_name} = ctx.session.user;
+                const {_id, name} = ctx.session.user;
 
                 const updatedLang = await UserControllerCore.updateUserLang(_id, lang);
 
@@ -37,7 +38,7 @@ class AdminMain {
                 const btns = await AdminController.generateAdminMarkButtons(ctx, [_id, "0"]);
 
                 await ctx.replyWithHTML(
-                    ctx.i18n.t("user_greeting").replace("*{user_name}*", user_name),
+                    ctx.i18n.t("admin_greeting").replace("*{user_name}*", name.first_name),
                     Extra.HTML().markup(Markup.keyboard(btns).resize())
                 );
 
@@ -71,7 +72,7 @@ class AdminMain {
                         btns: sheet_btns
                     } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0.x"], +match[1]);
                     await ctx.replyWithHTML(
-                        ctx.i18n.t("read_tests").replace("*{total}*", total_sheets),
+                        ctx.i18n.t("admin_view_tests_show").replace("*{total}*", total_sheets),
                         Extra.HTML()
                             .markup(
                                 Markup.keyboard(
@@ -92,14 +93,20 @@ class AdminMain {
                 const {_id, level} = ctx.session.user;
                 switch (text) {
                     // 0.0
-                    case ctx.i18n.t("statistics"):
-                        ctx.replyWithHTML(ctx.i18n.t("admin_statistics"));
+                    case ctx.i18n.t("admin_statistics"):
+                        const statistics = await AdminController.statistics();
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t(`admin_sts_show`)
+                                .replace("*{categories}*", statistics.total_categories)
+                                .replace("*{sheets}*", statistics.total_sheets)
+                                .replace("*{answers}*", statistics.total_answers)
+                        );
                         break;
                     // 0.1
-                    case ctx.i18n.t("tests"):
+                    case ctx.i18n.t("admin_data"):
                         ctx.session.user.level = "0.1";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_and_view_test_btn"),
+                            ctx.i18n.t("admin_view_btn_text"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -107,10 +114,10 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("create"):
+                    case ctx.i18n.t("admin_create"):
                         ctx.session.user.level = "0.1.0";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_cat_test_answer_btn"),
+                            ctx.i18n.t("admin_cat_she_ans"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -119,10 +126,10 @@ class AdminMain {
                         );
                         break;
                     //  0.1.0
-                    case ctx.i18n.t("category"):
+                    case ctx.i18n.t("admin_create_category"):
                         ctx.session.user.level = "0.1.0.0";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_category"),
+                            ctx.i18n.t("admin_create_cat_text"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -130,10 +137,10 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("test"):
+                    case ctx.i18n.t("admin_create_sheet"):
                         ctx.session.user.level = "0.1.0.1";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_test"),
+                            ctx.i18n.t("admin_create_she_text"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -141,10 +148,10 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("answer"):
+                    case ctx.i18n.t("admin_create_answer"):
                         ctx.session.user.level = "0.1.0.2";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_answer"),
+                            ctx.i18n.t("admin_create_ans_text"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -152,10 +159,10 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("view"):
+                    case ctx.i18n.t("admin_view"):
                         ctx.session.user.level = "0.1.1";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_cat_test_answer_btn"),
+                            ctx.i18n.t("admin_view_cat_she_ans"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -164,14 +171,14 @@ class AdminMain {
                         );
                         break;
                     //  0.1.1
-                    case ctx.i18n.t("categories"):
+                    case ctx.i18n.t("admin_view_categories"):
                         ctx.session.user.level = "0.1.1.0";
                         let {
                             total: total_cats,
                             btns: cat_btns
                         } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0"]);
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("view_categories").replace("*{total}*", total_cats),
+                            ctx.i18n.t("admin_view_cats_show").replace("*{total}*", total_cats),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -179,14 +186,14 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("read_tests"):
+                    case ctx.i18n.t("admin_view_sheets"):
                         ctx.session.user.level = "0.1.1.1";
                         let {
                             total: total_sheets,
                             btns: sheet_btns
                         } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.1"]);
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("read_tests").replace("*{total}*", total_sheets),
+                            ctx.i18n.t("admin_view_tests_show").replace("*{total}*", total_sheets),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -194,14 +201,14 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("answers"):
+                    case ctx.i18n.t("admin_view_answers"):
                         ctx.session.user.level = "0.1.1.2";
                         let {
                             total: total_answers,
                             btns: answer_btns
                         } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.2"]);
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("create_answer").replace("*{total}*", total_answers),
+                            ctx.i18n.t("admin_view_answers_show").replace("*{total}*", total_answers),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -210,32 +217,35 @@ class AdminMain {
                         );
                         break;
                     // // 0.2
-                    // case ctx.i18n.t("settings"):
-                    //     ctx.replyWithHTML(ctx.i18n.t("settings"));
-                    //     break;
-                    case ctx.i18n.t("back"):
-                        let decrease_level = level === "0" ? level : level.substring(0, level.lastIndexOf("."));
-                        ctx.session.user.level = decrease_level;
-                        const back_btns = await AdminController.generateAdminMarkButtons(
-                            ctx,
-                            [_id, decrease_level]
-                        );
+                    case ctx.i18n.t("admin_settings"):
+                        ctx.session.user.level = "0.2";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("back"),
+                            ctx.i18n.t("admin_view_btn_text"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        back_btns.btns ? back_btns.btns : back_btns
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.2"])
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("agree"):
-                        const {key, id} = await AdminController.createData(
-                            ctx,
-                            level
-                        );
+                    case ctx.i18n.t("admin_delete_with_id"):
+                        ctx.session.user.level = "0.2.1";
                         await ctx.replyWithHTML(
-                            ctx.i18n.t(`${level}_created`)
+                            ctx.i18n.t(`admin_delete`),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await AdminController.generateAdminMarkButtons(ctx, [_id, "0.2.1"])
+                                    ).resize())
+                        );
+                        break;
+                    case ctx.i18n.t("admin_agree"):
+                        const {key, id} = config.MARKUP_BUTTONS_LIST[level]?.method === BtnMethods.CREATE
+                            ? await AdminController.createData(ctx, level)
+                            : await AdminController.deleteData(ctx, level);
+
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("admin_agree_decision")
                                 .replace(key, id),
                             Extra.HTML()
                                 .markup(
@@ -246,11 +256,11 @@ class AdminMain {
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
                         break;
-                    case ctx.i18n.t("cancel"):
+                    case ctx.i18n.t("admin_cancel"):
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
                         await ctx.replyWithHTML(
-                            ctx.i18n.t(`${level}_canceled`),
+                            ctx.i18n.t("admin_cancel_decision"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
@@ -258,12 +268,40 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
+                    case ctx.i18n.t("admin_back"):
+                        let decrease_level = level === "0" ? level : level.substring(0, level.lastIndexOf("."));
+                        ctx.session.user.level = decrease_level;
+                        const back_btns = await AdminController.generateAdminMarkButtons(
+                            ctx,
+                            [_id, decrease_level]
+                        );
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("admin_back_text"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        back_btns.btns ? back_btns.btns : back_btns
+                                    ).resize())
+                        );
+                        break;
+                    case ctx.i18n.t("admin_change_lang"):
+
+                        const placeholder = await ctx.reply("...", {
+                            reply_markup: {remove_keyboard: true},
+                        });
+
+                        await ctx.telegram.deleteMessage(
+                            placeholder.chat.id,
+                            placeholder.message_id
+                        );
+                        await AdminController.changeLang(ctx);
+                        break;
                     default:
                         switch (level) {
                             case "0.1.0.0":
                                 ctx.session.text = text;
                                 await ctx.replyWithHTML(
-                                    ctx.i18n.t("this_is_right_you_sure"),
+                                    ctx.i18n.t("admin_this_is_right_sure"),
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(
@@ -275,7 +313,7 @@ class AdminMain {
                                 ctx.session.text = text;
                                 if (ctx.session?.file && text) {
                                     await ctx.replyWithHTML(
-                                        ctx.i18n.t("this_is_right_you_sure"),
+                                        ctx.i18n.t("admin_this_is_right_sure"),
                                         Extra.HTML()
                                             .markup(
                                                 Markup.keyboard(
@@ -287,7 +325,18 @@ class AdminMain {
                             case "0.1.0.2":
                                 ctx.session.text = text;
                                 await ctx.replyWithHTML(
-                                    ctx.i18n.t("this_is_right_you_sure"),
+                                    ctx.i18n.t("admin_this_is_right_sure"),
+                                    Extra.HTML()
+                                        .markup(
+                                            Markup.keyboard(
+                                                await AdminController.generateAgreeButton(ctx)
+                                            ).resize())
+                                );
+                                break;
+                            case "0.2.1":
+                                ctx.session.text = text;
+                                await ctx.replyWithHTML(
+                                    ctx.i18n.t("admin_this_is_right_sure"),
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(

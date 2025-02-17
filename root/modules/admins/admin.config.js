@@ -2,7 +2,7 @@ module.exports = {
     MARKUP_BUTTONS_STRUCTURE: {
         "0": {
             "statistics": "data comes from backend",
-            "tests": {
+            "data": {
                 "0.1": {
                     "create": {
                         "0.1.0": {
@@ -154,7 +154,7 @@ module.exports = {
     MARKUP_BUTTONS_LIST: {
         "0": [
             {
-                name: "statistics",
+                name: "admin_statistics",
                 position: 0,
                 is_child: false,
                 has_child: false,
@@ -163,7 +163,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "tests",
+                name: "admin_data",
                 position: 1,
                 is_child: false,
                 has_child: false,
@@ -172,7 +172,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "settings",
+                name: "admin_settings",
                 position: 2,
                 is_child: false,
                 has_child: false,
@@ -183,7 +183,7 @@ module.exports = {
         ],
         "0.1": [
             {
-                name: "create",
+                name: "admin_create",
                 position: 0,
                 is_child: true,
                 has_child: true,
@@ -192,7 +192,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "view",
+                name: "admin_view",
                 position: 0,
                 is_child: true,
                 has_child: true,
@@ -203,7 +203,7 @@ module.exports = {
         ],
         "0.1.0": [
             {
-                name: "category",
+                name: "admin_create_category",
                 position: 0,
                 is_child: false,
                 has_child: false,
@@ -212,7 +212,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "test",
+                name: "admin_create_sheet",
                 position: 1,
                 is_child: false,
                 has_child: false,
@@ -221,7 +221,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "answer",
+                name: "admin_create_answer",
                 position: 2,
                 is_child: false,
                 has_child: false,
@@ -236,7 +236,7 @@ module.exports = {
         },
         "0.1.0.1": {
             method: "create",
-            collection: "tests"
+            collection: "sheets"
         },
         "0.1.0.2": {
             method: "create",
@@ -244,7 +244,7 @@ module.exports = {
         },
         "0.1.1": [
             {
-                name: "categories",
+                name: "admin_view_categories",
                 position: 0,
                 is_child: false,
                 has_child: false,
@@ -253,7 +253,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "read_tests",
+                name: "admin_view_sheets",
                 position: 1,
                 is_child: false,
                 has_child: false,
@@ -262,7 +262,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "answers",
+                name: "admin_view_answers",
                 position: 2,
                 is_child: false,
                 has_child: false,
@@ -277,15 +277,84 @@ module.exports = {
         },
         "0.1.1.0.x": {
             method: "read",
-            collection: "tests"
+            collection: "sheets"
         },
         "0.1.1.1": {
             method: "read",
-            collection: "tests"
+            collection: "sheets"
         },
         "0.1.1.2": {
             method: "read",
             collection: "answers"
+        },
+        // section 2
+        "0.2": [
+            // {
+            //     name: "my_profile",
+            //     position: 0,
+            //     is_child: false,
+            //     has_child: false,
+            //     belong: "admin",
+            //     level: "0.2.0",
+            //     is_active: true
+            // },
+            {
+                name: "admin_delete_with_id",
+                position: 1,
+                is_child: false,
+                has_child: false,
+                belong: "admin",
+                level: "0.2.1",
+                is_active: true
+            },
+            // {
+            //     name: "set_time_period",
+            //     position: 2,
+            //     is_child: false,
+            //     has_child: false,
+            //     belong: "admin",
+            //     level: "0.2.2",
+            //     is_active: true
+            // },
+            // {
+            //     name: "limit",
+            //     position: 3,
+            //     is_child: false,
+            //     has_child: false,
+            //     belong: "admin",
+            //     level: "0.2.3",
+            //     is_active: true
+            // },
+            // {
+            //     name: "top_users",
+            //     position: 4,
+            //     is_child: false,
+            //     has_child: false,
+            //     belong: "admin",
+            //     level: "0.2.4",
+            //     is_active: true
+            // },
+            // {
+            //     name: "send_message",
+            //     position: 5,
+            //     is_child: false,
+            //     has_child: false,
+            //     belong: "admin",
+            //     level: "0.2.5",
+            //     is_active: true
+            // },
+            {
+                name: "admin_change_lang",
+                position: 6,
+                is_child: false,
+                has_child: false,
+                belong: "admin",
+                level: "0.2.6",
+                is_active: true
+            },
+        ],
+        "0.2.1": {
+            method: "delete",
         }
     },
 };
