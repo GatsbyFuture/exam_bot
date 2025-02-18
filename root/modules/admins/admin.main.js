@@ -62,7 +62,7 @@ class AdminMain {
                 ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
 
                 if (level === "0.1.1.1" || level === "0.1.1.0.x") {
-                    await AdminController.sendTestDocument(ctx, +match[1]);
+                    await UserControllerCore.sendTestDocument(ctx, +match[1]);
                 }
 
                 if (level === "0.1.1.0") {
@@ -239,7 +239,7 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("admin_agree"):
+                    case ctx.i18n.t("agree"):
                         const {key, id} = config.MARKUP_BUTTONS_LIST[level]?.method === BtnMethods.CREATE
                             ? await AdminController.createData(ctx, level)
                             : await AdminController.deleteData(ctx, level);
@@ -256,7 +256,7 @@ class AdminMain {
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
                         break;
-                    case ctx.i18n.t("admin_cancel"):
+                    case ctx.i18n.t("cancel"):
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
                         await ctx.replyWithHTML(
@@ -268,7 +268,7 @@ class AdminMain {
                                     ).resize())
                         );
                         break;
-                    case ctx.i18n.t("admin_back"):
+                    case ctx.i18n.t("back"):
                         let decrease_level = level === "0" ? level : level.substring(0, level.lastIndexOf("."));
                         ctx.session.user.level = decrease_level;
                         const back_btns = await AdminController.generateAdminMarkButtons(

@@ -46,11 +46,7 @@ class AdminController extends AdminService {
 
         if (Array.isArray(btn_keys)) {
             // get static buttons from config
-            return await HelpersCore.generateMarkupButtons(
-                ctx,
-                btn_keys,
-                level
-            );
+            return await HelpersCore.generateMarkupButtons(ctx,btn_keys,level);
         } else {
             // get data from db and generate buttons
             if (btn_keys["method"] === BtnMethods.READ) {
@@ -157,30 +153,6 @@ class AdminController extends AdminService {
                 key: "answers", // detect for which collection...
                 id: newAnswers.answers_id
             };
-        }
-    }
-
-    async sendTestDocument(ctx, id) {
-        const {level, lang} = ctx.session.user;
-        const btn_keys = config.MARKUP_BUTTONS_LIST[level];
-
-        if (btn_keys["method"] === BtnMethods.READ) {
-            const sheet = await SheetsService.getByIdSheet(id);
-
-            if (!sheet) {
-                throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
-            }
-
-            const filePath = sheet.file_path;
-            const caption = ctx.i18n.t("test_caption")
-                .replace("*{ID}*", sheet.sheet_id)
-                .replace("*{title}*", sheet.title[lang])
-                .replace("*{desc}*", sheet.desc[lang]);
-
-            await ctx.replyWithPhoto(
-                {source: filePath},
-                {caption: caption, protect_content: true},
-            );
         }
     }
 

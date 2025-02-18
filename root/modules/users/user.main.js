@@ -22,7 +22,7 @@ class UserMain {
             if (ctx.session.user.role === Roles.USER) {
                 const [section, lang] = ctx.match[0].split(".");
 
-                const {_id, user_name} = ctx.session.user;
+                const {_id, name} = ctx.session.user;
 
                 const updatedLang = await UserControllerCore.updateUserLang(_id, lang);
 
@@ -31,11 +31,12 @@ class UserMain {
                     ctx.i18n.locale(lang);
                 }
 
+                ctx.session.user.level = "0";
                 // generate users main buttons
-                const btns = await UserController.generateUserMarkButtons(ctx, [_id, "0"]);
+                const btns = await UserController.generateUserMarkButtons(ctx, _id);
 
                 await ctx.replyWithHTML(
-                    ctx.i18n.t("user_greeting").replace("*{user_name}*", user_name),
+                    ctx.i18n.t("user_greeting").replace("*{user_name}*", name.first_name),
                     Extra.HTML().markup(Markup.keyboard(btns).resize())
                 );
 
@@ -45,52 +46,96 @@ class UserMain {
             }
         });
 
+        bot.hears(/#\d{10}$/, async (ctx) => {
+            const {_id, level, lang} = ctx.session.user;
+            const match = ctx.message.text.match(/#(\d{10})$/);
+            if (match) {
+                ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+
+                if (level === "0.1.x") {
+                    await UserControllerCore.sendTestDocument(ctx, +match[1]);
+                }
+
+                if (level === "0.1") {
+                    ctx.session.user.level = "0.1.x";
+                    let {
+                        total: total_sheets,
+                        btns: sheet_btns
+                    } = await UserController.generateUserMarkButtons(ctx, _id, +match[1]);
+                    await ctx.replyWithHTML(
+                        ctx.i18n.t("user_view_tests_t").replace("*{total}*", total_sheets),
+                        Extra.HTML()
+                            .markup(
+                                Markup.keyboard(
+                                    sheet_btns
+                                ).resize())
+                    );
+                }
+
+                // if (level === "0.1.1.2") {
+                //     await AdminController.viewTestAnswers(ctx, +match[1], lang);
+                // }
+            }
+        });
+
         bot.on("text", async (ctx, next) => {
             if (ctx.session.user.role === Roles.USER) {
                 let text = ctx.message.text;
                 const {_id, level} = ctx.session.user;
                 switch (text) {
                     // main menu 0 level
-                    case ctx.i18n.t("statistics"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_statistics"));
+                    case ctx.i18n.t("user_statistics"):
+                        ctx.replyWithHTML(ctx.i18n.t("user_statistics_t"));
                         break;
-                    case ctx.i18n.t("by_category"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_by_category"));
-                        break;
-                    case ctx.i18n.t("random_test"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_random_test"));
-                        break;
-                    case ctx.i18n.t("check_answers"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_check_answers"));
-                        break;
-                    case ctx.i18n.t("settings"):
-                        ctx.session.user.level = "0.4";
+                    case ctx.i18n.t("user_categories"):
+                        ctx.session.user.level = "0.1";
+                        let {
+                            total: total_cats,
+                            btns: cat_btns
+                        } = await UserController.generateUserMarkButtons(ctx, _id);
                         await ctx.replyWithHTML(
-                            ctx.i18n.t("user_settings"),
+                            ctx.i18n.t("user_categories_t").replace("*{total}*", total_cats),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await UserController.generateUserMarkButtons(ctx, [_id, "0.4"])
+                                        cat_btns
+                                    ).resize())
+                        );
+                        break;
+                    case ctx.i18n.t("user_random_sheet"):
+                        ctx.replyWithHTML(ctx.i18n.t("user_random_sheet_t"));
+                        break;
+                    case ctx.i18n.t("user_check_answers"):
+                        ctx.replyWithHTML(ctx.i18n.t("user_check_answers_t"));
+                        break;
+                    case ctx.i18n.t("user_settings"):
+                        ctx.session.user.level = "0.4";
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("user_settings_t"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await UserController.generateUserMarkButtons(ctx, _id)
                                     ).resize())
                         );
                         break;
                     //  all categories 0.1 level
-                    case ctx.i18n.t("all_categories"):
+                    case ctx.i18n.t("all_categories_t"):
                         ctx.replyWithHTML(ctx.i18n.t("user_all_categories"));
                         break;
-                    //  setttings 0.4 level
-                    case ctx.i18n.t("my_profile"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_my_profile"));
-                        break;
-                    case ctx.i18n.t("appeal"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_appeal"));
-                        break;
-                    case ctx.i18n.t("my_certificate"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_my_certificate"));
-                        break;
-                    case ctx.i18n.t("my_statistics"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_my_statistics"));
-                        break;
+                    // //  setttings 0.4 level
+                    // case ctx.i18n.t("my_profile"):
+                    //     ctx.replyWithHTML(ctx.i18n.t("user_my_profile"));
+                    //     break;
+                    // case ctx.i18n.t("appeal"):
+                    //     ctx.replyWithHTML(ctx.i18n.t("user_appeal"));
+                    //     break;
+                    // case ctx.i18n.t("my_certificate"):
+                    //     ctx.replyWithHTML(ctx.i18n.t("user_my_certificate"));
+                    //     break;
+                    // case ctx.i18n.t("my_statistics"):
+                    //     ctx.replyWithHTML(ctx.i18n.t("user_my_statistics"));
+                    //     break;
                     case ctx.i18n.t("lang"):
                         ctx.replyWithHTML(ctx.i18n.t("user_lang"));
 
@@ -107,19 +152,18 @@ class UserMain {
 
                         break;
                     case ctx.i18n.t("back"):
-                        let decrease_level = level.includes(".") ?
+                        ctx.session.user.level = level.includes(".") ?
                             level.substring(0, level.lastIndexOf(".")) :
                             level;
+
+                        const back_btns = await UserController.generateUserMarkButtons(ctx, _id);
 
                         await ctx.replyWithHTML(
                             ctx.i18n.t("back"),
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await UserController.generateUserMarkButtons(
-                                            ctx,
-                                            [_id, decrease_level]
-                                        )
+                                        back_btns.btns ? back_btns.btns : back_btns
                                     ).resize())
                         );
                         break;

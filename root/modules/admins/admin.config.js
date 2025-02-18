@@ -20,7 +20,7 @@ module.exports = {
                             },
                             "answers": {
                                 "0.1.0.2": {
-                                    // "send a test_num and answer | response => success!",
+                                    // "send a test_num and answers | response => success!",
                                     "back": "back"
                                 }
                             },
@@ -181,6 +181,7 @@ module.exports = {
                 is_active: true
             },
         ],
+        // section 1
         "0.1": [
             {
                 name: "admin_create",

@@ -30,7 +30,7 @@ class HelpersCore {
         let buttons = Object.values(groupedButtons);
 
         if (level !== "0") {
-            buttons.push([Markup.button(ctx.i18n.t("admin_back"))]);
+            buttons.push([Markup.button(ctx.i18n.t("back"))]);
         }
 
         return buttons;
@@ -38,8 +38,8 @@ class HelpersCore {
 
     async generateMarkupBtnAgree(ctx) {
         return [
-            [Markup.button(ctx.i18n.t("admin_agree"))],
-            [Markup.button(ctx.i18n.t("admin_cancel"))]
+            [Markup.button(ctx.i18n.t("agree"))],
+            [Markup.button(ctx.i18n.t("cancel"))]
         ];
     }
 
@@ -48,7 +48,7 @@ class HelpersCore {
             // console.log(btn_keys);
             let buttons = await CategoriesHelpers.generateCategoriesBtn(lang);
 
-            buttons.btns.push([Markup.button(ctx.i18n.t("admin_back"))]);
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
             // console.log("__", buttons);
             return buttons;
         }
@@ -65,7 +65,7 @@ class HelpersCore {
 
             let buttons = await SheetsHelpers.generateSheetBtn(lang, query);
 
-            buttons.btns.push([Markup.button(ctx.i18n.t("admin_back"))]);
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
 
             return buttons;
         }
@@ -73,7 +73,7 @@ class HelpersCore {
         if (btn_keys["collection"] === Collections.ANSWER) {
             let buttons = await AnswersHelpers.generateAnswersBtn(lang);
 
-            buttons.btns.push([Markup.button(ctx.i18n.t("admin_back"))]);
+            buttons.btns.push([Markup.button(ctx.i18n.t("back"))]);
 
             return buttons;
         }

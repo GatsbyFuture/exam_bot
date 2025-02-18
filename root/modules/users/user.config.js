@@ -2,33 +2,41 @@ module.exports = {
     MARKUP_BUTTONS_STRUCTURE: {
         "0": {
             "statistics": "data comes from backend",
-            "by_category": {
+            "categories": {
                 "0.1": {
                     "all_categories": {
-                        "0.1.0": {
-                            "all tests": "data comes from backend"
-                        }
-                    }
-                }
+                        // [category_num/category_name : sheets(nums)]
+                        "0.1.x": {
+                            "category_tests": "[test_num/test_name : answer(status)]",
+                            "back": "back"
+                        },
+                        "back": "back"
+                    },
+                },
             },
             "random_test": "data comes from backend",
-            "check_answers": "send data to backend",
+            "check_answers": {
+                "0.3": {
+                    // "send a test_num and answers | response => checked!",
+                    "back": "back"
+                }
+            },
             "settings": {
                 "0.4": {
                     "my_profile": "data comes from backend",
                     "appeal": "send data to backend",
                     "my_certificate": "data comes from backend",
                     "my_statistics": "data comes from backend",
-                    "lang": "data comes from backend"
-                }
+                    "lang": "data comes from backend",
+                    "back": "back"
+                },
             }
         }
     },
     MARKUP_BUTTONS_LIST: {
-        // level 0
         "0": [
             {
-                name: "statistics",
+                name: "user_statistics",
                 position: 0,
                 is_child: false,
                 has_child: false,
@@ -38,7 +46,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "by_category",
+                name: "user_categories",
                 position: 1,
                 is_child: false,
                 has_child: true,
@@ -48,7 +56,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "random_test",
+                name: "user_random_sheet",
                 position: 1,
                 is_child: false,
                 has_child: false,
@@ -58,7 +66,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "check_answers",
+                name: "user_check_answers",
                 position: 3,
                 is_child: false,
                 has_child: false,
@@ -68,7 +76,7 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "settings",
+                name: "user_settings",
                 position: 4,
                 is_child: false,
                 has_child: true,
@@ -78,7 +86,6 @@ module.exports = {
                 is_active: true
             }
         ],
-        // level 0.4
         "0.4": [
             {
                 name: "my_profile",
@@ -131,9 +138,17 @@ module.exports = {
                 is_active: true
             },
         ],
-        // level 0.1
-        "0.1": "categories",
-        // level 0.1.x
-        "0.1.x": "tests"
+        "0.1": {
+            method: "read",
+            collection: "categories"
+        },
+        "0.1.x": {
+            method: "read",
+            collection: "sheets"
+        },
+        "0.3": {
+            method: "read",
+            collection: "answers"
+        }
     }
 };
