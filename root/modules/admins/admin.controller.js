@@ -4,6 +4,7 @@ const AdminHelpers = require("./admin.helpers");
 const {checkDeleteSchema} = require("./admin.dto");
 
 const HelpersCore = require("../../core/helpers/helpers.core");
+const UserServiceCore = require("../../core/service/user.service.core");
 
 const CategoriesService = require("../categories/categories.service");
 const CategoriesHelpers = require("../categories/categories.helpers");
@@ -40,13 +41,13 @@ class AdminController extends AdminService {
     async generateAdminMarkButtons(ctx, data, cat_id = 0) {
         const [_id, level] = data;
 
-        await this.updateLevel(_id, level);
+        await new UserServiceCore().updateLevel(_id, level);
 
         const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
         if (Array.isArray(btn_keys)) {
             // get static buttons from config
-            return await HelpersCore.generateMarkupButtons(ctx,btn_keys,level);
+            return await HelpersCore.generateMarkupButtons(ctx, btn_keys, level);
         } else {
             // get data from db and generate buttons
             if (btn_keys["method"] === BtnMethods.READ) {
@@ -135,7 +136,7 @@ class AdminController extends AdminService {
 
             const {error} = createAnswersSchema.validate(data);
 
-            const hasSheet = await SheetsService.getByIdSheet(data.sheet_id);
+            const hasSheet = await SheetsService.getBySheetId(data.sheet_id);
 
             if (!hasSheet) {
                 throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
@@ -145,7 +146,7 @@ class AdminController extends AdminService {
                 throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
             // get uuid of sheet
-            const sheet = await SheetsService.getByIdSheet(data.sheet_id);
+            const sheet = await SheetsService.getBySheetId(data.sheet_id);
             data.sheet_id = sheet._id;
             const newAnswers = await AnswersService.createAnswer(data);
 

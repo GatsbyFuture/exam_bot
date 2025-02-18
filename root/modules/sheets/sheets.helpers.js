@@ -26,7 +26,7 @@ class SheetsHelpers {
     }
 
     async generateSheetBtn(lang, query) {
-        const sheets = await SheetsService.getAllSheets(query);
+        const sheets = await SheetsService.getSheetWithFilter(query);
         const btns = sheets.map(sheet => {
                 return (
                     [Markup.button(`${sheet.title[lang]} #${sheet.sheet_id}`)]

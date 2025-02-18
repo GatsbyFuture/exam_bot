@@ -38,10 +38,10 @@ class UserControllerCore extends UserServiceCore {
         // const btn_keys = config.MARKUP_BUTTONS_LIST[level];
 
         // if (btn_keys["method"] === BtnMethods.READ) {
-        const sheet = await SheetsService.getByIdSheet(id);
+        const sheet = await SheetsService.getBySheetId(id);
 
         if (!sheet) {
-            throw CustomError.TestNotFoundError(ctx.i18n.t("sheet_not_found"));
+            throw CustomError.SheetNotFoundError(ctx.i18n.t("sheet_not_found"));
         }
 
         const filePath = sheet.file_path;

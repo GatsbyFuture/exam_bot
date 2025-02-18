@@ -55,6 +55,13 @@ class UserServiceCore {
 
         return true;
     }
+
+    async updateLevel(id, level) {
+        await User.updateOne(
+            {_id: id},
+            {$set: {level}},
+        ).lean();
+    }
 }
 
 module.exports = UserServiceCore;

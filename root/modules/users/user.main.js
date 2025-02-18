@@ -81,7 +81,7 @@ class UserMain {
         bot.on("text", async (ctx, next) => {
             if (ctx.session.user.role === Roles.USER) {
                 let text = ctx.message.text;
-                const {_id, level} = ctx.session.user;
+                const {_id, level, lang} = ctx.session.user;
                 switch (text) {
                     // main menu 0 level
                     case ctx.i18n.t("user_statistics"):
@@ -109,7 +109,7 @@ class UserMain {
                         );
                         break;
                     case ctx.i18n.t("user_random_sheet"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_random_sheet_t"));
+                        await UserController.sendRandomSheet(ctx, lang);
                         break;
                     case ctx.i18n.t("user_check_answers"):
                         ctx.replyWithHTML(ctx.i18n.t("user_check_answers_t"));
@@ -124,10 +124,6 @@ class UserMain {
                                         await UserController.generateUserMarkButtons(ctx, _id)
                                     ).resize())
                         );
-                        break;
-                    //  all categories 0.1 level
-                    case ctx.i18n.t("all_categories_t"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_all_categories"));
                         break;
                     // //  setttings 0.4 level
                     // case ctx.i18n.t("my_profile"):

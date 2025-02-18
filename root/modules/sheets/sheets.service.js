@@ -10,14 +10,18 @@ class SheetsService {
         return Sheet.create(sheet);
     }
 
-    async getAllSheets(query) {
+    async getSheetWithFilter(query) {
         return Sheet.find(query).sort({position: 1}).lean();
     }
 
-    async getByIdSheet(id) {
+    async getBySheetId(id) {
         return Sheet.findOne({
             sheet_id: id
         }).lean();
+    }
+
+    async getByIdSheet(id) {
+        return Sheet.findById(id).lean();
     }
 
     async getCountSheets() {
@@ -32,7 +36,7 @@ class SheetsService {
         ).lean();
 
         if (!updated) {
-            throw CustomError.CategoryNotFoundError();
+            throw CustomError.SheetNotFoundError();
         }
     }
 
@@ -42,8 +46,20 @@ class SheetsService {
         });
 
         if (deleted.deletedCount === 0) {
-            throw CustomError.CategoryNotFoundError();
+            throw CustomError.SheetNotFoundError();
         }
+    }
+
+    async getRandomSheet() {
+        const sheets = await Sheet.find({}, "_id");
+
+        if (sheets.length === 0) {
+            throw CustomError.SheetNotFoundError();
+        }
+
+        const random_id = sheets[Math.floor(Math.random() * sheets.length)]._id;
+
+        return this.getByIdSheet(random_id);
     }
 }
 

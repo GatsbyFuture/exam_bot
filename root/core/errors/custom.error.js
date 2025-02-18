@@ -19,7 +19,7 @@ module.exports = class CustomError extends Error {
     }
 
     // test
-    static TestNotFoundError(message) {
+    static SheetNotFoundError(message = "Sheet not found") {
         return new CustomError(404, message);
     }
 
