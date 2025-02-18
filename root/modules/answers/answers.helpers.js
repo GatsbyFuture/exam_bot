@@ -4,10 +4,10 @@ const AnswersService = require(".//answers.service");
 class AnswersHelpers {
     async polishingAnswersData(text) {
         const idMatch = text.match(/#id:(\d+)/);
-        const posMatch = text.match(/#pos:(\d+)/);
         const answersMatch = text.match(/#answers:([\d.ABCDE,]+)/);
+        const posMatch = text.match(/#pos:(\d+)/);
 
-        const sheet_id = parseInt(idMatch[1], 10);
+        const sheet = parseInt(idMatch[1], 10);
         const position = posMatch ? parseInt(posMatch[1], 10) : undefined;
 
         const answers = answersMatch[1].split(",").map((answer) => {
@@ -18,12 +18,12 @@ class AnswersHelpers {
             return null;
         }).filter(Boolean);
 
-        return {sheet_id, answers, position};
+        return {sheet, answers, position};
     }
 
     async generateAnswersBtn(lang) {
-        const answers = await AnswersService.getAllAnswers();
-        console.log(answers);
+        const answers = await AnswersService.getAnswersWithFilter({});
+        // console.log(answers);
         const btns = answers.map(answer => {
             return (
                 [Markup.button(

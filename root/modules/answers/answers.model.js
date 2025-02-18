@@ -20,6 +20,7 @@ const answersSchema = mongoose.Schema({
         type: String,
         ref: "sheets"
     },
+    sheet: Number,
     position: {
         type: Number,
         default: 0

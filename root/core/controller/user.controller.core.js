@@ -2,8 +2,8 @@ const UserServiceCore = require("../service/user.service.core");
 const Roles = require("../enums/roles.enum");
 const Langs = require("../enums/langs.enum");
 const config = require("../../modules/admins/admin.config");
-const BtnMethods = require("../enums/btn.method.enum");
 const SheetsService = require("../../modules/sheets/sheets.service");
+const HelpersCore = require("../helpers/helpers.core");
 const CustomError = require("../errors/custom.error");
 
 class UserControllerCore extends UserServiceCore {
@@ -55,6 +55,10 @@ class UserControllerCore extends UserServiceCore {
             {caption: caption, protect_content: true},
         );
         // }
+    }
+
+    async generateAgreeButton(ctx) {
+        return HelpersCore.generateMarkupBtnAgree(ctx);
     }
 }
 

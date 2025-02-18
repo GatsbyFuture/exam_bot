@@ -1,7 +1,7 @@
 module.exports = {
     rules: {
         create: {
-            sheet_id: "#id:",
+            sheet: "#id:",
             answers: "#answers:1.A,2.B,3.C,4.A,5.B,6.B,...",
             position: "#pos:" // optional
         }

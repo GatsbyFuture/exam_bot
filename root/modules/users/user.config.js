@@ -147,7 +147,7 @@ module.exports = {
             collection: "sheets"
         },
         "0.3": {
-            method: "read",
+            method: "check",
             collection: "answers"
         }
     }

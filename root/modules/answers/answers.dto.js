@@ -6,8 +6,8 @@ const CreateAnswersDto = {
     position: 0 // optional
 };
 
-const createAnswersSchema = Joi.object({
-    sheet_id: Joi.number().required(),
+const answersSchema = Joi.object({
+    sheet: Joi.number().required(),
     answers: Joi.array()
         .items(
             Joi.object({
@@ -20,5 +20,5 @@ const createAnswersSchema = Joi.object({
 
 module.exports = {
     CreateAnswersDto,
-    createAnswersSchema
+    answersSchema
 };

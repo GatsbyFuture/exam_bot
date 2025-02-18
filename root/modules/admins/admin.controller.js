@@ -16,7 +16,7 @@ const {createSheetSchema} = require("../sheets/sheets.dto");
 
 const AnswersService = require("../answers/answers.service");
 const AnswersHelpers = require("../answers/answers.helpers");
-const {createAnswersSchema} = require("../answers/answers.dto");
+const {answersSchema} = require("../answers/answers.dto");
 
 const BtnMethods = require("../../core/enums/btn.method.enum");
 const Collections = require("../../core/enums/collections.enum");
@@ -71,10 +71,6 @@ class AdminController extends AdminService {
                 );
             }
         }
-    }
-
-    async generateAgreeButton(ctx) {
-        return HelpersCore.generateMarkupBtnAgree(ctx);
     }
 
     async createData(ctx, level) {
@@ -134,19 +130,19 @@ class AdminController extends AdminService {
             const text = ctx.session.text;
             const data = await AnswersHelpers.polishingAnswersData(text);
 
-            const {error} = createAnswersSchema.validate(data);
+            const {error} = answersSchema.validate(data);
 
-            const hasSheet = await SheetsService.getBySheetId(data.sheet_id);
+            const hasSheet = await SheetsService.getBySheetId(data.sheet);
 
             if (!hasSheet) {
-                throw CustomError.TestNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
+                throw CustomError.SheetNotFoundError(ctx.i18n.t("admin_sheet_not_found"));
             }
 
             if (error) {
                 throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
             // get uuid of sheet
-            const sheet = await SheetsService.getBySheetId(data.sheet_id);
+            const sheet = await SheetsService.getBySheetId(data.sheet);
             data.sheet_id = sheet._id;
             const newAnswers = await AnswersService.createAnswer(data);
 

@@ -10,13 +10,19 @@ class AnswersService {
         return Answers.create(answer);
     }
 
-    async getAllAnswers() {
-        return Answers.find()
+    async getAnswersWithFilter(query) {
+        const answers = await Answers.find(query)
             .populate({
                 path: "sheet_id",
                 select: "title"
             })
             .lean();
+
+        if (!answers.length) {
+            throw CustomError.AnswersNotFoundError();
+        }
+
+        return answers;
     }
 
     async getByIdAnswer(id) {

@@ -6,6 +6,9 @@ const Roles = require("../../core/enums/roles.enum");
 const UserControllerCore = require("../../core/controller/user.controller.core");
 const UserController = require("./user.controller");
 const HelpersCore = require("../../core/helpers/helpers.core");
+const AdminController = require("../admins/admin.controller");
+const config = require("../admins/admin.config");
+const BtnMethods = require("../../core/enums/btn.method.enum");
 
 const userI18n = new TelegrafI18n({
     defaultLanguage: "oz",
@@ -112,7 +115,16 @@ class UserMain {
                         await UserController.sendRandomSheet(ctx, lang);
                         break;
                     case ctx.i18n.t("user_check_answers"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_check_answers_t"));
+                        ctx.session.user.level = "0.3";
+                        let answers = await UserController.generateUserMarkButtons(ctx, _id);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("user_check_answers_t"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        answers?.btns ? answers.btns : answers
+                                    ).resize())
+                        );
                         break;
                     case ctx.i18n.t("user_settings"):
                         ctx.session.user.level = "0.4";
@@ -153,6 +165,32 @@ class UserMain {
                         HelpersCore.langs(ctx);
 
                         break;
+                    case ctx.i18n.t("agree"):
+                        const compare = await UserController.checkAnswers(ctx, lang);
+
+                        await ctx.replyWithHTML(
+                            compare,
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await UserController.generateUserMarkButtons(ctx, _id)
+                                    ).resize())
+                        );
+                        ctx.session.text = undefined;
+                        ctx.session.file = undefined;
+                        break;
+                    case ctx.i18n.t("cancel"):
+                        ctx.session.text = undefined;
+                        ctx.session.file = undefined;
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("user_cancel_decision"),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        await UserController.generateUserMarkButtons(ctx, _id)
+                                    ).resize())
+                        );
+                        break;
                     case ctx.i18n.t("back"):
                         ctx.session.user.level = level.includes(".") ?
                             level.substring(0, level.lastIndexOf(".")) :
@@ -170,8 +208,21 @@ class UserMain {
                         );
                         break;
                     default:
-                        ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
-                        break;
+                        switch (level) {
+                            case "0.3":
+                                ctx.session.text = text;
+                                await ctx.replyWithHTML(
+                                    ctx.i18n.t("user_this_is_right_sure"),
+                                    Extra.HTML()
+                                        .markup(
+                                            Markup.keyboard(
+                                                await UserControllerCore.generateAgreeButton(ctx)
+                                            ).resize())
+                                );
+                                break;
+                        }
+                    // ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
+                    // break;
                 }
             } else {
                 await next();

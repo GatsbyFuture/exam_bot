@@ -305,7 +305,7 @@ class AdminMain {
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(
-                                                await AdminController.generateAgreeButton(ctx)
+                                                await UserControllerCore.generateAgreeButton(ctx)
                                             ).resize())
                                 );
                                 break;
@@ -317,7 +317,7 @@ class AdminMain {
                                         Extra.HTML()
                                             .markup(
                                                 Markup.keyboard(
-                                                    await AdminController.generateAgreeButton(ctx)
+                                                    await UserControllerCore.generateAgreeButton(ctx)
                                                 ).resize())
                                     );
                                 }
@@ -329,7 +329,7 @@ class AdminMain {
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(
-                                                await AdminController.generateAgreeButton(ctx)
+                                                await UserControllerCore.generateAgreeButton(ctx)
                                             ).resize())
                                 );
                                 break;
@@ -340,7 +340,7 @@ class AdminMain {
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(
-                                                await AdminController.generateAgreeButton(ctx)
+                                                await UserControllerCore.generateAgreeButton(ctx)
                                             ).resize())
                                 );
                                 break;
@@ -348,8 +348,6 @@ class AdminMain {
                                 ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
                                 break;
                         }
-                    // ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
-                    // break;
                 }
             } else {
                 await next();

@@ -3,4 +3,5 @@ module.exports = {
     DELETE: "delete",
     UPDATE: "update",
     READ: "read",
+    CHECK: "check",
 };
