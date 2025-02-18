@@ -1,3 +1,4 @@
 {
-  "user_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz"
+  "user_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
+  "user_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*"
 }

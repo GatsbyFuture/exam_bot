@@ -85,7 +85,13 @@ class UserMain {
                 switch (text) {
                     // main menu 0 level
                     case ctx.i18n.t("user_statistics"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_statistics_t"));
+                        const statistics = await UserController.statistics();
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t(`user_statistics_t`)
+                                .replace("*{categories}*", statistics.total_categories)
+                                .replace("*{sheets}*", statistics.total_sheets)
+                                .replace("*{answers}*", statistics.total_answers)
+                        );
                         break;
                     case ctx.i18n.t("user_categories"):
                         ctx.session.user.level = "0.1";

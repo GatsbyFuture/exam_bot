@@ -96,7 +96,7 @@ class AdminMain {
                     case ctx.i18n.t("admin_statistics"):
                         const statistics = await AdminController.statistics();
                         await ctx.replyWithHTML(
-                            ctx.i18n.t(`admin_sts_show`)
+                            ctx.i18n.t(`admin_statistics_t`)
                                 .replace("*{categories}*", statistics.total_categories)
                                 .replace("*{sheets}*", statistics.total_sheets)
                                 .replace("*{answers}*", statistics.total_answers)
