@@ -1,7 +1,7 @@
 {
-  "core_lang": "Tilni tanlang:\uD83D\uDD3D",
-  "admin_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
   "back": "⬅\uFE0F Ortga",
+  "admin_lang": "Tilni tanlang:\uD83D\uDD3D",
+  "admin_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
   "admin_back_text": "Marhamat! oldingi bo'lim :)",
   "sheet_answers_list": "\uD83D\uDCCB Test nomi :*{sheet_title}*\n\uD83D\uDD11 Javob id :*{answers_id}*\n\n*{answers_text}*",
   "admin_statistics": "\uD83D\uDCC8 Statistika",
@@ -29,11 +29,12 @@
   "admin_view_answers_show": "\uD83D\uDCDD Jami javoblar soni: *{total}*",
   "admin_delete": "❗\uFE0F <b>Namuna:</b> #categories:479..7 #answers:214..5 #sheets:132..3\n\n❕<i>Eslatib o'tamiz, yuqoridagilardan bittasini kiriting! Qaysi birini kiritsangiz o'sha bo'limdan olib tashiydi!\n</i>",
   "admin_this_is_right_sure": "❗\uFE0F Ishonchingiz komilmi?",
-  "agree": "Xa tasdiqliman",
-  "cancel": "Bekor qilaman",
+  "agree": "✅ Xa tasdiqliman",
+  "cancel": "❌ Bekor qilaman",
   "admin_agree_decision": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!",
   "admin_cancel_decision": "⭕\uFE0F So'rovingiz bekor qilindi!",
   "admin_sheet_not_found": "Test topilmadi!",
   "admin_dto_incorrect": "Ma'lumot to'g'ri kiritilmagan!",
-  "admin_saved_data_error": "Ma'lumot saqlashda xatolik yuz berdi iltimos qayta urinib ko'ring!"
+  "admin_saved_data_error": "Ma'lumot saqlashda xatolik yuz berdi iltimos qayta urinib ko'ring!",
+  "sheet_caption": "\uD83D\uDCC4 Test id: <code>*{ID}*</code>\n\uD83C\uDFF7 Test nomi: *{title}*\n\uD83D\uDCF0 Test haqida: *{desc}*\n"
 }

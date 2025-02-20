@@ -109,7 +109,7 @@ module.exports = {
             },
             {
                 name: "my_certificate",
-                position: 2,
+                position: 1,
                 is_child: true,
                 has_child: false,
                 belong: "user",
@@ -119,7 +119,7 @@ module.exports = {
             },
             {
                 name: "my_statistics",
-                position: 2,
+                position: 1,
                 is_child: true,
                 has_child: false,
                 belong: "user",
@@ -128,8 +128,8 @@ module.exports = {
                 is_active: true
             },
             {
-                name: "lang",
-                position: 3,
+                name: "user_change_lang",
+                position: 2,
                 is_child: true,
                 has_child: false,
                 belong: "user",

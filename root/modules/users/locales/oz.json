@@ -1,4 +1,25 @@
 {
+  "back": "⬅\uFE0F Ortga",
   "user_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
-  "user_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*"
+  "user_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*",
+  "user_answers_header": "\uD83D\uDCC5 sana: *{date}* \n\uD83D\uDC64: *{user}*\n\uD83D\uDCC4 Test id: *{sheet_id}*\n\uD83D\uDCD1 savollar soni: *{total_questions}*\n\n",
+  "user_total_corrects": "\uD83D\uDCDD tog'ri javoblar soni",
+  "sheet_caption": "\uD83D\uDCC4 Test id: <code>*{ID}*</code>\n\uD83C\uDFF7 Test nomi: *{title}*\n\uD83D\uDCF0 Test haqida: *{desc}*\n",
+  "user_statistics": "\uD83D\uDCC8 Statistika",
+  "user_categories": "\uD83D\uDDC2 Bo'limlarni ko'rish",
+  "user_random_sheet": "\uD83E\uDDFE Taxminiy test",
+  "user_check_answers": "\uD83D\uDDDE Javobni tekshirish",
+  "user_settings": "⚙\uFE0F Sozlamalar",
+  "user_categories_t": "\uD83D\uDCDA Jami bo'limlar soni: *{total}*",
+  "user_view_tests_t": "\uD83D\uDCCB Jami testlar soni: *{total}*",
+  "user_check_answers_t": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1.A,2.B,3.C,4.A,5.B,6.B,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
+  "user_this_is_right_sure": "❗\uFE0F Ishonchingiz komilmi?",
+  "agree": "✅ Xa tasdiqliman",
+  "cancel": "❌ Bekor qilaman",
+  "user_cancel_decision": "⭕\uFE0F So'rovingiz bekor qilindi!",
+  "my_profile": "\uD83D\uDC64 Mening profilim \uD83D\uDD12",
+  "appeal": "\uD83D\uDCDD Apilyatsiya \uD83D\uDD12",
+  "my_certificate": "\uD83D\uDD16 Sertificat \uD83D\uDD12",
+  "my_statistics": "\uD83D\uDCCA statistikam \uD83D\uDD12",
+  "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Tilni o'zgartirish"
 }

@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const UserService = require("./user.service");
 const HelpersCore = require("../../core/helpers/helpers.core");
 const BtnMethods = require("../../core/enums/btn.method.enum");
@@ -56,19 +57,24 @@ class UserController extends UserService {
         const sheet = await SheetsService.getRandomSheet();
 
         const filePath = sheet.file_path;
-        const caption = ctx.i18n.t("user_random_sheet_t")
+        const caption = ctx.i18n.t("sheet_caption")
             .replace("*{ID}*", sheet.sheet_id)
             .replace("*{title}*", sheet.title[lang])
             .replace("*{desc}*", sheet.desc[lang]);
 
         await ctx.replyWithPhoto(
             {source: filePath},
-            {caption: caption, protect_content: true},
+            {
+                caption: caption,
+                protect_content: true,
+                parse_mode: "HTML"
+            },
         );
     }
 
     async checkAnswers(ctx, lang) {
         const text = ctx.session.text;
+        const {name} = ctx.session.user;
 
         const data = await AnswersHelpers.polishingAnswersData(text);
 
@@ -101,7 +107,14 @@ class UserController extends UserService {
             return acc;
         }, {results: [], total_corrects: 0, total: 0});
 
-        return results.join("\n") + `\ntotal_corrects: ${total_corrects} | ${total_corrects / total * 100} %`;
+        const header_text = ctx.i18n.t("user_answers_header")
+            .replace("*{date}*", dayjs().format("DD-MM-YYYY"))
+            .replace("*{user}*", name.first_name)
+            .replace("*{sheet_id}*", data.sheet)
+            .replace("*{total_questions}*", total);
+
+        return header_text + results.join("\n") +
+            `\n\n${ctx.i18n.t("user_total_corrects")}: ${total_corrects} | ${Math.floor(total_corrects / total * 100)} %`;
     }
 }
 

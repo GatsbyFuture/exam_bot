@@ -45,14 +45,18 @@ class UserControllerCore extends UserServiceCore {
         }
 
         const filePath = sheet.file_path;
-        const caption = ctx.i18n.t("core_test_caption")
+        const caption = ctx.i18n.t("sheet_caption")
             .replace("*{ID}*", sheet.sheet_id)
             .replace("*{title}*", sheet.title[lang])
             .replace("*{desc}*", sheet.desc[lang]);
 
         await ctx.replyWithPhoto(
             {source: filePath},
-            {caption: caption, protect_content: true},
+            {
+                caption: caption,
+                protect_content: true,
+                parse_mode: "HTML"
+            },
         );
         // }
     }

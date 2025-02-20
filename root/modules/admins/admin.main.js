@@ -48,42 +48,50 @@ class AdminMain {
             }
         });
 
-        bot.on("photo", async (ctx) => {
-            const {file_id} = ctx.message.photo[ctx.message.photo.length - 1];
-            const file = await ctx.telegram.getFile(file_id);
+        bot.on("photo", async (ctx, next) => {
+            if (ctx.session.user.role === Roles.ADMIN) {
+                const {file_id} = ctx.message.photo[ctx.message.photo.length - 1];
+                const file = await ctx.telegram.getFile(file_id);
 
-            ctx.session.file = file;
+                ctx.session.file = file;
+            } else {
+                await next();
+            }
         });
 
-        bot.hears(/#\d{10}$/, async (ctx) => {
-            const {_id, level, lang} = ctx.session.user;
-            const match = ctx.message.text.match(/#(\d{10})$/);
-            if (match) {
-                ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+        bot.hears(/#\d{10}$/, async (ctx, next) => {
+            const {_id, level, lang, role} = ctx.session.user;
+            if (role === Roles.ADMIN) {
+                const match = ctx.message.text.match(/#(\d{10})$/);
+                if (match) {
+                    ctx.reply(`Foydalanilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
 
-                if (level === "0.1.1.1" || level === "0.1.1.0.x") {
-                    await UserControllerCore.sendTestDocument(ctx, +match[1]);
-                }
+                    if (level === "0.1.1.1" || level === "0.1.1.0.x") {
+                        await UserControllerCore.sendTestDocument(ctx, +match[1]);
+                    }
+                    console.log("level =>", level);
+                    if (level === "0.1.1.0") {
+                        ctx.session.user.level = "0.1.1.0.x";
+                        let {
+                            total: total_sheets,
+                            btns: sheet_btns
+                        } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0.x"], +match[1]);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("admin_view_tests_show").replace("*{total}*", total_sheets),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        sheet_btns
+                                    ).resize())
+                        );
+                    }
 
-                if (level === "0.1.1.0") {
-                    ctx.session.user.level = "0.1.1.0.x";
-                    let {
-                        total: total_sheets,
-                        btns: sheet_btns
-                    } = await AdminController.generateAdminMarkButtons(ctx, [_id, "0.1.1.0.x"], +match[1]);
-                    await ctx.replyWithHTML(
-                        ctx.i18n.t("admin_view_tests_show").replace("*{total}*", total_sheets),
-                        Extra.HTML()
-                            .markup(
-                                Markup.keyboard(
-                                    sheet_btns
-                                ).resize())
-                    );
+                    if (level === "0.1.1.2") {
+                        await AdminController.viewTestAnswers(ctx, +match[1], lang);
+                    }
                 }
-
-                if (level === "0.1.1.2") {
-                    await AdminController.viewTestAnswers(ctx, +match[1], lang);
-                }
+            } else {
+                await next();
             }
         });
 

@@ -49,35 +49,35 @@ class UserMain {
             }
         });
 
-        bot.hears(/#\d{10}$/, async (ctx) => {
-            const {_id, level, lang} = ctx.session.user;
-            const match = ctx.message.text.match(/#(\d{10})$/);
-            if (match) {
-                ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+        bot.hears(/#\d{10}$/, async (ctx, next) => {
+            const {_id, level, lang, role} = ctx.session.user;
+            if (role === Roles.USER) {
+                const match = ctx.message.text.match(/#(\d{10})$/);
+                if (match) {
+                    ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
 
-                if (level === "0.1.x") {
-                    await UserControllerCore.sendTestDocument(ctx, +match[1]);
+                    if (level === "0.1.x") {
+                        await UserControllerCore.sendTestDocument(ctx, +match[1]);
+                    }
+
+                    if (level === "0.1") {
+                        ctx.session.user.level = "0.1.x";
+                        let {
+                            total: total_sheets,
+                            btns: sheet_btns
+                        } = await UserController.generateUserMarkButtons(ctx, _id, +match[1]);
+                        await ctx.replyWithHTML(
+                            ctx.i18n.t("user_view_tests_t").replace("*{total}*", total_sheets),
+                            Extra.HTML()
+                                .markup(
+                                    Markup.keyboard(
+                                        sheet_btns
+                                    ).resize())
+                        );
+                    }
                 }
-
-                if (level === "0.1") {
-                    ctx.session.user.level = "0.1.x";
-                    let {
-                        total: total_sheets,
-                        btns: sheet_btns
-                    } = await UserController.generateUserMarkButtons(ctx, _id, +match[1]);
-                    await ctx.replyWithHTML(
-                        ctx.i18n.t("user_view_tests_t").replace("*{total}*", total_sheets),
-                        Extra.HTML()
-                            .markup(
-                                Markup.keyboard(
-                                    sheet_btns
-                                ).resize())
-                    );
-                }
-
-                // if (level === "0.1.1.2") {
-                //     await AdminController.viewTestAnswers(ctx, +match[1], lang);
-                // }
+            } else {
+                await next();
             }
         });
 
@@ -150,21 +150,6 @@ class UserMain {
                     // case ctx.i18n.t("my_statistics"):
                     //     ctx.replyWithHTML(ctx.i18n.t("user_my_statistics"));
                     //     break;
-                    case ctx.i18n.t("lang"):
-                        ctx.replyWithHTML(ctx.i18n.t("user_lang"));
-
-                        const placeholder = await ctx.reply("...", {
-                            reply_markup: {remove_keyboard: true},
-                        });
-
-                        await ctx.telegram.deleteMessage(
-                            placeholder.chat.id,
-                            placeholder.message_id
-                        );
-
-                        HelpersCore.langs(ctx);
-
-                        break;
                     case ctx.i18n.t("agree"):
                         const compare = await UserController.checkAnswers(ctx, lang);
 
@@ -206,6 +191,19 @@ class UserMain {
                                         back_btns.btns ? back_btns.btns : back_btns
                                     ).resize())
                         );
+                        break;
+                    case ctx.i18n.t("user_change_lang"):
+
+                        const placeholder = await ctx.reply("...", {
+                            reply_markup: {remove_keyboard: true},
+                        });
+
+                        await ctx.telegram.deleteMessage(
+                            placeholder.chat.id,
+                            placeholder.message_id
+                        );
+
+                        HelpersCore.langs(ctx);
                         break;
                     default:
                         switch (level) {

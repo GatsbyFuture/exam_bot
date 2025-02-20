@@ -1,7 +1,7 @@
 {
-  "core_lang": "Тилни танланг:\uD83D\uDD3D",
+  "back": "⬅\uFE0F Ортга",
+  "admin_lang": "Тилни танланг:\uD83D\uDD3D",
   "admin_greeting": "Ҳуш келибсиз <b>*{user_name}*</b>! қандай хизматларимиздан фойдаланишни хоҳлайсиз",
-  "admin_back": "⬅\uFE0F Ортга",
   "admin_back_text": "Марҳамат! олдинги бўлим :)",
   "sheet_answers_list": "\uD83D\uDCCB Тест номи :*{sheet_title}*\n\uD83D\uDD11 Жавоб ид :*{answers_id}*\n\n*{answers_text}*",
   "admin_statistics": "\uD83D\uDCC8 Статистика",
@@ -29,11 +29,12 @@
   "admin_view_answers_show": "\uD83D\uDCDD Жами жавоблар сони: *{total}*",
   "admin_delete": "❗\uFE0F <b>Намуна:</b> #categories:479..7 #answers:214..5 #sheets:132..3\n\n❕<i>Эслатиб ўтамиз, юқоридагилардан биттасини киритинг! Қайси бирини киритсангиз ўша бўлимдан олиб ташийди!\n</i>",
   "admin_this_is_right_sure": "❗\uFE0F Ишончингиз комилми?",
-  "admin_agree": "Ха тасдиқлиман",
-  "admin_cancel": "Бекор қиламан",
+  "admin_agree": "✅ Ха тасдиқлиман",
+  "admin_cancel": "❌ Бекор қиламан",
   "admin_agree_decision": "✅ Сўровингиз мувофақиятли амалга оширилди!",
   "admin_cancel_decision": "⭕\uFE0F Сўровингиз бекор қилинди!",
   "admin_sheet_not_found": "Тест топилмади!",
   "admin_dto_incorrect": "Маълумот тўғри киритилмаган!",
-  "admin_saved_data_error": "Маълумот сақлашда хатолик юз берди илтимос қайта уриниб кўринг!"
+  "admin_saved_data_error": "Маълумот сақлашда хатолик юз берди илтимос қайта уриниб кўринг!",
+  "sheet_caption": "\uD83D\uDCC4 Тест ид: <code>*{ID}*</code>\n\uD83C\uDFF7 Тест номи: *{title}*\n\uD83D\uDCF0 Тест ҳақида: *{desc}*\n"
 }
