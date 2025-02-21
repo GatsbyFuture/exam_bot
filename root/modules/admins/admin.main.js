@@ -9,6 +9,7 @@ const BtnMethods = require("../../core/enums/btn.method.enum");
 const UserController = require("../users/user.controller");
 const config = require("./admin.config");
 const btnMethods = require("../../core/enums/btn.method.enum");
+const fileTypesEnum = require("../../core/enums/file.types.enum");
 
 const adminI18n = new TelegrafI18n({
     defaultLanguage: "oz",
@@ -43,6 +44,22 @@ class AdminMain {
                 );
 
                 ctx.deleteMessage();
+            } else {
+                await next();
+            }
+        });
+
+        bot.on("document", async (ctx, next) => {
+            if (ctx.session.user.role === Roles.ADMIN) {
+                const document = ctx.message.document;
+
+                const file = await ctx.telegram.getFile(document.file_id);
+
+                ctx.session.file = file;
+
+                if (document.mime_type === fileTypesEnum.PDF) {
+                    // download PDF
+                }
             } else {
                 await next();
             }
