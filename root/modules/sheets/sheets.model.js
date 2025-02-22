@@ -32,6 +32,10 @@ const sheetSchema = mongoose.Schema({
     },
     category_id: Number,
     file_path: String,
+    file_type: {
+        type: String,
+        default: ""
+    },
     position: {
         type: Number,
         default: 0

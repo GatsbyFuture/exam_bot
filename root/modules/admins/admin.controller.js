@@ -98,8 +98,11 @@ class AdminController extends AdminService {
 
         if (btn_keys["collection"] === Collections.SHEETS) {
             // code for creating test
-            const {text, file} = ctx.session;
+            const {text, file, file_type} = ctx.session;
             // console.log(text, file);
+            if (!file_type) {
+                throw CustomError.DocumentNotFoundError(ctx.i18n.t("admin_document_not_found"));
+            }
 
             const data = await SheetsHelpers.polishingSheetData(text);
             const {error} = createSheetSchema.validate(data);
@@ -108,13 +111,14 @@ class AdminController extends AdminService {
                 throw CustomError.InCorrectDtoError(ctx.i18n.t("admin_dto_incorrect"));
             }
 
-            const {success, file_path} = await SheetsHelpers.createSheetDocument(file);
+            const {success, file_path, type} = await SheetsHelpers.createSheetDocument(file_type, file);
 
             if (!success) {
                 throw CustomError.SaveDocumentsError(ctx.i18n.t("admin_saved_data_error"));
             }
 
             data.file_path = file_path;
+            data.file_type = type;
             data.title.uz = toCyrillic(data.title.oz);
             data.desc.uz = toCyrillic(data.desc.oz);
 

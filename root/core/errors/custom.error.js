@@ -39,4 +39,8 @@ module.exports = class CustomError extends Error {
     static InternalError() {
         return new CustomError(500, "Internal Server Error");
     }
+
+    static DocumentNotFoundError(message) {
+        return new CustomError(404, message);
+    }
 };

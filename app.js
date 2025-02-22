@@ -8,7 +8,7 @@ process.on("rejectionHandled", (e) => console.log("rejectionHandled:", e));
 const path = require("path");
 
 process.env.TZ = "Asia/Tashkent";
-process.env.STATIC = path.join(__dirname, "root/static/images/sheets/");
+process.env.STATIC = path.join(__dirname, "root/static/");
 
 // db connection and configuration
 const {bot_token} = require("./root/config/config");

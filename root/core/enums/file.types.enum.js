@@ -1,7 +1,18 @@
 module.exports = {
-    PDF: "application/pdf",
-    DOC: "application/msword",
-    DOCX: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    XLS: "application/vnd.ms-excel",
-    XLSX: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    PHOTO: {
+        key: "photo",
+        path: "sheets/img/"
+    },
+    PDF: {
+        key: "pdf",
+        path: "sheets/pdf/"
+    },
+    DOC: {
+        key: "doc",
+        path: "sheets/doc/"
+    },
+    EXCEL: {
+        key: "excel",
+        path: "answers/xls/"
+    }
 };
