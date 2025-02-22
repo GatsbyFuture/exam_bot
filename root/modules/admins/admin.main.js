@@ -99,7 +99,7 @@ class AdminMain {
                     if (level === "0.1.1.1" || level === "0.1.1.0.x") {
                         await UserControllerCore.sendTestDocument(ctx, +match[1]);
                     }
-                    console.log("level =>", level);
+                    // console.log("level =>", level);
                     if (level === "0.1.1.0") {
                         ctx.session.user.level = "0.1.1.0.x";
                         let {

@@ -50,7 +50,7 @@ class UserControllerCore extends UserServiceCore {
             .replace("*{title}*", sheet.title[lang])
             .replace("*{desc}*", sheet.desc[lang]);
 
-        await ctx.replyWithPhoto(
+        await ctx.replyWithDocument(
             {source: filePath},
             {
                 caption: caption,
