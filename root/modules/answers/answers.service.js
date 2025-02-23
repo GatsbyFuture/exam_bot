@@ -25,6 +25,12 @@ class AnswersService {
         return answers;
     }
 
+    async getAnswersWithSheetId(sheetId) {
+        return Answers.find({
+            sheet: sheetId
+        }).lean();
+    }
+
     async getByIdAnswer(id) {
         return Answers.findById(id).lean();
     }

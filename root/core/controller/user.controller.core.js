@@ -1,10 +1,14 @@
+const Markup = require("telegraf/markup");
+const Extra = require("telegraf/extra");
 const UserServiceCore = require("../service/user.service.core");
 const Roles = require("../enums/roles.enum");
 const Langs = require("../enums/langs.enum");
 const config = require("../../modules/admins/admin.config");
 const SheetsService = require("../../modules/sheets/sheets.service");
+const AnswersService = require("../../modules/answers/answers.service");
 const HelpersCore = require("../helpers/helpers.core");
 const CustomError = require("../errors/custom.error");
+const {cap} = require("lodash/fp/_falseOptions");
 
 class UserControllerCore extends UserServiceCore {
     async createUser(data) {
@@ -33,11 +37,13 @@ class UserControllerCore extends UserServiceCore {
         return await this.updateLang(id, lang);
     }
 
-    async sendTestDocument(ctx, id) {
-        const {level, lang} = ctx.session.user;
-        // const btn_keys = config.MARKUP_BUTTONS_LIST[level];
+    async checkAnswersHas(sheet_id) {
+        con;
+    }
 
-        // if (btn_keys["method"] === BtnMethods.READ) {
+    async sendTestDocument(ctx, id) {
+        const {level, lang, role} = ctx.session.user;
+
         const sheet = await SheetsService.getBySheetId(id);
 
         if (!sheet) {
@@ -45,20 +51,35 @@ class UserControllerCore extends UserServiceCore {
         }
 
         const filePath = sheet.file_path;
-        const caption = ctx.i18n.t("sheet_caption")
+        let caption = ctx.i18n.t("sheet_caption")
             .replace("*{ID}*", sheet.sheet_id)
             .replace("*{title}*", sheet.title[lang])
             .replace("*{desc}*", sheet.desc[lang]);
 
+        const extra = {
+            protect_content: true,
+            parse_mode: "HTML",
+        };
+
+        if (role === Roles.USER) {
+            if (sheet.has_answers) {
+                extra.reply_markup = Markup.inlineKeyboard([
+                    [Markup.callbackButton(ctx.i18n.t("check_answers_one_time"), "check_answers")]
+                ]);
+            } else {
+                caption += "\n" + ctx.i18n.t("not_found_answers");
+            }
+        }
+
+        if (role === Roles.ADMIN && !sheet.has_answers) {
+            caption += "\n" + ctx.i18n.t("not_found_answers");
+        }
+
+        extra.caption = caption;
         await ctx.replyWithDocument(
             {source: filePath},
-            {
-                caption: caption,
-                protect_content: true,
-                parse_mode: "HTML"
-            },
+            extra
         );
-        // }
     }
 
     async generateAgreeButton(ctx) {

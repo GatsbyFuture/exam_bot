@@ -21,5 +21,7 @@
   "appeal": "\uD83D\uDCDD Апиляция \uD83D\uDD12",
   "my_certificate": "\uD83D\uDD16 Сертифиcат \uD83D\uDD12",
   "my_statistics": "\uD83D\uDCCA статистикам \uD83D\uDD12",
-  "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Тилни ўзгартириш"
+  "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Тилни ўзгартириш",
+  "not_found_answers": "⭕\uFE0F Жавоби киритилмаган!",
+  "check_answers_one_time": "✅ Жавобни текшириш"
 }

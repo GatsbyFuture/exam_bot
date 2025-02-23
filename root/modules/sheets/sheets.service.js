@@ -51,15 +51,16 @@ class SheetsService {
     }
 
     async getRandomSheet() {
-        const sheets = await Sheet.find({}, "_id");
+        const sheets = await Sheet.aggregate([
+            {$sample: {size: 1}}, // Tasodifiy 1 ta hujjat tanlaydi
+            {$project: {sheet_id: 1}}  // Faqat _id maydonini qaytaradi
+        ]);
 
-        if (sheets.length === 0) {
-            throw CustomError.SheetNotFoundError();
+        if (!sheets.length) {
+            return null;
         }
 
-        const random_id = sheets[Math.floor(Math.random() * sheets.length)]._id;
-
-        return this.getByIdSheet(random_id);
+        return sheets[0].sheet_id;
     }
 }
 

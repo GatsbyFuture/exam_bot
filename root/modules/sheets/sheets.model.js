@@ -31,6 +31,10 @@ const sheetSchema = mongoose.Schema({
         },
     },
     category_id: Number,
+    has_answers: {
+        type: Boolean,
+        default: false
+    },
     file_path: String,
     file_type: {
         type: String,

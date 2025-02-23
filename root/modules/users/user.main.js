@@ -66,13 +66,12 @@ class UserMain {
                             total: total_sheets,
                             btns: sheet_btns
                         } = await UserController.generateUserMarkButtons(ctx, _id, +match[1]);
+
                         await ctx.replyWithHTML(
                             ctx.i18n.t("user_view_tests_t").replace("*{total}*", total_sheets),
-                            Extra.HTML()
-                                .markup(
-                                    Markup.keyboard(
-                                        sheet_btns
-                                    ).resize())
+                            {
+                                reply_markup: Markup.keyboard(sheet_btns).resize()
+                            }
                         );
                     }
                 }

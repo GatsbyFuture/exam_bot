@@ -21,5 +21,7 @@
   "appeal": "\uD83D\uDCDD Apilyatsiya \uD83D\uDD12",
   "my_certificate": "\uD83D\uDD16 Sertificat \uD83D\uDD12",
   "my_statistics": "\uD83D\uDCCA statistikam \uD83D\uDD12",
-  "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Tilni o'zgartirish"
+  "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Tilni o'zgartirish",
+  "not_found_answers": "⭕\uFE0F Javobi kiritilmagan!",
+  "check_answers_one_time": "✅ Javobni tekshirish"
 }

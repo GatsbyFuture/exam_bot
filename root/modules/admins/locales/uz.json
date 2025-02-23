@@ -36,5 +36,6 @@
   "admin_sheet_not_found": "Тест топилмади!",
   "admin_dto_incorrect": "Маълумот тўғри киритилмаган!",
   "admin_saved_data_error": "Маълумот сақлашда хатолик юз берди илтимос қайта уриниб кўринг!",
-  "sheet_caption": "\uD83D\uDCC4 Тест ид: <code>*{ID}*</code>\n\uD83C\uDFF7 Тест номи: *{title}*\n\uD83D\uDCF0 Тест ҳақида: *{desc}*\n"
+  "sheet_caption": "\uD83D\uDCC4 Тест ид: <code>*{ID}*</code>\n\uD83C\uDFF7 Тест номи: *{title}*\n\uD83D\uDCF0 Тест ҳақида: *{desc}*\n",
+  "not_found_answers": "⭕\uFE0F Жавоби киритилмаган!"
 }

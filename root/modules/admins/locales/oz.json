@@ -36,5 +36,6 @@
   "admin_sheet_not_found": "Test topilmadi!",
   "admin_dto_incorrect": "Ma'lumot to'g'ri kiritilmagan!",
   "admin_saved_data_error": "Ma'lumot saqlashda xatolik yuz berdi iltimos qayta urinib ko'ring!",
-  "sheet_caption": "\uD83D\uDCC4 Test id: <code>*{ID}*</code>\n\uD83C\uDFF7 Test nomi: *{title}*\n\uD83D\uDCF0 Test haqida: *{desc}*\n"
+  "sheet_caption": "\uD83D\uDCC4 Test id: <code>*{ID}*</code>\n\uD83C\uDFF7 Test nomi: *{title}*\n\uD83D\uDCF0 Test haqida: *{desc}*\n",
+  "not_found_answers": "⭕\uFE0F Javobi kiritilmagan!"
 }

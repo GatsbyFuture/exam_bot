@@ -1,10 +1,13 @@
 const dayjs = require("dayjs");
+const Markup = require("telegraf/markup");
+const Extra = require("telegraf/extra");
 const UserService = require("./user.service");
 const HelpersCore = require("../../core/helpers/helpers.core");
 const BtnMethods = require("../../core/enums/btn.method.enum");
 const config = require("./user.config");
 const CustomError = require("../../core/errors/custom.error");
 
+const UserControllerCore = require("../../core/controller/user.controller.core");
 const UserServiceCore = require("../../core/service/user.service.core");
 const UserHelpers = require("./user.helpers");
 
@@ -56,20 +59,11 @@ class UserController extends UserService {
     async sendRandomSheet(ctx, lang) {
         const sheet = await SheetsService.getRandomSheet();
 
-        const filePath = sheet.file_path;
-        const caption = ctx.i18n.t("sheet_caption")
-            .replace("*{ID}*", sheet.sheet_id)
-            .replace("*{title}*", sheet.title[lang])
-            .replace("*{desc}*", sheet.desc[lang]);
+        if (!sheet) {
+            throw CustomError.SheetNotFoundError(ctx.i18n.t("sheet_not_found"));
+        }
 
-        await ctx.replyWithPhoto(
-            {source: filePath},
-            {
-                caption: caption,
-                protect_content: true,
-                parse_mode: "HTML"
-            },
-        );
+        await UserControllerCore.sendTestDocument(ctx, sheet);
     }
 
     async checkAnswers(ctx, lang) {
