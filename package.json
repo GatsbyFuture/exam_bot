@@ -1,6 +1,6 @@
 {
   "name": "exam_bot",
-  "version": "1.5.0",
+  "version": "1.7.2",
   "description": "this bot cheks physics questions",
   "main": "app.js",
   "scripts": {
@@ -26,7 +26,8 @@
     "mongoose": "^8.10.0",
     "telegraf": "^3.38.0",
     "telegraf-i18n": "^6.6.0",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"

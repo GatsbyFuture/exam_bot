@@ -13,9 +13,18 @@ const answersSchema = mongoose.Schema({
     answers: [
         {
             num: Number,
-            key: String
+            key: [],
+            score: [],
+            single: {
+                type: Boolean,
+                default: true
+            }
         }
     ],
+    has_score: {
+        type: Boolean,
+        default: false
+    },
     sheet_id: {
         type: String,
         ref: "sheets"

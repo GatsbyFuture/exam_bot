@@ -43,4 +43,8 @@ module.exports = class CustomError extends Error {
     static DocumentNotFoundError(message = "Document not found") {
         return new CustomError(404, message);
     }
+
+    static ReadingExcelError(message = "Reading Excel failed") {
+        return new CustomError(500, message);
+    }
 };

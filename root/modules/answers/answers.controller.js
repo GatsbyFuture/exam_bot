@@ -1,5 +1,6 @@
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
+const XLSX = require("xlsx");
 const CustomError = require("../../core/errors/custom.error");
 
 const SheetsService = require("../sheets/sheets.service");
@@ -23,7 +24,7 @@ class AnswersController extends AnswersService {
     }
 
     async createByHand(text) {
-        const data = await AnswersHelpers.polishingAnswersData(text);
+        const data = await AnswersHelpers.polishingAnswersText(text);
 
         const {error} = createAnswersSchema.validate(data);
 
@@ -58,9 +59,21 @@ class AnswersController extends AnswersService {
         if (!success) {
             throw CustomError.SaveDocumentsError();
         }
-
-        data.file_path = file_path;
         console.log(file_path);
+
+        const workbook = XLSX.readFile(file_path);
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+
+        const data = XLSX.utils.sheet_to_json(worksheet, {header: ["num", "key", "score"]});
+
+        const {success: ok, variants} = await AnswersHelpers.polishingAnswersExcel(data);
+
+        if (!ok) {
+            throw CustomError.ReadingExcelError();
+        }
+
+        console.log(variants);
 
         return {
             key: "answers", // detect for which collection...

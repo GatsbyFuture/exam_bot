@@ -7,7 +7,7 @@ const CoreHelpers = require("../../core/helpers/core.helpers");
 const fileTypesEnum = require("../../core/enums/file.types.enum");
 
 class AnswersHelpers {
-    async polishingAnswersData(text) {
+    async polishingAnswersText(text) {
         const idMatch = text.match(/#id:(\d+)/);
         const answersMatch = text.match(/#answers:([\d.ABCDE,]+)/);
         const posMatch = text.match(/#pos:(\d+)/);
@@ -59,7 +59,7 @@ class AnswersHelpers {
         const url = config.bot_file_path + file.file_path;
         let save_path = "";
 
-        save_path = config.static + `${fileTypesEnum.EXCEL.path}${file_name}.${file_extension}`;
+        save_path = config.static + `${fileTypesEnum.EXCEL.path}${file_name}`;
 
         const save_file = await CoreHelpers.saveDocument(url, save_path);
 
@@ -71,6 +71,61 @@ class AnswersHelpers {
         }
 
         return save_file;
+    }
+
+    async polishingAnswersExcel(data) {
+        try {
+            let variants = {};
+            let currentId = null;
+
+            data.forEach(row => {
+                if (typeof row.num === "string" && row.num.startsWith("#")) {
+                    const [title, id] = row.num.split(";");
+                    currentId = id;
+                    variants[currentId] = {
+                        title: title.replace("#", ""),
+                        data: []
+                    };
+                }
+                // Header qatorini o‘tkazib yuborish
+                else if (row.num === "num" && row.key === "key" && row.score === "score") {
+                    // Hech narsa qilmaymiz
+                }
+                // Oddiy ma’lumot qatori
+                else if (currentId) {
+                    // Javob array ko‘rinishida
+                    const keyArray = row.key.includes(";") ? row.key.split(";") : [row.key];
+
+                    // Ball array ko‘rinishida (yo‘q bo‘lsa default qiymat)
+                    let scoreArray;
+                    if (row.score === undefined || row.score === null || row.score === "") {
+                        scoreArray = [0]; // Default qiymat sifatida [0] qo‘yamiz
+                    } else {
+                        scoreArray = row.score.toString().includes(";")
+                            ? row.score.split(";").map(num => Number(num) || 0) // Agar Number NaN bo‘lsa, 0 qo‘yamiz
+                            : [Number(row.score) || 0];
+                    }
+
+                    variants[currentId].data.push({
+                        num: row.num,
+                        key: keyArray,
+                        score: scoreArray,
+                        single: keyArray.length === 1
+                    });
+                }
+            });
+
+            return {
+                success: true,
+                variants: variants
+            };
+
+        } catch (e) {
+            console.error(e);
+            return {
+                success: false,
+            };
+        }
     }
 }
 
