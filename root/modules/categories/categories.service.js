@@ -11,10 +11,7 @@ class CategoriesService {
     }
 
     async getAllCategories() {
-        return Category.find({
-            is_public: true,
-            is_active: true
-        }).sort({position: 1}).lean();
+        return Category.find({}).sort({position: 1}).lean();
     }
 
     async getByIdCategory(id) {
@@ -48,4 +45,4 @@ class CategoriesService {
     }
 }
 
-module.exports = new CategoriesService();
+module.exports = CategoriesService;

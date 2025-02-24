@@ -60,7 +60,7 @@ class AnswersService {
         }
     }
 
-    async deleteAnswers(id) {
+    async deleteAnswer(id) {
         const deleted = await Answers.deleteOne({
             answers_id: id
         });
@@ -71,4 +71,4 @@ class AnswersService {
     }
 }
 
-module.exports = new AnswersService();
+module.exports = AnswersService;

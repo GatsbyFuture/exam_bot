@@ -1,5 +1,10 @@
+const fs = require("fs");
+const axios = require("axios");
 const Markup = require("telegraf/markup");
-const AnswersService = require(".//answers.service");
+const config = require("../../config/config");
+
+const CoreHelpers = require("../../core/helpers/core.helpers");
+const fileTypesEnum = require("../../core/enums/file.types.enum");
 
 class AnswersHelpers {
     async polishingAnswersData(text) {
@@ -21,9 +26,7 @@ class AnswersHelpers {
         return {sheet, answers, position};
     }
 
-    async generateAnswersBtn(lang) {
-        const answers = await AnswersService.getAnswersWithFilter({});
-        // console.log(answers);
+    async generateAnswersBtn(answers, lang) {
         const btns = answers.map(answer => {
             return (
                 [Markup.button(
@@ -38,7 +41,7 @@ class AnswersHelpers {
         };
     }
 
-    async generateAnswersShow(answers, lang) {
+    async generateAnswersText(answers, lang) {
         const sheet_title = answers.sheet_id?.title[lang] || "No title";
         const answersText = answers.answers
             .map(item => `${item.num}. ${item.key}`)
@@ -49,6 +52,25 @@ class AnswersHelpers {
             answers_id: answers.answers_id,
             answers_text: answersText
         };
+    }
+
+    async createAnswerDocument(file_name, file) {
+        const file_extension = file.file_path.split(".").pop();
+        const url = config.bot_file_path + file.file_path;
+        let save_path = "";
+
+        save_path = config.static + `${fileTypesEnum.EXCEL.path}${file_name}.${file_extension}`;
+
+        const save_file = await CoreHelpers.saveDocument(url, save_path);
+
+        if (save_file.success) {
+            return {
+                success: true,
+                file_path: save_path,
+            };
+        }
+
+        return save_file;
     }
 }
 

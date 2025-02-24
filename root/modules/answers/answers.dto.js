@@ -1,12 +1,6 @@
 const Joi = require("joi");
 
-const CreateAnswersDto = {
-    sheet_id: 0,
-    answers: "string",
-    position: 0 // optional
-};
-
-const answersSchema = Joi.object({
+const StaticStruct = {
     sheet: Joi.number().required(),
     answers: Joi.array()
         .items(
@@ -16,9 +10,20 @@ const answersSchema = Joi.object({
             })
         ).required(),
     position: Joi.optional()
-});
+};
+
+const CreateAnswersDto = {
+    sheet_id: 0,
+    answers: "string",
+    position: 0 // optional
+};
+
+const createAnswersSchema = Joi.object(StaticStruct);
+
+const checkAnswersSchema = Joi.object(StaticStruct);
 
 module.exports = {
     CreateAnswersDto,
-    answersSchema
+    createAnswersSchema,
+    checkAnswersSchema
 };

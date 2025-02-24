@@ -1,7 +1,7 @@
-const User = require("../models/user.models.core");
+const User = require("../models/core.models");
 const CustomError = require("../errors/custom.error");
 
-class UserServiceCore {
+class CoreService {
     async create(data) {
         const user = await User.create(data);
         return {
@@ -64,4 +64,4 @@ class UserServiceCore {
     }
 }
 
-module.exports = UserServiceCore;
+module.exports = CoreService;

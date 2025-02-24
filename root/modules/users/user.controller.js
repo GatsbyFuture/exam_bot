@@ -2,13 +2,13 @@ const dayjs = require("dayjs");
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const UserService = require("./user.service");
-const HelpersCore = require("../../core/helpers/helpers.core");
+const HelpersCore = require("../../core/helpers/core.helpers");
 const BtnMethods = require("../../core/enums/btn.method.enum");
 const config = require("./user.config");
 const CustomError = require("../../core/errors/custom.error");
 
-const UserControllerCore = require("../../core/controller/user.controller.core");
-const UserServiceCore = require("../../core/service/user.service.core");
+const UserControllerCore = require("../../core/controller/core.controller");
+const UserServiceCore = require("../../core/service/core.service");
 const UserHelpers = require("./user.helpers");
 
 const CategoriesService = require("../categories/categories.service");

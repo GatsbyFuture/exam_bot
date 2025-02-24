@@ -20,7 +20,7 @@ const session = require("telegraf/session");
 
 const bot = new Telegraf(bot_token);
 // calling Primary middleware
-const middlewarePrimary = require("./root/core/middleware/middleware.primary");
+const middlewarePrimary = require("./root/core/middleware/core.middleware");
 // calling main body of bot
 const CoreMain = require("./root/core/core.main");
 const UserMain = require("./root/modules/users/user.main");

@@ -239,7 +239,33 @@ module.exports = {
             method: "create",
             collection: "sheets"
         },
-        "0.1.0.2": {
+        "0.1.0.2": [
+            {
+                name: "create_by_hand",
+                position: 0,
+                is_child: false,
+                has_child: false,
+                belong: "admin",
+                level: "0.1.0.2",
+                is_active: true
+            },
+            {
+                name: "create_by_excel",
+                position: 1,
+                is_child: false,
+                has_child: false,
+                belong: "admin",
+                level: "0.1.0.2",
+                is_active: true
+            },
+        ],
+        // by hand
+        "0.1.0.2.0": {
+            method: "create",
+            collection: "answers"
+        },
+        // by Excel sheet
+        "0.1.0.2.1": {
             method: "create",
             collection: "answers"
         },
@@ -357,5 +383,6 @@ module.exports = {
         "0.2.1": {
             method: "delete",
         }
+        //
     },
 };

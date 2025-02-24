@@ -28,16 +28,28 @@ class SheetsService {
         return Sheet.countDocuments();
     }
 
-    async updateSheet(id, data) {
-        const updated = await Sheet.findByIdAndUpdate(
-            id,
-            data,
-            {new: true}
-        ).lean();
+    async updateSheet(filter, data) {
+        const result = await Sheet.updateOne(
+            filter,
+            {$set: data}
+        );
 
-        if (!updated) {
+        if (result.matchedCount === 0) {
             throw CustomError.SheetNotFoundError();
         }
+    }
+
+    async getRandomSheet() {
+        const sheets = await Sheet.aggregate([
+            {$sample: {size: 1}},
+            {$project: {sheet_id: 1}}
+        ]);
+
+        if (!sheets.length) {
+            return null;
+        }
+
+        return sheets[0].sheet_id;
     }
 
     async deleteSheet(id) {
@@ -49,19 +61,6 @@ class SheetsService {
             throw CustomError.SheetNotFoundError();
         }
     }
-
-    async getRandomSheet() {
-        const sheets = await Sheet.aggregate([
-            {$sample: {size: 1}}, // Tasodifiy 1 ta hujjat tanlaydi
-            {$project: {sheet_id: 1}}  // Faqat _id maydonini qaytaradi
-        ]);
-
-        if (!sheets.length) {
-            return null;
-        }
-
-        return sheets[0].sheet_id;
-    }
 }
 
-module.exports = new SheetsService();
+module.exports = SheetsService;

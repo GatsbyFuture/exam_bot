@@ -3,8 +3,8 @@ const path = require("path");
 const {bot_name} = require("../config/config");
 const Roles = require("./enums/roles.enum");
 
-const UserControllerCore = require("./controller/user.controller.core");
-const HelpersCore = require("./helpers/helpers.core");
+const UserControllerCore = require("./controller/core.controller");
+const HelpersCore = require("./helpers/core.helpers");
 
 const coreI18n = new TelegrafI18n({
     defaultLanguage: "oz",

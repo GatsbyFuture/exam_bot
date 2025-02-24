@@ -1,4 +1,4 @@
-const User = require("../../core/models/user.models.core");
+const User = require("../../core/models/core.models");
 
 class UserService {
 

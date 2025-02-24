@@ -22,7 +22,11 @@
   "admin_cat_she_ans": "Bu yerda bo'lim, test va javoblarni qo'shishingiz mumkin",
   "admin_create_cat_text": "❗\uFE0F <b>Namuna:</b> #title: Matematika #desc: Trigonametriya",
   "admin_create_she_text": "❗\uFE0F <b>Namuna:</b>⬇\uFE0F\n1-qadam: Rasmni yuklash botga\n2-qadam: #title: 25-variant #desc: sinx va cosx doir #cat_id:351..5\n\n❕<i>Eslatib o'tamiz, cat_id test varaqasi qaysi bo'limga tegishli ekanini belgilash!(ixtiyoriy)</i>",
-  "admin_create_ans_text": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1.A,2.B,3.C,4.A,5.B,6.B,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
+
+  "create_answers_text": "❗\uFE0F Javobni 2 xil usulda kiritishingiz mumkin marhamat!",
+  "create_by_hand_text": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1.A,2.B,3.C,4.A,5.B,6.B,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
+  "create_by_excel_text": "Excel fayilni yuboring :)\n❗\uFE0FEslatma: Excel fayilda javoblar qoida bo'yicha joylashtirilgan bo'lishi kerak!",
+
   "admin_view_cat_she_ans": "Bu yerda bo'lim, test va javoblarni ko'rishingiz mumkin :)",
   "admin_view_cats_show": "\uD83D\uDCDA Jami bo'limlar soni: *{total}*",
   "admin_view_tests_show": "\uD83D\uDCCB Jami testlar soni: *{total}*",

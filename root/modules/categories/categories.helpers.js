@@ -19,16 +19,15 @@ class CategoriesHelpers {
         };
     }
 
-    async generateCategoriesBtn(lang) {
-        const categories = await CategoriesService.getAllCategories();
-        // console.log(lang);
+    async generateCategoriesBtn(categories, lang) {
+        console.log(categories);
         const btns = categories.map(category => {
                 return (
                     [Markup.button(`${category.title[lang]} #${category.category_id}`)]
                 );
             }
         );
-        // console.log(btns);
+
         return {
             total: btns.length,
             btns: btns

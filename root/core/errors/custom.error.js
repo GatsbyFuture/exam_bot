@@ -28,11 +28,11 @@ module.exports = class CustomError extends Error {
         return new CustomError(404, "Answers not found");
     }
 
-    static InCorrectDtoError(message) {
+    static InCorrectDtoError(message = "Incorrect DTO") {
         return new CustomError(400, message);
     }
 
-    static SaveDocumentsError(message) {
+    static SaveDocumentsError(message = "Save Documents failed") {
         return new CustomError(500, message);
     }
 
@@ -40,7 +40,7 @@ module.exports = class CustomError extends Error {
         return new CustomError(500, "Internal Server Error");
     }
 
-    static DocumentNotFoundError(message) {
+    static DocumentNotFoundError(message = "Document not found") {
         return new CustomError(404, message);
     }
 };
