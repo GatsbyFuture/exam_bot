@@ -151,24 +151,24 @@ class AdminController extends CoreService {
         if (type === Collections.CATEGORIES) {
             await CategoriesController.deleteCategory(id);
             return {
-                key: "category", // detect for which collection...
-                id: id
+                id: id,
+                key: "del"
             };
         }
 
         if (type === Collections.SHEETS) {
             await SheetsController.deleteSheet(id);
             return {
-                key: "sheet", // detect for which collection...
-                id: id
+                id: id,
+                key: "del"
             };
         }
 
         if (type === Collections.ANSWERS) {
             await AnswersController.deleteAnswer(id);
             return {
-                key: "answers", // detect for which collection...
-                id: id
+                id: id,
+                key: "del"
             };
         }
 

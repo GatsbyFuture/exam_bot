@@ -215,14 +215,14 @@ class AdminMain {
                         break;
                     case ctx.i18n.t("agree"):
                         const {
-                            key,
-                            id
+                            id,
+                            key = null
                         } = config.MARKUP_BUTTONS_LIST[level]?.method === BtnMethods.CREATE ?
                             await AdminController.createData(ctx, level) :
                             await AdminController.deleteData(ctx, level);
 
-                        await ctx.replyWithHTML(ctx.i18n.t("admin_agree_decision")
-                            .replace(key, id), Extra.HTML()
+                        await ctx.replyWithHTML(ctx.i18n.t(`agree_decision_${key ? key : "default"}`)
+                            .replace("*{key}*", id), Extra.HTML()
                             .markup(Markup.keyboard(await AdminController.generateAdminMarkButtons(ctx)).resize()));
 
                         ctx.session.text = undefined;

@@ -7,7 +7,10 @@ class CategoriesService {
             const count = await this.getCountCategories();
             category.position = count + 1;
         }
-        return Category.create(category);
+
+        const newCategory = await Category.create(category);
+
+        return newCategory.category_id;
     }
 
     async getAllCategories() {

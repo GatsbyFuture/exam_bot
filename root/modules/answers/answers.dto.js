@@ -5,11 +5,17 @@ const StaticStruct = {
     answers: Joi.array()
         .items(
             Joi.object({
-                num: Joi.number().required(),
-                key: Joi.string().valid("A", "B", "C", "D", "E").required()
+                num: Joi.number().integer().required(),
+                key: Joi.array()
+                    .items(
+                        Joi.string().allow("")
+                    )
+                    .min(1)
+                    .required()
             })
-        ).required(),
-    position: Joi.optional()
+        )
+        .required(),
+    position: Joi.number().integer().optional()
 };
 
 const CreateAnswersDto = {

@@ -7,7 +7,10 @@ class SheetsService {
             const count = await this.getCountSheets();
             sheet.position = count + 1;
         }
-        return Sheet.create(sheet);
+
+        const newSheet = await Sheet.create(sheet);
+
+        return newSheet.sheet_id;
     }
 
     async getSheetWithFilter(query) {

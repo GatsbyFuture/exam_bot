@@ -19,8 +19,8 @@ class SheetsHelpers {
                 uz: "yes"
             },
             desc: {
-                oz: descMatch ? descMatch[1].trim() : null,
-                uz: "yes"
+                oz: descMatch ? descMatch[1].trim() : "",
+                uz: ""
             },
             category_id: category_id ? +category_id[1].trim() : null,
             position: position ? +position[1].trim() : null

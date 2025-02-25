@@ -13,6 +13,8 @@
   "admin_create_category": "\uD83D\uDDC2 Bo'lim qo'shish",
   "admin_create_sheet": "\uD83E\uDDFE Test qo'shish",
   "admin_create_answer": "\uD83D\uDDDE Javoblarni kiritish",
+  "create_by_hand": "✍\uFE0F Testni text shaklda yuborish",
+  "create_by_excel": "\uD83D\uDCCB Testni excel shaklda yuborish",
   "admin_view_categories": "\uD83D\uDDC2 Bo'limlarni ko'rish",
   "admin_view_sheets": "\uD83E\uDDFE Testlarni ko'rish",
   "admin_view_answers": "\uD83D\uDDDE Javoblarni ko'rish",
@@ -21,12 +23,10 @@
   "admin_view_btn_text": "Marhamat! quydagi funksiyalardan foydalanishingiz mumkin",
   "admin_cat_she_ans": "Bu yerda bo'lim, test va javoblarni qo'shishingiz mumkin",
   "admin_create_cat_text": "❗\uFE0F <b>Namuna:</b> #title: Matematika #desc: Trigonametriya",
-  "admin_create_she_text": "❗\uFE0F <b>Namuna:</b>⬇\uFE0F\n1-qadam: Rasmni yuklash botga\n2-qadam: #title: 25-variant #desc: sinx va cosx doir #cat_id:351..5\n\n❕<i>Eslatib o'tamiz, cat_id test varaqasi qaysi bo'limga tegishli ekanini belgilash!(ixtiyoriy)</i>",
-
+  "admin_create_she_text": "❗\uFE0F <b>Namuna:</b>⬇\uFE0F\n1-qadam: PDF, Word, Расм турларга эга бўлган маълумотни юклаш\n2-qadam: #title: 25-variant #cat_id:351..5\n\n❕<i>Eslatib o'tamiz, cat_id test varaqasi qaysi bo'limga tegishli ekanini belgilash!(ixtiyoriy)</i>",
   "create_answers_text": "❗\uFE0F Javobni 2 xil usulda kiritishingiz mumkin marhamat!",
   "create_by_hand_text": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1.A,2.B,3.C,4.A,5.B,6.B,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
   "create_by_excel_text": "Excel fayilni yuboring :)\n❗\uFE0FEslatma: Excel fayilda javoblar qoida bo'yicha joylashtirilgan bo'lishi kerak!",
-
   "admin_view_cat_she_ans": "Bu yerda bo'lim, test va javoblarni ko'rishingiz mumkin :)",
   "admin_view_cats_show": "\uD83D\uDCDA Jami bo'limlar soni: *{total}*",
   "admin_view_tests_show": "\uD83D\uDCCB Jami testlar soni: *{total}*",
@@ -35,11 +35,16 @@
   "admin_this_is_right_sure": "❗\uFE0F Ishonchingiz komilmi?",
   "agree": "✅ Xa tasdiqliman",
   "cancel": "❌ Bekor qilaman",
-  "admin_agree_decision": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!",
+  "agree_decision_default": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!",
   "admin_cancel_decision": "⭕\uFE0F So'rovingiz bekor qilindi!",
   "admin_sheet_not_found": "Test topilmadi!",
   "admin_dto_incorrect": "Ma'lumot to'g'ri kiritilmagan!",
   "admin_saved_data_error": "Ma'lumot saqlashda xatolik yuz berdi iltimos qayta urinib ko'ring!",
   "sheet_caption": "\uD83D\uDCC4 Test id: <code>*{ID}*</code>\n\uD83C\uDFF7 Test nomi: *{title}*\n\uD83D\uDCF0 Test haqida: *{desc}*\n",
-  "not_found_answers": "⭕\uFE0F Javobi kiritilmagan!"
+  "not_found_answers": "⭕\uFE0F Javobi kiritilmagan!",
+  "agree_decision_cat": "✅ Bo'lim muvofaqiyatli yaratildi! id: <code>*{key}*</code>",
+  "agree_decision_she": "✅ Savollar muvofaqiyatli yaratildi! id: <code>*{key}*</code>",
+  "agree_decision_ans": "✅ Javoblar muvofaqiyatli yaratildi!",
+  "agree_decision_ans_xls": "✅ Javoblar muvofaqiyatli yaratildi!\nYaratishlar soni: *{key}*",
+  "agree_decision_del": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!\nO'chirilgan id: *{key}*"
 }

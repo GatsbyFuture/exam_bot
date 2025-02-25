@@ -23,11 +23,11 @@ const sheetSchema = mongoose.Schema({
     desc: {
         oz: {
             type: String,
-            required: true
+            default: ""
         },
         uz: {
             type: String,
-            required: true
+            default: ""
         },
     },
     category_id: Number,

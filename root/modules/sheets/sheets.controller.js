@@ -49,11 +49,9 @@ class SheetsController extends SheetsService {
         data.title.uz = toCyrillic(data.title.oz);
         data.desc.uz = toCyrillic(data.desc.oz);
 
-        const newSheet = await this.createSheet(data);
-
         return {
-            key: "sheet", // detect for which collection...
-            id: newSheet.sheet_id// replace with real id
+            id: await this.createSheet(data),
+            key: "she"
         };
     }
 }

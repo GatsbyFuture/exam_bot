@@ -7,25 +7,6 @@ const CoreHelpers = require("../../core/helpers/core.helpers");
 const fileTypesEnum = require("../../core/enums/file.types.enum");
 
 class AnswersHelpers {
-    async polishingAnswersText(text) {
-        const idMatch = text.match(/#id:(\d+)/);
-        const answersMatch = text.match(/#answers:([\d.ABCDE,]+)/);
-        const posMatch = text.match(/#pos:(\d+)/);
-
-        const sheet = parseInt(idMatch[1], 10);
-        const position = posMatch ? parseInt(posMatch[1], 10) : undefined;
-
-        const answers = answersMatch[1].split(",").map((answer) => {
-            const match = answer.match(/(\d+)\.([ABCDE])/);
-            if (match) {
-                return {num: parseInt(match[1], 10), key: match[2]};
-            }
-            return null;
-        }).filter(Boolean);
-
-        return {sheet, answers, position};
-    }
-
     async generateAnswersBtn(answers, lang) {
         const btns = answers.map(answer => {
             return (
@@ -44,7 +25,12 @@ class AnswersHelpers {
     async generateAnswersText(answers, lang) {
         const sheet_title = answers.sheet_id?.title[lang] || "No title";
         const answersText = answers.answers
-            .map(item => `${item.num}. ${item.key}`)
+            .map(item => {
+                // `key` massivni stringga aylantirish: ["A"] → "A", ["20", "120"] → "20;120"
+                const keyString = item.key.join(";");
+                const scoreString = item.score.join(";");
+                return `${item.num}. ${keyString} (Score: ${scoreString})`;
+            })
             .join("\n");
 
         return {
@@ -73,6 +59,30 @@ class AnswersHelpers {
         return save_file;
     }
 
+    async polishingAnswersText(text) {
+        const idMatch = text.match(/#id:(\d+)/);
+        const answersMatch = text.match(/#answers:([^#]+)/); // #answers dan keyingi hamma narsa
+        const posMatch = text.match(/#pos:(\d+)/);
+
+        const sheet = parseInt(idMatch[1], 10);
+        const position = posMatch ? parseInt(posMatch[1], 10) : undefined;
+
+        const answers = answersMatch[1].split(",").map((answer) => {
+            // Har bir javob uchun raqam va qiymatni ajratish
+            const match = answer.match(/(\d+)-(.+)/);
+            if (match) {
+                const num = parseInt(match[1], 10);
+                const keyText = match[2]; // "A" yoki "20;120" yoki "2.5" yoki "-4"
+                // Agar ";" bo‘lsa, massivga bo‘lamiz, aks holda bitta elementli massiv
+                const key = keyText.includes(";") ? keyText.split(";") : [keyText];
+                return {num, key};
+            }
+            return null;
+        }).filter(Boolean);
+
+        return {sheet, answers, position};
+    }
+
     async polishingAnswersExcel(data) {
         try {
             let variants = {};
@@ -86,20 +96,15 @@ class AnswersHelpers {
                         title: title.replace("#", ""),
                         data: []
                     };
-                }
-                // Header qatorini o‘tkazib yuborish
-                else if (row.num === "num" && row.key === "key" && row.score === "score") {
-                    // Hech narsa qilmaymiz
-                }
-                // Oddiy ma’lumot qatori
-                else if (currentId) {
-                    // Javob array ko‘rinishida
+                } else if (row.num === "num" && row.key === "key" && row.score === "score") {
+                    // returned nothing
+                } else if (currentId) {
+                    // answer form array
                     const keyArray = row.key.includes(";") ? row.key.split(";") : [row.key];
 
-                    // Ball array ko‘rinishida (yo‘q bo‘lsa default qiymat)
                     let scoreArray;
                     if (row.score === undefined || row.score === null || row.score === "") {
-                        scoreArray = [0]; // Default qiymat sifatida [0] qo‘yamiz
+                        scoreArray = [0]; // Default value [0]
                     } else {
                         scoreArray = row.score.toString().includes(";")
                             ? row.score.split(";").map(num => Number(num) || 0) // Agar Number NaN bo‘lsa, 0 qo‘yamiz

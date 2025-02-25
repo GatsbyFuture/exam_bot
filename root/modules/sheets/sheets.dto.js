@@ -19,8 +19,8 @@ const createSheetSchema = Joi.object({
         uz: Joi.string()
     },
     desc: {
-        oz: Joi.string().required(),
-        uz: Joi.string()
+        oz: Joi.optional(),
+        uz: Joi.optional()
     },
     category_id: Joi.optional(),
     position: Joi.optional()

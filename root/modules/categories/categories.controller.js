@@ -29,11 +29,9 @@ class CategoriesController extends CategoriesService {
         data.title.uz = toCyrillic(data.title.oz);
         data.desc.uz = toCyrillic(data.desc.oz);
 
-        const newCategory = await this.createCategory(data);
-
         return {
-            key: "category", // detect for which collection...
-            id: newCategory.category_id
+            id: await this.createCategory(data),
+            key: "cat"
         };
     }
 }

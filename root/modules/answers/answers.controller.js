@@ -3,14 +3,12 @@ const Extra = require("telegraf/extra");
 const XLSX = require("xlsx");
 const CustomError = require("../../core/errors/custom.error");
 
-const SheetsService = require("../sheets/sheets.service");
 
 const {createAnswersSchema} = require("./answers.dto");
 const AnswersHelpers = require("./answers.helpers");
 const AnswersService = require("./answers.service");
 
 class AnswersController extends AnswersService {
-    sheetsService = new SheetsService();
 
     async generateMarkupButtonsDynamic(back, lang) {
 
@@ -28,28 +26,13 @@ class AnswersController extends AnswersService {
 
         const {error} = createAnswersSchema.validate(data);
 
-        const hasSheet = await this.sheetsService.getBySheetId(data.sheet);
-
-        if (!hasSheet) {
-            throw CustomError.SheetNotFoundError();
-        }
-
         if (error) {
             throw CustomError.InCorrectDtoError();
         }
 
-        data.sheet_id = hasSheet._id;
-
-        const newAnswers = await this.createAnswersByHand(data);
-
-        await this.sheetsService.updateSheet(
-            {_id: hasSheet._id},
-            {has_answers: true}
-        );
-
         return {
-            key: "answers", // detect for which collection...
-            id: newAnswers.answers_id
+            id: await this.createAnswersByHand(data),
+            key: "ans"
         };
     }
 
@@ -59,7 +42,6 @@ class AnswersController extends AnswersService {
         if (!success) {
             throw CustomError.SaveDocumentsError();
         }
-        console.log(file_path);
 
         const workbook = XLSX.readFile(file_path);
         const sheetName = workbook.SheetNames[0];
@@ -73,11 +55,9 @@ class AnswersController extends AnswersService {
             throw CustomError.ReadingExcelError();
         }
 
-        const newAnswers = await this.createAnswersByExcel(variants);
-
         return {
-            key: "answers", // detect for which collection...
-            id: newAnswers // number of answers
+            id: await this.createAnswersByExcel(variants), // number of answers
+            key: "ans_xls"
         };
     }
 
