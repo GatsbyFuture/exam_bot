@@ -1,5 +1,5 @@
 const XLSX = require("xlsx");
-
+const Sheets = require("./root/modules/sheets/sheets.model");
 // Excel faylni o‘qish
 const workbook = XLSX.readFile("/media/jack/01DB788885700CC01/exam_bot/root/static/answers/xls/Test javoblari4.xlsx"); // Fayl yo‘lini to‘g‘ri kiriting
 const sheetName = workbook.SheetNames[0]; // Birinchi varaqni olish
@@ -12,7 +12,7 @@ const data = XLSX.utils.sheet_to_json(worksheet, {header: ["num", "key", "score"
 // const cleanedData = data.slice(1);
 
 // Natijani konsolga chiqarish
-console.log(data);
+// console.log(data);
 
 // Variantlarni saqlash uchun obyekt
 const variants = {};
@@ -57,4 +57,9 @@ data.forEach(row => {
     }
 });
 
-console.log(variants["1740394966"].data);
+(async function () {
+    const sheetIds = Object.keys(variants).map(Number);
+
+    console.log(sheetIds);
+    console.log(variants);
+})();

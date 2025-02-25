@@ -40,7 +40,7 @@ class AnswersController extends AnswersService {
 
         data.sheet_id = hasSheet._id;
 
-        const newAnswers = await this.createAnswer(data);
+        const newAnswers = await this.createAnswersByHand(data);
 
         await this.sheetsService.updateSheet(
             {_id: hasSheet._id},
@@ -73,11 +73,11 @@ class AnswersController extends AnswersService {
             throw CustomError.ReadingExcelError();
         }
 
-        console.log(variants);
+        const newAnswers = await this.createAnswersByExcel(variants);
 
         return {
             key: "answers", // detect for which collection...
-            id: 13
+            id: newAnswers // number of answers
         };
     }
 
