@@ -44,15 +44,16 @@ class SheetsService {
 
     async getRandomSheet() {
         const sheets = await Sheet.aggregate([
-            {$sample: {size: 1}},
-            {$project: {sheet_id: 1}}
+            {
+                $sample: {size: 1}
+            }
         ]);
 
         if (!sheets.length) {
             return null;
         }
 
-        return sheets[0].sheet_id;
+        return sheets[0];
     }
 
     async deleteSheet(id) {

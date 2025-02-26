@@ -20,7 +20,7 @@ class CategoriesHelpers {
     }
 
     async generateCategoriesBtn(categories, lang) {
-        console.log(categories);
+        // console.log(categories);
         const btns = categories.map(category => {
                 return (
                     [Markup.button(`${category.title[lang]} #${category.category_id}`)]

@@ -3,6 +3,8 @@
   "user_greeting": "Ҳуш келибсиз <b>*{user_name}*</b>! қандай хизматларимиздан фойдаланишни хоҳлайсиз",
   "user_statistics_t": "\uD83D\uDCC8 Статистика\n\n БЎЛИМЛАР: *{categories}*\n ТEСТЛАР: *{sheets}*\n ЖАВОБЛАР: *{answers}*",
   "user_answers_header": "\uD83D\uDCC5 сана: *{date}* \n\uD83D\uDC64: *{user}*\n\uD83D\uDCC4 Тест ид: *{sheet_id}*\n\uD83D\uDCD1 саволлар сони: *{total_questions}*\n\n",
+  "total_corrects": "✅ Жами тўғри жавоблар:",
+  "total_corrects_score": "✅ Тўпланган балллар:",
   "user_total_corrects": "\uD83D\uDCDD тоғри жавоблар сони",
   "sheet_caption": "\uD83D\uDCC4 Тест ид: <code>*{ID}*</code>\n\uD83C\uDFF7 Тест номи: *{title}*\n\uD83D\uDCF0 Тест ҳақида: *{desc}*\n",
   "user_statistics": "\uD83D\uDCC8 Статистика",

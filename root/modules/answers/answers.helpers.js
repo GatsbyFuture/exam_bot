@@ -132,6 +132,88 @@ class AnswersHelpers {
             };
         }
     }
+
+    async polishingEnteredText(text) {
+        const idMatch = text.match(/#id:(\d+)/);
+        const answersMatch = text.match(/#answers:([^#]+)/);
+
+        const sheet = parseInt(idMatch[1], 10);
+
+        const answers = answersMatch[1].split(",").map((answer) => {
+            const match = answer.match(/(\d+)-(.+)/);
+            if (match) {
+                const num = parseInt(match[1], 10);
+                const keyText = match[2];
+                const key = keyText.includes(";") ? keyText.split(";") : [keyText];
+                return {num, key};
+            }
+            return null;
+        }).filter(Boolean);
+
+        return {sheet, answers};
+    }
+
+    async compareAnswers(entered_answers, answers) {
+        const user_answers = new Map(
+            entered_answers.map(ans => [ans.num, ans.key])
+        );
+
+        return answers.answers.reduce((acc, {num, key, score}) => {
+            // Massivlarni taqqoslash uchun yordamchi funksiya
+            const areArraysEqual = (arr1, arr2) => {
+                if (!arr1 || !arr2) return false;
+                if (arr1.length !== arr2.length) return false;
+                return arr1.every((elem, index) => elem === arr2[index]);
+            };
+
+            // Qisman moslikni tekshirish va ballni hisoblash
+            const getPartialMatch = (userKey, correctKey, correctScore) => {
+                let partialScore = 0;
+                const resultParts = [];
+
+                userKey.forEach((uk, i) => {
+                    const ck = correctKey[i];
+                    if (uk === ck) {
+                        resultParts.push(`✅ ${uk}`);
+                        partialScore += correctScore[i];
+                    } else {
+                        resultParts.push(`❌ ${uk} → ✅ ${ck}`);
+                    }
+                });
+
+                return {partialScore, resultText: resultParts.join(";")};
+            };
+
+            const userAnswerKey = user_answers.get(num);
+            const scoreString = score.join(";");
+
+            if (userAnswerKey === undefined) {
+                acc.results.push(`${num}: ❌ (Belgilamagan) → ✅ ${key.join(";")} (Ball: ${scoreString})`);
+            } else if (!areArraysEqual(userAnswerKey, key)) {
+                // Qisman moslikni tekshirish
+                const {partialScore, resultText} = getPartialMatch(userAnswerKey, key, score);
+                if (partialScore > 0) {
+                    acc.results.push(`${num}: ${resultText} (Ball: ${scoreString}, qisman: ${partialScore})`);
+                    acc.total_corrects_score += partialScore;
+                    acc.total_corrects += 1; // Qisman to‘g‘ri javoblar soni
+                } else {
+                    acc.results.push(`${num}: ❌ ${userAnswerKey.join(";")} → ✅ ${key.join(";")} (Ball: ${scoreString})`);
+                }
+            } else {
+                acc.results.push(`${num}: ✅ ${key.join(";")} (Ball: ${scoreString})`);
+                acc.total_corrects += 1;
+                acc.total_corrects_score += score.reduce((sum, s) => sum + s, 0);
+            }
+            acc.total += 1;
+            return acc;
+        }, {
+            results: [],
+            total_corrects: 0,
+            total_corrects_score: 0,
+            total: 0,
+            sheet: answers.sheet
+        });
+    }
 }
 
 module.exports = new AnswersHelpers();

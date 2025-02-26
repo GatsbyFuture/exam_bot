@@ -3,12 +3,11 @@ const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const path = require("path");
 const Roles = require("../../core/enums/roles.enum");
-const UserControllerCore = require("../../core/controller/core.controller");
-const UserController = require("./user.controller");
+
+const CoreController = require("../../core/controller/core.controller");
 const HelpersCore = require("../../core/helpers/core.helpers");
-const AdminController = require("../admins/admin.controller");
-const config = require("../admins/admin.config");
-const BtnMethods = require("../../core/enums/btn.method.enum");
+
+const UserController = require("./user.controller");
 
 const userI18n = new TelegrafI18n({
     defaultLanguage: "oz",
@@ -27,7 +26,7 @@ class UserMain {
 
                 const {_id, name} = ctx.session.user;
 
-                const updatedLang = await UserControllerCore.updateUserLang(_id, lang);
+                const updatedLang = await CoreController.updateUserLang(_id, lang);
 
                 if (updatedLang) {
                     ctx.session.user.lang = lang;
@@ -36,7 +35,7 @@ class UserMain {
 
                 ctx.session.user.level = "0";
                 // generate users main buttons
-                const btns = await UserController.generateUserMarkButtons(ctx, _id);
+                const btns = await UserController.generateUserMarkButtons(ctx);
 
                 await ctx.replyWithHTML(
                     ctx.i18n.t("user_greeting").replace("*{user_name}*", name.first_name),
@@ -50,14 +49,14 @@ class UserMain {
         });
 
         bot.hears(/#\d{10}$/, async (ctx, next) => {
-            const {_id, level, lang, role} = ctx.session.user;
+            const {level, role} = ctx.session.user;
             if (role === Roles.USER) {
                 const match = ctx.message.text.match(/#(\d{10})$/);
                 if (match) {
-                    ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+                    // ctx.reply(`Topilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
 
                     if (level === "0.1.x") {
-                        await UserControllerCore.sendTestDocument(ctx, +match[1]);
+                        await UserController.ShowSheet(ctx, +match[1]);
                     }
 
                     if (level === "0.1") {
@@ -65,7 +64,7 @@ class UserMain {
                         let {
                             total: total_sheets,
                             btns: sheet_btns
-                        } = await UserController.generateUserMarkButtons(ctx, _id, +match[1]);
+                        } = await UserController.generateUserMarkButtons(ctx, +match[1]);
 
                         await ctx.replyWithHTML(
                             ctx.i18n.t("user_view_tests_t").replace("*{total}*", total_sheets),
@@ -100,7 +99,7 @@ class UserMain {
                         let {
                             total: total_cats,
                             btns: cat_btns
-                        } = await UserController.generateUserMarkButtons(ctx, _id);
+                        } = await UserController.generateUserMarkButtons(ctx);
                         await ctx.replyWithHTML(
                             ctx.i18n.t("user_categories_t").replace("*{total}*", total_cats),
                             Extra.HTML()
@@ -115,7 +114,7 @@ class UserMain {
                         break;
                     case ctx.i18n.t("user_check_answers"):
                         ctx.session.user.level = "0.3";
-                        let answers = await UserController.generateUserMarkButtons(ctx, _id);
+                        let answers = await UserController.generateUserMarkButtons(ctx);
                         await ctx.replyWithHTML(
                             ctx.i18n.t("user_check_answers_t"),
                             Extra.HTML()
@@ -132,7 +131,7 @@ class UserMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await UserController.generateUserMarkButtons(ctx, _id)
+                                        await UserController.generateUserMarkButtons(ctx)
                                     ).resize())
                         );
                         break;
@@ -157,7 +156,7 @@ class UserMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await UserController.generateUserMarkButtons(ctx, _id)
+                                        await UserController.generateUserMarkButtons(ctx)
                                     ).resize())
                         );
                         ctx.session.text = undefined;
@@ -171,7 +170,7 @@ class UserMain {
                             Extra.HTML()
                                 .markup(
                                     Markup.keyboard(
-                                        await UserController.generateUserMarkButtons(ctx, _id)
+                                        await UserController.generateUserMarkButtons(ctx)
                                     ).resize())
                         );
                         break;
@@ -180,7 +179,7 @@ class UserMain {
                             level.substring(0, level.lastIndexOf(".")) :
                             level;
 
-                        const back_btns = await UserController.generateUserMarkButtons(ctx, _id);
+                        const back_btns = await UserController.generateUserMarkButtons(ctx);
 
                         await ctx.replyWithHTML(
                             ctx.i18n.t("back"),
@@ -213,7 +212,7 @@ class UserMain {
                                     Extra.HTML()
                                         .markup(
                                             Markup.keyboard(
-                                                await UserControllerCore.generateAgreeButton(ctx)
+                                                await CoreController.generateAgreeButton(ctx)
                                             ).resize())
                                 );
                                 break;

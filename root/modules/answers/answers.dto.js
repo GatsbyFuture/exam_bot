@@ -18,6 +18,23 @@ const StaticStruct = {
     position: Joi.number().integer().optional()
 };
 
+const EnteredAnswers = {
+    sheet: Joi.number().required(),
+    answers: Joi.array()
+        .items(
+            Joi.object({
+                num: Joi.number().integer().required(),
+                key: Joi.array()
+                    .items(
+                        Joi.string().allow("")
+                    )
+                    .min(1)
+                    .required()
+            })
+        )
+        .required(),
+};
+
 const CreateAnswersDto = {
     sheet_id: 0,
     answers: "string",
@@ -26,7 +43,7 @@ const CreateAnswersDto = {
 
 const createAnswersSchema = Joi.object(StaticStruct);
 
-const checkAnswersSchema = Joi.object(StaticStruct);
+const checkAnswersSchema = Joi.object(EnteredAnswers);
 
 module.exports = {
     CreateAnswersDto,

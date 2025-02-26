@@ -39,7 +39,7 @@ class AdminMain {
                 }
 
                 // generate admin main buttons
-                const btns = await AdminController.generateAdminMarkButtons(ctx, [_id, "0"]);
+                const btns = await AdminController.generateAdminMarkButtons(ctx);
 
                 await ctx.replyWithHTML(ctx.i18n.t("admin_greeting").replace("*{user_name}*", name.first_name), Extra.HTML().markup(Markup.keyboard(btns).resize()));
 
@@ -91,11 +91,11 @@ class AdminMain {
         });
 
         bot.hears(/#\d{10}$/, async (ctx, next) => {
-            const {_id, level, lang, role} = ctx.session.user;
+            const {level, lang, role} = ctx.session.user;
             if (role === Roles.ADMIN) {
                 const match = ctx.message.text.match(/#(\d{10})$/);
                 if (match) {
-                    ctx.reply(`Foydalanilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
+                    // ctx.reply(`Foydalanilgan ID: ${match[1]}`); // Faqat raqamni qaytaradi
 
                     if (level === "0.1.1.1" || level === "0.1.1.0.x") {
                         await AdminController.ShowSheet(ctx, +match[1]);

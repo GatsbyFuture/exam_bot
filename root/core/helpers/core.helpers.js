@@ -76,7 +76,7 @@ class CoreHelpers {
         let caption = ctx.i18n.t("sheet_caption")
             .replace("*{ID}*", sheet.sheet_id)
             .replace("*{title}*", sheet.title[lang])
-            .replace("*{desc}*", sheet.desc[lang]);
+            .replace("*{desc}*", sheet?.desc[lang]);
 
         const extra = {
             protect_content: true,

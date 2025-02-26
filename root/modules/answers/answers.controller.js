@@ -4,7 +4,7 @@ const XLSX = require("xlsx");
 const CustomError = require("../../core/errors/custom.error");
 
 
-const {createAnswersSchema} = require("./answers.dto");
+const {createAnswersSchema, checkAnswersSchema} = require("./answers.dto");
 const AnswersHelpers = require("./answers.helpers");
 const AnswersService = require("./answers.service");
 
@@ -63,6 +63,28 @@ class AnswersController extends AnswersService {
 
     async showAnswers(answers, lang) {
         return AnswersHelpers.generateAnswersText(answers, lang);
+    }
+
+    async compareAnswers(text) {
+        const data = await AnswersHelpers.polishingEnteredText(text);
+
+        console.log(data);
+        const {error} = checkAnswersSchema.validate(data);
+
+        if (error) {
+            throw CustomError.InCorrectDtoError();
+        }
+
+        const answers = await this.getAnswersWithFilter(
+            {
+                sheet: data.sheet
+            }
+        );
+
+        return AnswersHelpers.compareAnswers(
+            data.answers,
+            answers[0]
+        );
     }
 }
 
