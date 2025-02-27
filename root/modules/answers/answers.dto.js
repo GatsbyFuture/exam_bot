@@ -7,16 +7,22 @@ const StaticStruct = {
             Joi.object({
                 num: Joi.number().integer().required(),
                 key: Joi.array()
-                    .items(
-                        Joi.string().allow("")
-                    )
+                    .items(Joi.string().allow(""))
                     .min(1)
                     .required(),
                 score: Joi.array()
-                    .items(
-                        Joi.number().required() // Har bir score raqam bo‘lishi kerak
-                    )
-                    .min(1).optional()
+                    .items(Joi.number().required())
+                    .min(1)
+                    .optional()
+                    .custom((value, helpers) => {
+                        if (value) {
+                            const keyLength = helpers.state.ancestors[0].key.length;
+                            if (value.length !== keyLength) {
+                                return helpers.error("array.length", {expected: keyLength});
+                            }
+                        }
+                        return value;
+                    }, "Answers and score are length must be equals!")
             })
         )
         .required(),
