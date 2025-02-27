@@ -61,26 +61,37 @@ class AnswersHelpers {
 
     async polishingAnswersText(text) {
         const idMatch = text.match(/#id:(\d+)/);
-        const answersMatch = text.match(/#answers:([^#]+)/); // #answers dan keyingi hamma narsa
-        const posMatch = text.match(/#pos:(\d+)/);
+        const answersMatch = text.match(/#answers:([^#]+)/);
 
         const sheet = parseInt(idMatch[1], 10);
-        const position = posMatch ? parseInt(posMatch[1], 10) : undefined;
 
         const answers = answersMatch[1].split(",").map((answer) => {
-            // Har bir javob uchun raqam va qiymatni ajratish
-            const match = answer.match(/(\d+)-(.+)/);
+            // Har bir javob uchun raqam, qiymat va score ni ajratish
+            const match = answer.match(/(\d+)-(.+)\[(.+)\]/) || answer.match(/(\d+)-(.+)/);
             if (match) {
                 const num = parseInt(match[1], 10);
-                const keyText = match[2]; // "A" yoki "20;120" yoki "2.5" yoki "-4"
-                // Agar ";" bo‘lsa, massivga bo‘lamiz, aks holda bitta elementli massiv
+                const keyText = match[2]; // "A" yoki "20;120"
+                const scoreText = match[3]; // "1.3" yoki "1.5;1.7" yoki undefined
+
+                // Key ni massivga aylantirish
                 const key = keyText.includes(";") ? keyText.split(";") : [keyText];
-                return {num, key};
+
+                // Score ni massivga aylantirish
+                let score;
+                if (scoreText) {
+                    score = scoreText.includes(";")
+                        ? scoreText.split(";").map(s => Number(s) || 0)
+                        : [Number(scoreText) || 0];
+                } else {
+                    score = [0]; // Agar score kiritilmagan bo‘lsa default 0
+                }
+
+                return {num, key, score};
             }
             return null;
         }).filter(Boolean);
 
-        return {sheet, answers, position};
+        return {sheet, answers};
     }
 
     async polishingAnswersExcel(data) {

@@ -24,6 +24,7 @@ class AnswersController extends AnswersService {
     async createByHand(text) {
         const data = await AnswersHelpers.polishingAnswersText(text);
 
+        console.log(data);
         const {error} = createAnswersSchema.validate(data);
 
         if (error) {

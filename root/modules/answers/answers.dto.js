@@ -11,11 +11,15 @@ const StaticStruct = {
                         Joi.string().allow("")
                     )
                     .min(1)
-                    .required()
+                    .required(),
+                score: Joi.array()
+                    .items(
+                        Joi.number().required() // Har bir score raqam bo‘lishi kerak
+                    )
+                    .min(1).optional()
             })
         )
         .required(),
-    position: Joi.number().integer().optional()
 };
 
 const EnteredAnswers = {
