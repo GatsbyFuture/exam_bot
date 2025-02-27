@@ -68,7 +68,7 @@ class AnswersController extends AnswersService {
     async compareAnswers(text) {
         const data = await AnswersHelpers.polishingEnteredText(text);
 
-        console.log(data);
+        // console.log(data);
         const {error} = checkAnswersSchema.validate(data);
 
         if (error) {

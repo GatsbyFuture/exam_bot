@@ -14,7 +14,7 @@
   "user_settings": "⚙\uFE0F Sozlamalar",
   "user_categories_t": "\uD83D\uDCDA Jami bo'limlar soni: *{total}*",
   "user_view_tests_t": "\uD83D\uDCCB Jami testlar soni: *{total}*",
-  "user_check_answers_t": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1.A,2.B,3.C,4.A,5.B,6.B,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
+  "user_check_answers_t": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1-C,2-C,3-A,4-B,36-20;120,37-6;4,40-5;80,41-4;3.1*10^-27,42-10;0.5,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",
   "user_this_is_right_sure": "❗\uFE0F Ishonchingiz komilmi?",
   "agree": "✅ Xa tasdiqliman",
   "cancel": "❌ Bekor qilaman",

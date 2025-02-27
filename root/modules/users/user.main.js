@@ -8,6 +8,7 @@ const CoreController = require("../../core/controller/core.controller");
 const HelpersCore = require("../../core/helpers/core.helpers");
 
 const UserController = require("./user.controller");
+const UserHelpers = require("./user.helpers");
 
 const userI18n = new TelegrafI18n({
     defaultLanguage: "oz",
@@ -43,6 +44,30 @@ class UserMain {
                 );
 
                 ctx.deleteMessage();
+            } else {
+                await next();
+            }
+        });
+
+        bot.action(/compare_test.+/, async (ctx, next) => {
+            const {role} = ctx.session.user;
+            if (role === Roles.USER) {
+                const [section, id] = ctx.match[0].split(".");
+                ctx.session.text = `#id:${id}#answers:*{answers}*}`;
+                ctx.session.inlineQuery = true;
+                ctx.session.user.level = "0.3";
+
+                await UserHelpers.editInlineQuery(ctx);
+
+                let answers = await UserController.generateUserMarkButtons(ctx);
+                await ctx.replyWithHTML(
+                    ctx.i18n.t("user_check_answers_t"),
+                    Extra.HTML()
+                        .markup(
+                            Markup.keyboard(
+                                answers?.btns ? answers.btns : answers
+                            ).resize())
+                );
             } else {
                 await next();
             }
@@ -161,10 +186,12 @@ class UserMain {
                         );
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
+                        ctx.session.inlineQuery = false;
                         break;
                     case ctx.i18n.t("cancel"):
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
+                        ctx.session.inlineQuery = false;
                         await ctx.replyWithHTML(
                             ctx.i18n.t("user_cancel_decision"),
                             Extra.HTML()
@@ -175,6 +202,10 @@ class UserMain {
                         );
                         break;
                     case ctx.i18n.t("back"):
+                        ctx.session.text = undefined;
+                        ctx.session.file = undefined;
+                        ctx.session.inlineQuery = false;
+                        
                         ctx.session.user.level = level.includes(".") ?
                             level.substring(0, level.lastIndexOf(".")) :
                             level;
@@ -206,7 +237,11 @@ class UserMain {
                     default:
                         switch (level) {
                             case "0.3":
-                                ctx.session.text = text;
+                                if (ctx.session.inlineQuery) {
+                                    ctx.session.text = ctx.session.text.replace("*{answers}*", text);
+                                } else {
+                                    ctx.session.text = text;
+                                }
                                 await ctx.replyWithHTML(
                                     ctx.i18n.t("user_this_is_right_sure"),
                                     Extra.HTML()
@@ -216,9 +251,10 @@ class UserMain {
                                             ).resize())
                                 );
                                 break;
+                            default:
+                                await ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
+                                break;
                         }
-                    // ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
-                    // break;
                 }
             } else {
                 await next();

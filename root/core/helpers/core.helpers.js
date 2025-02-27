@@ -85,7 +85,12 @@ class CoreHelpers {
 
         if (markup && sheet.has_answers) {
             extra.reply_markup = Markup.inlineKeyboard([
-                [Markup.callbackButton(ctx.i18n.t("check_answers_one_time"), "check_answers")]
+                [
+                    Markup.callbackButton(
+                        ctx.i18n.t("check_answers_one_time"),
+                        `compare_test.${sheet.sheet_id}`
+                    )
+                ]
             ]);
         }
 
