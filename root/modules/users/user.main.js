@@ -61,7 +61,7 @@ class UserMain {
 
                 let answers = await UserController.generateUserMarkButtons(ctx);
                 await ctx.replyWithHTML(
-                    ctx.i18n.t("user_check_answers_t"),
+                    ctx.i18n.t("user_check_answers_t_inline"),
                     Extra.HTML()
                         .markup(
                             Markup.keyboard(

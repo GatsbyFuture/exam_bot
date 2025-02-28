@@ -18,8 +18,8 @@ const createCategorySchema = Joi.object({
         uz: Joi.string()
     },
     desc: {
-        oz: Joi.string().required(),
-        uz: Joi.string()
+        oz: Joi.optional(),
+        uz: Joi.optional()
     },
     position: Joi.optional()
 });

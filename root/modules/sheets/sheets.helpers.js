@@ -8,10 +8,9 @@ const fileTypesEnum = require("../../core/enums/file.types.enum");
 
 class SheetsHelpers {
     async polishingSheetData(text) {
-        const titleMatch = text.match(/#title:\s*([^#]+)/);
-        const descMatch = text.match(/#desc:\s*([^#]+)/);
-        const category_id = text.match(/#cat_id:\s*([^#]+)/);
-        const position = text.match(/#pos:\s*([^#]+)/);
+        const titleMatch = text.match(/#title\s*:([^#]+)/);
+        const descMatch = text.match(/#desc\s*:([^#]+)/);
+        const categoryIdMatch = text.match(/#cat_id\s*:([^#]+)/);
 
         return {
             title: {
@@ -22,8 +21,7 @@ class SheetsHelpers {
                 oz: descMatch ? descMatch[1].trim() : "",
                 uz: ""
             },
-            category_id: category_id ? +category_id[1].trim() : null,
-            position: position ? +position[1].trim() : null
+            category_id: categoryIdMatch ? +categoryIdMatch[1].trim() : null,
         };
     }
 

@@ -3,19 +3,22 @@ const CategoriesService = require("./categories.service");
 
 class CategoriesHelpers {
     async polishingCategoryData(text) {
-        const titleMatch = text.match(/#title:\s*([^#]+)/);
-        const descMatch = text.match(/#desc:\s*([^#]+)/);
-        const position = text.match(/#pos:\s*([^#]+)/);
+        // #title: yoki #title : uchun
+        const titleMatch = text.match(/#title\s*:([^#]+)/);
+        // #desc: yoki #desc : uchun
+        const descMatch = text.match(/#desc\s*:([^#]+)/);
+        // #pos: yoki #pos : uchun
+        const positionMatch = text.match(/#pos\s*:([^#]+)/);
         return {
             title: {
                 oz: titleMatch ? titleMatch[1].trim() : null,
                 uz: "yes"
             },
             desc: {
-                oz: descMatch ? descMatch[1].trim() : null,
+                oz: descMatch ? descMatch[1].trim() : "yes",
                 uz: "yes"
             },
-            position: position ? +position[1].trim() : null
+            position: positionMatch ? +positionMatch[1].trim() : null
         };
     }
 

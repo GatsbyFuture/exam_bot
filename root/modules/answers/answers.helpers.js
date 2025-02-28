@@ -60,8 +60,8 @@ class AnswersHelpers {
     }
 
     async polishingAnswersText(text) {
-        const idMatch = text.match(/#id:(\d+)/);
-        const answersMatch = text.match(/#answers:([^#]+)/);
+        const idMatch = text.match(/#id\s*:(\d+)/);
+        const answersMatch = text.match(/#answers\s*:([^#]+)/);
 
         const sheet = parseInt(idMatch[1], 10);
 
@@ -145,8 +145,8 @@ class AnswersHelpers {
     }
 
     async polishingEnteredText(text) {
-        const idMatch = text.match(/#id:(\d+)/);
-        const answersMatch = text.match(/#answers:([^#]+)/);
+        const idMatch = text.match(/#id\s*:(\d+)/);
+        const answersMatch = text.match(/#answers\s*:([^#]+)/);
 
         const sheet = parseInt(idMatch[1], 10);
 
@@ -166,7 +166,10 @@ class AnswersHelpers {
 
     async compareAnswers(entered_answers, answers) {
         const user_answers = new Map(
-            entered_answers.map(ans => [ans.num, ans.key])
+            entered_answers.map(ans => [
+                ans.num,
+                ans.key.map(k => k.toUpperCase()) // Har bir key elementini katta harfga aylantirish
+            ])
         );
 
         return answers.answers.reduce((acc, {num, key, score}) => {
