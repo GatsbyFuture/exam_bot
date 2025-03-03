@@ -1,7 +1,7 @@
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const {toCyrillic} = require("../../libs/libs.latin.to.cyril");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 const {createSheetSchema} = require("./sheets.dto");
 const SheetsHelpers = require("./sheets.helpers");

@@ -2,7 +2,7 @@ const TelegrafI18n = require("telegraf-i18n");
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const path = require("path");
-const Roles = require("../../core/enums/roles.enum");
+const Roles = require("../../enums/roles.enum");
 
 const CoreController = require("../../core/controller/core.controller");
 const HelpersCore = require("../../core/helpers/core.helpers");

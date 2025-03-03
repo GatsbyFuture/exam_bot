@@ -1,10 +1,10 @@
 const Markup = require("telegraf/markup");
 const config = require("./admin.config");
-const BtnMethods = require("../../core/enums/btn.method.enum");
-const Collections = require("../../core/enums/collections.enum");
+const BtnMethods = require("../../enums/btn.method.enum");
+const Collections = require("../../enums/collections.enum");
 const {toCyrillic} = require("../../libs/libs.latin.to.cyril");
 
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 const CoreService = require("../../core/service/core.service");
 const CoreHelpers = require("../../core/helpers/core.helpers");

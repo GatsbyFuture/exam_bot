@@ -1,5 +1,5 @@
 const Sheet = require("./sheets.model");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 class SheetsService {
     async createSheet(sheet) {

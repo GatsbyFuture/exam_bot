@@ -12,8 +12,8 @@ process.env.STATIC = path.join(__dirname, "root/static/");
 
 // db connection and configuration
 const {bot_token} = require("./root/config/config");
-const Roles = require("./root/core/enums/roles.enum");
-require("./root/core/mongodb/connection");
+const Roles = require("./root/enums/roles.enum");
+require("./root/connection/mongodb/connection");
 // main npm packages
 const Telegraf = require("telegraf");
 const session = require("telegraf/session");

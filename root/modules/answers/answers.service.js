@@ -1,6 +1,6 @@
 const Answers = require("./answers.model");
 const SheetsService = require("../sheets/sheets.service");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 class AnswersService {
     sheetsService = new SheetsService();

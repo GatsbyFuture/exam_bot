@@ -1,5 +1,5 @@
 const {toCyrillic} = require("../../libs/libs.latin.to.cyril");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 const {createCategorySchema} = require("./categories.dto");
 const CategoriesHelpers = require("./categories.helpers");

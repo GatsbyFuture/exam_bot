@@ -1,5 +1,5 @@
 const Category = require("./categories.model");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 class CategoriesService {
     async createCategory(category) {

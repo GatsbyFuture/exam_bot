@@ -1,5 +1,5 @@
-const User = require("../models/core.models");
-const CustomError = require("../errors/custom.error");
+const User = require("../models/core.models.mongo");
+const CustomError = require("../../errors/custom.error");
 
 class CoreService {
     async create(data) {

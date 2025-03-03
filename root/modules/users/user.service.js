@@ -1,4 +1,4 @@
-const User = require("../../core/models/core.models");
+const User = require("../../core/models/core.models.mongo");
 
 class UserService {
 

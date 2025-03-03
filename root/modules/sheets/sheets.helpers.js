@@ -4,7 +4,7 @@ const Markup = require("telegraf/markup");
 const config = require("../../config/config");
 
 const CoreHelpers = require("../../core/helpers/core.helpers");
-const fileTypesEnum = require("../../core/enums/file.types.enum");
+const fileTypesEnum = require("../../enums/file.types.enum");
 
 class SheetsHelpers {
     async polishingSheetData(text) {

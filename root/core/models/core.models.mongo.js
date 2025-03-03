@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const {v4: uuid} = require("uuid");
-const Roles = require("../enums/roles.enum");
+const Roles = require("../../enums/roles.enum");
 
 const userSchema = new mongoose.Schema({
         _id: {

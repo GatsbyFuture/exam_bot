@@ -1,7 +1,7 @@
 const UserControllerCore = require("../controller/core.controller");
-const CustomError = require("../errors/custom.error");
-const Roles = require("../enums/roles.enum");
-const Langs = require("../enums/langs.enum");
+const CustomError = require("../../errors/custom.error");
+const Roles = require("../../enums/roles.enum");
+const Langs = require("../../enums/langs.enum");
 
 module.exports = class MiddlewarePrimary {
     static async errorHandler(ctx, next) {

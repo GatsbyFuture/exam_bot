@@ -1,7 +1,6 @@
 const TelegrafI18n = require("telegraf-i18n");
 const path = require("path");
 const {bot_name} = require("../config/config");
-const Roles = require("./enums/roles.enum");
 
 const UserControllerCore = require("./controller/core.controller");
 const HelpersCore = require("./helpers/core.helpers");

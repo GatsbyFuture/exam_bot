@@ -2,7 +2,7 @@ const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const axios = require("axios");
 const fs = require("fs");
-const Roles = require("../enums/roles.enum");
+const Roles = require("../../enums/roles.enum");
 
 class CoreHelpers {
     langs(ctx) {
@@ -99,7 +99,7 @@ class CoreHelpers {
         }
 
         extra.caption = caption;
-
+        console.log(extra, filePath);
         await ctx.replyWithDocument(
             {source: filePath},
             extra

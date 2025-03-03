@@ -2,9 +2,10 @@ const fs = require("fs");
 const axios = require("axios");
 const Markup = require("telegraf/markup");
 const config = require("../../config/config");
+const CustomError = require("../../errors/custom.error");
 
 const CoreHelpers = require("../../core/helpers/core.helpers");
-const fileTypesEnum = require("../../core/enums/file.types.enum");
+const fileTypesEnum = require("../../enums/file.types.enum");
 
 class AnswersHelpers {
     async generateAnswersBtn(answers, lang) {
@@ -62,6 +63,10 @@ class AnswersHelpers {
     async polishingAnswersText(text) {
         const idMatch = text.match(/#id\s*:(\d+)/);
         const answersMatch = text.match(/#answers\s*:([^#]+)/);
+
+        if (!idMatch || !answersMatch) {
+            throw CustomError.InCorrectDtoError("Matnda #id yoki #answers topilmadi");
+        }
 
         const sheet = parseInt(idMatch[1], 10);
 
@@ -148,6 +153,10 @@ class AnswersHelpers {
         const idMatch = text.match(/#id\s*:(\d+)/);
         const answersMatch = text.match(/#answers\s*:([^#]+)/);
 
+        if (!idMatch || !answersMatch) {
+            throw CustomError.InCorrectDtoError("Matnda #id yoki #answers topilmadi");
+        }
+
         const sheet = parseInt(idMatch[1], 10);
 
         const answers = answersMatch[1].split(",").map((answer) => {
@@ -191,7 +200,7 @@ class AnswersHelpers {
                         resultParts.push(`✅ ${uk}`);
                         partialScore += correctScore[i];
                     } else {
-                        resultParts.push(`❌ ${uk} → ✅ ${ck}`);
+                        resultParts.push(`❌ ${uk}`);
                     }
                 });
 
@@ -202,7 +211,7 @@ class AnswersHelpers {
             const scoreString = score.join(";");
 
             if (userAnswerKey === undefined) {
-                acc.results.push(`${num}: ❌ (Belgilamagan) → ✅ ${key.join(";")} (Ball: ${scoreString})`);
+                acc.results.push(`${num}: ❌ (Belgilamagan) (Ball: ${scoreString})`);
             } else if (!areArraysEqual(userAnswerKey, key)) {
                 // Qisman moslikni tekshirish
                 const {partialScore, resultText} = getPartialMatch(userAnswerKey, key, score);
@@ -211,7 +220,7 @@ class AnswersHelpers {
                     acc.total_corrects_score += partialScore;
                     acc.total_corrects += 1; // Qisman to‘g‘ri javoblar soni
                 } else {
-                    acc.results.push(`${num}: ❌ ${userAnswerKey.join(";")} → ✅ ${key.join(";")} (Ball: ${scoreString})`);
+                    acc.results.push(`${num}: ❌ ${userAnswerKey.join(";")} (Ball: ${scoreString})`);
                 }
             } else {
                 acc.results.push(`${num}: ✅ ${key.join(";")} (Ball: ${scoreString})`);

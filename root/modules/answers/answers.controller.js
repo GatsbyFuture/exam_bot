@@ -1,7 +1,7 @@
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const XLSX = require("xlsx");
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 
 const {createAnswersSchema, checkAnswersSchema} = require("./answers.dto");

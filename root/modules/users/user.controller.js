@@ -1,9 +1,9 @@
 const dayjs = require("dayjs");
 const Markup = require("telegraf/markup");
 const config = require("./user.config");
-const BtnMethods = require("../../core/enums/btn.method.enum");
+const BtnMethods = require("../../enums/btn.method.enum");
 
-const CustomError = require("../../core/errors/custom.error");
+const CustomError = require("../../errors/custom.error");
 
 const CoreService = require("../../core/service/core.service");
 const CoreHelpers = require("../../core/helpers/core.helpers");
@@ -13,7 +13,7 @@ const CategoriesController = require("../categories/categories.controller");
 const SheetsController = require("../sheets/sheets.controller");
 
 const AnswersController = require("../answers/answers.controller");
-const Collections = require("../../core/enums/collections.enum");
+const Collections = require("../../enums/collections.enum");
 
 class UserController extends CoreService {
     async statistics() {
@@ -87,7 +87,7 @@ class UserController extends CoreService {
         if (!sheet) {
             throw CustomError.SheetNotFoundError(ctx.i18n.t("sheet_not_found"));
         }
-
+        // console.log(sheet);
         await CoreHelpers.sendTestDocument(ctx, lang, sheet, true);
     }
 

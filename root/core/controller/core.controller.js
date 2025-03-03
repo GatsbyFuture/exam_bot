@@ -1,8 +1,8 @@
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const UserServiceCore = require("../service/core.service");
-const Roles = require("../enums/roles.enum");
-const Langs = require("../enums/langs.enum");
+const Roles = require("../../enums/roles.enum");
+const Langs = require("../../enums/langs.enum");
 const HelpersCore = require("../helpers/core.helpers");
 
 class CoreController extends UserServiceCore {

@@ -2,17 +2,17 @@ const TelegrafI18n = require("telegraf-i18n");
 const Markup = require("telegraf/markup");
 const Extra = require("telegraf/extra");
 const path = require("path");
-const Roles = require("../../core/enums/roles.enum");
+const Roles = require("../../enums/roles.enum");
 
 const CoreController = require("../../core/controller/core.controller");
 
 const AdminController = require("./admin.controller");
 
 
-const BtnMethods = require("../../core/enums/btn.method.enum");
+const BtnMethods = require("../../enums/btn.method.enum");
 const config = require("./admin.config");
-const fileTypesTgEnum = require("../../core/enums/file.types.tg.enum");
-const fileTypesEnum = require("../../core/enums/file.types.enum");
+const fileTypesTgEnum = require("../../enums/file.types.tg.enum");
+const fileTypesEnum = require("../../enums/file.types.enum");
 
 const adminI18n = new TelegrafI18n({
     defaultLanguage: "oz",
