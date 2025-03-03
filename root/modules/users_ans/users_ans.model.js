@@ -17,7 +17,10 @@ const usersAnsSchema = mongoose.Schema({
         total: Number,
         total_corrects: Number,
         total_corrects_score: Number,
-        status: true // true or false
+        status: {
+            type: Boolean,
+            default: true // true or false
+        }
     }, {
         timestamps: true,
     }
