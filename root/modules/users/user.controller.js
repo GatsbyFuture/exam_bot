@@ -15,6 +15,8 @@ const SheetsController = require("../sheets/sheets.controller");
 const AnswersController = require("../answers/answers.controller");
 const Collections = require("../../enums/collections.enum");
 
+const UsersAnsController = require("../users_ans/users_ans.controller");
+
 class UserController extends CoreService {
     async statistics() {
         const total_categories = await CategoriesController.getCountCategories();
@@ -95,13 +97,17 @@ class UserController extends CoreService {
         const {name} = ctx.session.user;
         const text = ctx.session.text;
         // get answers controller
+        const data = await AnswersController.compareAnswers(text);
+
+        await UsersAnsController.create(data);
+
         const {
             results,
             total_corrects,
             total_corrects_score,
             total,
             sheet
-        } = await AnswersController.compareAnswers(text);
+        } = data;
 
         const header_text = ctx.i18n.t("user_answers_header")
             .replace("*{date}*", dayjs().format("DD-MM-YYYY"))

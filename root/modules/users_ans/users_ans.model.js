@@ -6,10 +6,6 @@ const usersAnsSchema = mongoose.Schema({
             type: String,
             default: uuid
         },
-        users_ans_id: {
-            type: Number,
-            default: () => Math.floor(Date.now() * 1000)
-        },
         user_id: {
             type: String,
             ref: "users"

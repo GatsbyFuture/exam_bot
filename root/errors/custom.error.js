@@ -47,4 +47,8 @@ module.exports = class CustomError extends Error {
     static ReadingExcelError(message = "Reading Excel failed") {
         return new CustomError(500, message);
     }
+
+    static UserAnswersError(status = 404, message = "Not found UserAnswers") {
+        return new CustomError(status, message);
+    }
 };
