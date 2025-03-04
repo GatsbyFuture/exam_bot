@@ -94,20 +94,25 @@ class UserController extends CoreService {
     }
 
     async checkAnswers(ctx, lang) {
-        const {name} = ctx.session.user;
+        const {_id, name} = ctx.session.user;
         const text = ctx.session.text;
         // get answers controller
-        const data = await AnswersController.compareAnswers(text);
-
-        await UsersAnsController.create(data);
-
         const {
             results,
+            total,
             total_corrects,
             total_corrects_score,
+            sheet,
+            sheet_id
+        } = await AnswersController.compareAnswers(text);
+
+        await UsersAnsController.create({
+            user_id: _id,
+            sheet_id,
             total,
-            sheet
-        } = data;
+            total_corrects,
+            total_corrects_score,
+        });
 
         const header_text = ctx.i18n.t("user_answers_header")
             .replace("*{date}*", dayjs().format("DD-MM-YYYY"))

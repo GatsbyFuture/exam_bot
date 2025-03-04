@@ -163,7 +163,8 @@ class AnswersHelpers {
             const match = answer.match(/(\d+)-(.+)/);
             if (match) {
                 const num = parseInt(match[1], 10);
-                const keyText = match[2];
+                let keyText = match[2].trim();
+                keyText = keyText.replace(/[^A-Za-z0-9;]/g, "");
                 const key = keyText.includes(";") ? keyText.split(";") : [keyText];
                 return {num, key};
             }
@@ -234,7 +235,8 @@ class AnswersHelpers {
             total_corrects: 0,
             total_corrects_score: 0,
             total: 0,
-            sheet: answers.sheet
+            sheet: answers.sheet,
+            sheet_id: answers.sheet_id
         });
     }
 }
