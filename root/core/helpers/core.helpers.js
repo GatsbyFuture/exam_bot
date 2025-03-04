@@ -6,6 +6,13 @@ const Roles = require("../../enums/roles.enum");
 const config = require("../../config/config");
 
 class CoreHelpers {
+    separateToChatId(ctx) {
+        if (ctx.update?.message)
+            return ctx.update.message.from.id;
+        if (ctx.update?.callback_query)
+            return ctx.update.callback_query.from.id;
+    }
+
     langs(ctx) {
         const role = ctx.session.user.role;
 

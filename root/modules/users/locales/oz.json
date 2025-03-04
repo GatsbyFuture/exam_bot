@@ -1,7 +1,8 @@
 {
   "back": "⬅\uFE0F Ortga",
   "user_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
-  "user_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*",
+  "cluster_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*",
+  "user_statistics_t": "Sizning oxirgi topshirgan 5 ta test natijalaringiz :)\n\n",
   "user_answers_header": "\uD83D\uDCC5 sana: *{date}* \n\uD83D\uDC64: *{user}*\n\uD83D\uDCC4 Test id: <code>*{sheet_id}*</code>\n\uD83D\uDCD1 Savollar soni: *{total_questions}*\n\n",
   "total_corrects": "✅ Jami to'g'ri javoblar:",
   "total_corrects_score": "✅ To'plangan balllar:",
@@ -26,5 +27,11 @@
   "my_statistics": "\uD83D\uDCCA statistikam \uD83D\uDD12",
   "user_change_lang": "\uD83C\uDDFA\uD83C\uDDFF Tilni o'zgartirish",
   "not_found_answers": "⭕\uFE0F Javobi kiritilmagan!",
-  "check_answers_one_time": "✅ Javobni tekshirish"
+  "check_answers_one_time": "✅ Javobni tekshirish",
+  "not_found_usr_stc": "Hech qanday natija topilmadi",
+  "passed_date": "Topshirilgan sana",
+  "test_title": "Test nomi",
+  "total_tests": "Jami testlar soni",
+  "total_corts": "Jami to'g'ri javoblar",
+  "total_corts_score": "Jami yig'ilgan ball"
 }

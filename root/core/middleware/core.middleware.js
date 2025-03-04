@@ -23,6 +23,7 @@ module.exports = class MiddlewarePrimary {
     static async updateHandler(ctx, next) {
         // all events will pass here
         console.log(ctx.update);
+        console.log(ctx.session.user);
         if (ctx.update.inline_query && ctx.session?.user) {
             return next();
         }
@@ -38,12 +39,13 @@ module.exports = class MiddlewarePrimary {
             return next();
         }
 
-        const chatId = ctx.update?.message?.from?.id;
-
+        const chatId = CoreHelpers.separateToChatId(ctx);
+        console.log(chatId);
         if (chatId) {
             let {success, user} = await CoreController.getUserOne(chatId);
             if (success) {
                 ctx.session.user = user;
+                // ctx.i18n.locale(user.lang);
             } else {
                 let {success, user} = await CoreController.createUser(ctx.update.message);
                 ctx.session.user = user;

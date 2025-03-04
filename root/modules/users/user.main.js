@@ -108,15 +108,23 @@ class UserMain {
             if (ctx.session.user.role === Roles.USER) {
                 let text = ctx.message.text;
                 const {_id, level, lang} = ctx.session.user;
+                console.log(text, ctx.i18n.t("user_statistics"));
                 switch (text) {
                     // main menu 0 level
+                    // case ctx.i18n.t("cluster_statistics"):
+                    //     const statistics = await UserController.statistics();
+                    //     await ctx.replyWithHTML(
+                    //         ctx.i18n.t(`cluster_statistics_t`)
+                    //             .replace("*{categories}*", statistics.total_categories)
+                    //             .replace("*{sheets}*", statistics.total_sheets)
+                    //             .replace("*{answers}*", statistics.total_answers)
+                    //     );
+                    //     break;
                     case ctx.i18n.t("user_statistics"):
-                        const statistics = await UserController.statistics();
+                        const userStatistics = await UserController.userStatistics(ctx, _id);
+
                         await ctx.replyWithHTML(
-                            ctx.i18n.t(`user_statistics_t`)
-                                .replace("*{categories}*", statistics.total_categories)
-                                .replace("*{sheets}*", statistics.total_sheets)
-                                .replace("*{answers}*", statistics.total_answers)
+                            ctx.i18n.t(`user_statistics_t`).concat(userStatistics)
                         );
                         break;
                     case ctx.i18n.t("user_categories"):

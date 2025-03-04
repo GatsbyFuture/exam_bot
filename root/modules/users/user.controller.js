@@ -1,9 +1,10 @@
 const dayjs = require("dayjs");
 const Markup = require("telegraf/markup");
 const config = require("./user.config");
-const BtnMethods = require("../../enums/btn.method.enum");
-
 const CustomError = require("../../errors/custom.error");
+
+const BtnMethods = require("../../enums/btn.method.enum");
+const Collections = require("../../enums/collections.enum");
 
 const CoreService = require("../../core/service/core.service");
 const CoreHelpers = require("../../core/helpers/core.helpers");
@@ -13,21 +14,31 @@ const CategoriesController = require("../categories/categories.controller");
 const SheetsController = require("../sheets/sheets.controller");
 
 const AnswersController = require("../answers/answers.controller");
-const Collections = require("../../enums/collections.enum");
 
 const UsersAnsController = require("../users_ans/users_ans.controller");
 
 class UserController extends CoreService {
-    async statistics() {
-        const total_categories = await CategoriesController.getCountCategories();
-        const total_sheets = await SheetsController.getCountSheets();
-        const total_answers = await AnswersController.getCountAnswers();
-
-        return {
-            total_categories,
-            total_sheets,
-            total_answers
+    // async statistics() {
+    //     const total_categories = await CategoriesController.getCountCategories();
+    //     const total_sheets = await SheetsController.getCountSheets();
+    //     const total_answers = await AnswersController.getCountAnswers();
+    //
+    //     return {
+    //         total_categories,
+    //         total_sheets,
+    //         total_answers
+    //     };
+    // }
+    async userStatistics(ctx, _id) {
+        const text_key_words = {
+            empty: ctx.i18n.t("not_found_usr_stc"),
+            date: ctx.i18n.t("passed_date"),
+            title: ctx.i18n.t("test_title"),
+            total: ctx.i18n.t("total_tests"),
+            total_corts: ctx.i18n.t("total_corts"),
+            total_corts_score: ctx.i18n.t("total_corts_score"),
         };
+        return await UsersAnsController.readUsersAns(text_key_words, _id);
     }
 
     async generateUserMarkButtons(ctx, cat_id = 0) {
@@ -106,12 +117,14 @@ class UserController extends CoreService {
             sheet_id
         } = await AnswersController.compareAnswers(text);
 
+        const score = Math.floor(total_corrects_score);
+
         await UsersAnsController.create({
             user_id: _id,
             sheet_id,
             total,
             total_corrects,
-            total_corrects_score,
+            score
         });
 
         const header_text = ctx.i18n.t("user_answers_header")
@@ -122,7 +135,7 @@ class UserController extends CoreService {
 
         return header_text + results.join("\n") +
             `\n\n${ctx.i18n.t("total_corrects")} ${total_corrects} | ${Math.floor(total_corrects / total * 100)} %
-            \n${ctx.i18n.t("total_corrects_score")} ${total_corrects_score}`;
+            \n${ctx.i18n.t("total_corrects_score")} ${score}`;
     }
 }
 
