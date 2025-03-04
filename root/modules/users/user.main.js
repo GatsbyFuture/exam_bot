@@ -205,7 +205,7 @@ class UserMain {
                         ctx.session.text = undefined;
                         ctx.session.file = undefined;
                         ctx.session.inlineQuery = false;
-                        
+
                         ctx.session.user.level = level.includes(".") ?
                             level.substring(0, level.lastIndexOf(".")) :
                             level;

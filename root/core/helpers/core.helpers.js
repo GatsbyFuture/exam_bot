@@ -3,6 +3,7 @@ const Extra = require("telegraf/extra");
 const axios = require("axios");
 const fs = require("fs");
 const Roles = require("../../enums/roles.enum");
+const config = require("../../config/config");
 
 class CoreHelpers {
     langs(ctx) {
@@ -103,6 +104,33 @@ class CoreHelpers {
         await ctx.replyWithDocument(
             {source: filePath},
             extra
+        );
+    }
+
+    async checkUserInGroup(user_id) {
+        try {
+            const res = await axios.get(`${config.bot_url}getChatMember?chat_id=${config.group_id}&user_id=${user_id}`);
+            return res.data.result.status;
+        } catch (e) {
+            console.error("Guruh a’zoligini tekshirishda xato:", e);
+            return null;
+        }
+    }
+
+    async offerToGroup(chat_id, ctx) {
+        const keyboard = {
+            reply_markup: {
+                inline_keyboard: [
+                    [{url: `${config.group_url}`, text: "✍️ KANALIMIZGA A'ZO BO'LISH ✍️"}],
+                    [{callback_data: "I_am_here", text: "✅ KANALGA A'ZO BO'LDIM ✅"}]
+                ]
+            }
+        };
+        const text = "ASSALOMU ALAYKUM! XUSH KELIBSIZ!\nBOTDAN FOYDALANISH UCHUN AVVAL KANALIMIZGA A'ZO BO'LISHINGIZ KERAK";
+        await ctx.telegram.sendMessage(
+            chat_id,
+            text,
+            keyboard
         );
     }
 }
