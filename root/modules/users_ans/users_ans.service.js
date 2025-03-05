@@ -11,19 +11,17 @@ class UsersAnsService {
         }
     }
 
-    async getResultsBySheetId(sheet_id) {
-        const results = await UsersAns.find({sheet_id})
+    async getResultsBySheetId(id) {
+        const results = await UsersAns.find({sheet: id})
             .populate("user_id")
+            .populate("sheet_id")
             .select("-__v");
 
         if (!results.length) {
             throw CustomError.UserAnswersError(404, "Not found any results!");
         }
 
-        return {
-            success: true,
-            data: results
-        };
+        return results;
     }
 
     async readUsersResults(user_id) {

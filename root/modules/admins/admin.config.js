@@ -201,6 +201,15 @@ module.exports = {
                 level: "0.1",
                 is_active: true
             },
+            {
+                name: "view_results_users",
+                position: 1,
+                is_child: true,
+                has_child: true,
+                belong: "admin",
+                level: "0.1",
+                is_active: true
+            },
         ],
         "0.1.0": [
             {
@@ -313,6 +322,10 @@ module.exports = {
         "0.1.1.2": {
             method: "read",
             collection: "answers"
+        },
+        "0.1.2": {
+            method: "create",
+            collection: "users_ans"
         },
         // section 2
         "0.2": [

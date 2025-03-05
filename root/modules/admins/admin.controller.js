@@ -19,6 +19,8 @@ const SheetsController = require("../sheets/sheets.controller");
 
 const AnswersController = require("../answers/answers.controller");
 
+const UsersAnsController = require("../users_ans/users_ans.controller");
+
 class AdminController extends CoreService {
     async statistics() {
         const total_categories = await CategoriesController.getCountCategories();
@@ -65,7 +67,6 @@ class AdminController extends CoreService {
                         lang,
                     );
                 }
-
             } else if (btn_keys["method"] === BtnMethods.CREATE) {
                 return await CoreHelpers.generateMarkupButtonsStatic(
                     ctx,
@@ -134,6 +135,27 @@ class AdminController extends CoreService {
             .replace("*{answers_text}*", answers_text);
 
         await ctx.replyWithHTML(answersList);
+    }
+
+    async generateExcelResultsOfUsers(ctx, chat_id, id) {
+        const {success, data} = await UsersAnsController.readResultsForExcel(id);
+
+        const {
+            file_name,
+            file_buffer,
+            sheet_title
+        } = data;
+
+        await ctx.telegram.sendDocument(
+            chat_id,
+            {
+                source: file_buffer, // Buffer ishlatilmoqda
+                filename: file_name
+            },
+            {
+                caption: sheet_title
+            }
+        );
     }
 
     async deleteData(ctx) {

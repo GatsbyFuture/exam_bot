@@ -1,4 +1,4 @@
-const User = require("../models/core.models.mongo");
+const User = require("../models/core.model");
 const CustomError = require("../../errors/custom.error");
 
 class CoreService {

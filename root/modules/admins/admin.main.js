@@ -91,7 +91,7 @@ class AdminMain {
         });
 
         bot.hears(/#\d{10}$/, async (ctx, next) => {
-            const {level, lang, role} = ctx.session.user;
+            const {level, lang, role, chat_id} = ctx.session.user;
             if (role === Roles.ADMIN) {
                 const match = ctx.message.text.match(/#(\d{10})$/);
                 if (match) {
@@ -112,6 +112,10 @@ class AdminMain {
 
                     if (level === "0.1.1.2") {
                         await AdminController.viewTestAnswers(ctx, +match[1], lang);
+                    }
+
+                    if (level === "0.1.2") {
+                        await AdminController.generateExcelResultsOfUsers(ctx, chat_id, +match[1]);
                     }
                 }
             } else {
@@ -202,7 +206,13 @@ class AdminMain {
                         await ctx.replyWithHTML(ctx.i18n.t("admin_view_answers_show").replace("*{total}*", total_answers), Extra.HTML()
                             .markup(Markup.keyboard(answer_btns).resize()));
                         break;
-                    // // 0.2
+                    // view results of users by admin
+                    case ctx.i18n.t("view_results_users"):
+                        ctx.session.user.level = "0.1.2";
+                        await ctx.replyWithHTML(ctx.i18n.t("view_results_users_t"), Extra.HTML()
+                            .markup(Markup.keyboard(await AdminController.generateAdminMarkButtons(ctx)).resize()));
+                        break;
+                    // 0.2
                     case ctx.i18n.t("admin_settings"):
                         ctx.session.user.level = "0.2";
                         await ctx.replyWithHTML(ctx.i18n.t("admin_view_btn_text"), Extra.HTML()
@@ -293,6 +303,11 @@ class AdminMain {
                                 await ctx.replyWithHTML(ctx.i18n.t("admin_this_is_right_sure"), Extra.HTML()
                                     .markup(Markup.keyboard(await CoreController.generateAgreeButton(ctx)).resize()));
                                 break;
+                            // case "0.1.2":
+                            //     ctx.session.text = text;
+                            //     await ctx.replyWithHTML(ctx.i18n.t("admin_this_is_right_sure"), Extra.HTML()
+                            //         .markup(Markup.keyboard(await CoreController.generateAgreeButton(ctx)).resize()));
+                            //     break;
                             default:
                                 ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
                                 break;

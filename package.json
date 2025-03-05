@@ -1,6 +1,6 @@
 {
   "name": "exam_bot",
-  "version": "1.20.11",
+  "version": "1.23.13",
   "description": "this bot cheks physics questions",
   "main": "app.js",
   "scripts": {
@@ -20,6 +20,7 @@
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
     "joi": "^17.13.3",
     "knex": "^3.1.0",
     "latin-to-cyrillic": "^1.0.1",

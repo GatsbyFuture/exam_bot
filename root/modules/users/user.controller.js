@@ -117,14 +117,13 @@ class UserController extends CoreService {
             sheet_id
         } = await AnswersController.compareAnswers(text);
 
-        const score = Math.floor(total_corrects_score);
-
         await UsersAnsController.create({
+            sheet,
             user_id: _id,
             sheet_id,
             total,
             total_corrects,
-            score
+            total_corrects_score
         });
 
         const header_text = ctx.i18n.t("user_answers_header")
@@ -135,7 +134,7 @@ class UserController extends CoreService {
 
         return header_text + results.join("\n") +
             `\n\n${ctx.i18n.t("total_corrects")} ${total_corrects} | ${Math.floor(total_corrects / total * 100)} %
-            \n${ctx.i18n.t("total_corrects_score")} ${score}`;
+            \n${ctx.i18n.t("total_corrects_score")} ${total_corrects_score.toFixed(2)}`;
     }
 }
 

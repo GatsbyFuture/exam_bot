@@ -8,7 +8,7 @@ class UsersAnsHelpers {
 
         const formattedResults = data.map((item, index) => {
             return `${index + 1}. ${date}: ${new Date(item.createdAt).toLocaleString()}
-${title}: ${item.sheet_id?.title.oz || "Noma'lum"}
+${title}: ${item.sheet_id?.title.oz || ""}
 ${total}: ${item.total || 0}
 ${total_corts}: ${item.total_corrects || 0}
 ${total_corts_score}: ${item.total_corrects_score || 0}`;
