@@ -30,11 +30,15 @@ class UsersAnsController extends UsersAnsService {
         const total_participants = results.length;
 
         // Sarlavha qatori
-        worksheet.addRow([`Sheet name: ${sheet_title} | ID: ${sheet_id} | Jami yechganlar soni: ${total_participants}`]);
-        worksheet.addRow([]); // Bo'sh qator
+        worksheet.addRow([`Test nomi: ${sheet_title} | Test id: ${sheet_id} | Jami yechganlar soni: ${total_participants}`]);
+        worksheet.mergeCells("A1:E1");
+        // worksheet.getRow(1).font = {bold: true};
+        worksheet.getRow(1).alignment = {vertical: "middle", horizontal: "center"};
+
+        worksheet.addRow([]);
 
         // Jadval sarlavhalari
-        worksheet.addRow(["Nums", "User Name", "Correct Answers", "Score", "Passed Time"]);
+        worksheet.addRow(["N", "FOYDALANUVCHI", "TO'G'RI JAVOBLAR", "YIG'ILGAN BALL", "TOPSHIRGAN VAQT"]);
 
         // Sarlavhalarni formatlash
         worksheet.getRow(3).font = {bold: true};
@@ -62,9 +66,9 @@ class UsersAnsController extends UsersAnsService {
 
         // Ustun kengliklarini sozlash
         worksheet.columns = [
-            {width: 10},  // Nums
-            {width: 20},  // User Name
-            {width: 15},  // Correct Answers
+            {width: 8},  // Nums
+            {width: 25},  // User Name
+            {width: 20},  // Correct Answers
             {width: 15},  // Score
             {width: 25}   // Passed Time
         ];
@@ -88,6 +92,7 @@ class UsersAnsController extends UsersAnsService {
                 file_name: file_name,
                 file_buffer: buffer,
                 sheet_title: sheet_title,
+                total_participants: total_participants
             }
         };
     }

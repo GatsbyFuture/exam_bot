@@ -143,7 +143,8 @@ class AdminController extends CoreService {
         const {
             file_name,
             file_buffer,
-            sheet_title
+            sheet_title,
+            total_participants
         } = data;
 
         await ctx.telegram.sendDocument(
@@ -153,7 +154,8 @@ class AdminController extends CoreService {
                 filename: file_name
             },
             {
-                caption: sheet_title
+                caption: `<b>Test nomi:</b> ${sheet_title}\n<b>Testni yechganlar soni:</b> ${total_participants}`,
+                parse_mode: "HTML"
             }
         );
     }

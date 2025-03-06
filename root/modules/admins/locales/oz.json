@@ -46,5 +46,8 @@
   "agree_decision_she": "✅ Savollar muvofaqiyatli yaratildi! id: <code>*{key}*</code>",
   "agree_decision_ans": "✅ Javoblar muvofaqiyatli yaratildi!",
   "agree_decision_ans_xls": "✅ Javoblar muvofaqiyatli yaratildi!\nYaratishlar soni: *{key}*",
-  "agree_decision_del": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!\nO'chirilgan id: *{key}*"
+  "agree_decision_del": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!\nO'chirilgan id: *{key}*",
+
+  "view_results_users": "\uD83D\uDCCA Natijalarni ko'rish",
+  "view_results_users_t": "❗\uFE0F Natijani <b>Excel</b> formatda olish uchun test ID sini kiriting.\nNamuna: <b>#3253536324</b> shu ko'rinishda kiriting!"
 }
