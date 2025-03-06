@@ -126,7 +126,7 @@ class AdminMain {
         bot.on("text", async (ctx, next) => {
             if (ctx.session.user.role === Roles.ADMIN) {
                 let text = ctx.message.text;
-                const {_id, level} = ctx.session.user;
+                const {_id, level, lang} = ctx.session.user;
                 switch (text) {
                     // 0.0
                     case ctx.i18n.t("admin_statistics"):
@@ -309,6 +309,11 @@ class AdminMain {
                             //         .markup(Markup.keyboard(await CoreController.generateAgreeButton(ctx)).resize()));
                             //     break;
                             default:
+                                if (!ctx.session.__language_code && lang !== "oz") {
+                                    ctx.replyWithHTML(ctx.i18n.t("default_message"));
+                                    ctx.i18n.locale(lang);
+                                    break;
+                                }
                                 ctx.replyWithHTML(ctx.i18n.t("admin_default_message"));
                                 break;
                         }

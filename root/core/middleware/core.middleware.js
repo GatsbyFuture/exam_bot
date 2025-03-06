@@ -45,7 +45,6 @@ module.exports = class MiddlewarePrimary {
             let {success, user} = await CoreController.getUserOne(chatId);
             if (success) {
                 ctx.session.user = user;
-                // ctx.i18n.locale(user.lang);
             } else {
                 let {success, user} = await CoreController.createUser(ctx.update.message);
                 ctx.session.user = user;

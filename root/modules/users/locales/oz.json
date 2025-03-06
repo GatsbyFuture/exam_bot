@@ -1,5 +1,7 @@
 {
   "back": "⬅\uFE0F Ortga",
+  "default_message": "Bot qayta faollashti, foydalanishda davom eting. \uD83E\uDEE1",
+  "user_default_message": "Iltimos taqdim qilingan funksiyalardan foydalanib, foydalanishda davom etting, e'tibor uchun raxmat. \uD83D\uDE0A",
   "user_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
   "cluster_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*",
   "user_statistics_t": "Sizning oxirgi topshirgan 5 ta test natijalaringiz :)\n\n",
@@ -13,6 +15,7 @@
   "user_random_sheet": "\uD83E\uDDFE Taxminiy test",
   "user_check_answers": "\uD83D\uDDDE Javobni tekshirish",
   "user_settings": "⚙\uFE0F Sozlamalar",
+  "user_settings_t": "Marhamat sozlamar bo'limi",
   "user_categories_t": "\uD83D\uDCDA Jami bo'limlar soni: *{total}*",
   "user_view_tests_t": "\uD83D\uDCCB Jami testlar soni: *{total}*",
   "user_check_answers_t": "❗\uFE0F <b>Namuna:</b> #id:2345512342 #answers:1-C,2-C,3-A,4-B,36-20;120,37-6;4,40-5;80,41-4;3.1*10^-27,42-10;0.5,...\n\n❕<i>Eslatib o'tamiz, id test varaqasini idsi bo'lishi kerak!</i>",

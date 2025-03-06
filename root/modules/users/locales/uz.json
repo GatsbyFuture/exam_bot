@@ -1,5 +1,7 @@
 {
   "back": "⬅\uFE0F Ортга",
+  "default_message": "Бот қайта фаоллашти, фойдаланишда давом этинг. \uD83E\uDEE1",
+  "user_default_message": "Илтимос тақдим қилинган функциялардан фойдаланиб, фойдаланишда давом эттинг, эътибор учун рахмат. \uD83D\uDE0A",
   "user_greeting": "Ҳуш келибсиз <b>*{user_name}*</b>! қандай хизматларимиздан фойдаланишни хоҳлайсиз",
   "cluster_statistics_t": "\uD83D\uDCC8 Статистика\n\n БЎЛИМЛАР: *{categories}*\n ТEСТЛАР: *{sheets}*\n ЖАВОБЛАР: *{answers}*",
   "user_statistics_t": "Сизнинг охирги топширган 5 та тест натижаларингиз :)\n\n",
@@ -13,6 +15,7 @@
   "user_random_sheet": "\uD83E\uDDFE Тахминий тест",
   "user_check_answers": "\uD83D\uDDDE Жавобни текшириш",
   "user_settings": "⚙\uFE0F Созламалар",
+  "user_settings_t": "Марҳамат созламар бўлими",
   "user_categories_t": "\uD83D\uDCDA Жами бўлимлар сони: *{total}*",
   "user_view_tests_t": "\uD83D\uDCCB Жами тестлар сони: *{total}*",
   "user_check_answers_t": "❗\uFE0F <b>Намуна:</b> #id:2345512342 #answers:1-C,2-C,3-A,4-B,36-20;120,37-6;4,40-5;80,41-4;3.1*10^-27,42-10;0.5,...\n\n❕<i>Эслатиб ўтамиз, ид тест варақасини идси бўлиши керак!</i>",

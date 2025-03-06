@@ -108,7 +108,7 @@ class UserMain {
             if (ctx.session.user.role === Roles.USER) {
                 let text = ctx.message.text;
                 const {_id, level, lang} = ctx.session.user;
-                console.log(text, ctx.i18n.t("user_statistics"));
+                // console.log(text, ctx.i18n.t("user_statistics"));
                 switch (text) {
                     // main menu 0 level
                     // case ctx.i18n.t("cluster_statistics"):
@@ -260,7 +260,12 @@ class UserMain {
                                 );
                                 break;
                             default:
-                                await ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
+                                if (!ctx.session.__language_code && lang !== "oz") {
+                                    ctx.replyWithHTML(ctx.i18n.t("default_message"));
+                                    ctx.i18n.locale(lang);
+                                    break;
+                                }
+                                ctx.replyWithHTML(ctx.i18n.t("user_default_message"));
                                 break;
                         }
                 }

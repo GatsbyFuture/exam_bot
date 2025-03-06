@@ -1,5 +1,7 @@
 {
   "back": "⬅\uFE0F Ortga",
+  "default_message": "Bot qayta faollashti, foydalanishda davom eting. \uD83E\uDEE1",
+  "admin_default_message": "Iltimos taqdim qilingan funksiyalardan foydalanib, foydalanishda davom etting, e'tibor uchun raxmat. \uD83D\uDE0A",
   "admin_lang": "Tilni tanlang:\uD83D\uDD3D",
   "admin_greeting": "Hush kelibsiz <b>*{user_name}*</b>! qanday xizmatlarimizdan foydalanishni xohlaysiz",
   "admin_back_text": "Marhamat! oldingi bo'lim :)",
@@ -47,7 +49,6 @@
   "agree_decision_ans": "✅ Javoblar muvofaqiyatli yaratildi!",
   "agree_decision_ans_xls": "✅ Javoblar muvofaqiyatli yaratildi!\nYaratishlar soni: *{key}*",
   "agree_decision_del": "✅ So'rovingiz muvofaqiyatli amalga oshirildi!\nO'chirilgan id: *{key}*",
-
   "view_results_users": "\uD83D\uDCCA Natijalarni ko'rish",
   "view_results_users_t": "❗\uFE0F Natijani <b>Excel</b> formatda olish uchun test ID sini kiriting.\nNamuna: <b>#3253536324</b> shu ko'rinishda kiriting!"
 }
