@@ -5,6 +5,7 @@ const CustomError = require("../../errors/custom.error");
 const config = require("../../config/config");
 const Roles = require("../../enums/roles.enum");
 const Langs = require("../../enums/langs.enum");
+const logError = require("../../logs/logs");
 
 module.exports = class MiddlewarePrimary {
     static async errorHandler(ctx, next) {
@@ -12,10 +13,9 @@ module.exports = class MiddlewarePrimary {
             await next();
         } catch (e) {
             if (e instanceof CustomError) {
-                await ctx.reply(`❌ Xatolik: ${e.message}`);
+                logError(`Custom xatolik => ${e.message}`);
             } else {
-                console.error("Noma‘lum xatolik:", e);
-                await ctx.reply("❌ Ichki xatolik yuz berdi, keyinroq qayta urinib ko‘ring.");
+                logError(`Ichki xatolik => ${e.message}`);
             }
         }
     }
@@ -24,15 +24,21 @@ module.exports = class MiddlewarePrimary {
         // all events will pass here
         console.log(ctx.update);
         // console.log(ctx.session.user);
-        if (ctx.update.inline_query && ctx.session?.user) {
-            return next();
+        // if (ctx.update.inline_query && ctx.session?.user) {
+        //     return next();
+        // }
+        // To detect to post and ignore it when text and event come from channel
+        if (ctx.update.channel_post || ctx.update.my_chat_member) {
+            return undefined;
         }
 
-        if (ctx.update.message && ctx.update.message?.text !== "/start" && ctx.session?.user) {
+        if (ctx.update.message && ctx.update.message?.text !== "/start") {
             if (ctx.update.message.chat.id === config.group_id) {
                 return undefined;
             }
-            return next();
+            if (ctx.session?.user) {
+                return next();
+            }
         }
 
         if (ctx.update.callback_query && ctx.session?.user) {
