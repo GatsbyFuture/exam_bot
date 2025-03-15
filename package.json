@@ -1,6 +1,6 @@
 {
   "name": "exam_bot",
-  "version": "1.24.14",
+  "version": "1.25.14",
   "description": "this bot cheks physics questions",
   "main": "app.js",
   "scripts": {

@@ -1,3 +1,4 @@
+const dayjs = require("dayjs");
 const Markup = require("telegraf/markup");
 const config = require("./admin.config");
 const BtnMethods = require("../../enums/btn.method.enum");
@@ -26,11 +27,15 @@ class AdminController extends CoreService {
         const total_categories = await CategoriesController.getCountCategories();
         const total_sheets = await SheetsController.getCountSheets();
         const total_answers = await AnswersController.getCountAnswers();
+        const total_active_users = await this.readAllUsers();
+        const current_time = dayjs().format("DD-MM-YYYY HH:mm:ss");
 
         return {
             total_categories,
             total_sheets,
-            total_answers
+            total_answers,
+            total_active_users,
+            current_time,
         };
     }
 

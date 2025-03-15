@@ -9,7 +9,7 @@
   "admin_statistics": "\uD83D\uDCC8 Statistika",
   "admin_data": "\uD83D\uDCE6 Ma'lumotlar",
   "admin_settings": "⚙\uFE0F Sozlamalar",
-  "admin_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*",
+  "admin_statistics_t": "\uD83D\uDCC8 Statistika\n\n BO'LIMLAR: *{categories}*\n TESTLAR: *{sheets}*\n JAVOBLAR: *{answers}*\n\n\uD83D\uDC64: *{active_users}*\n\n♻\uFE0F: *{current_date}*",
   "admin_create": "\uD83D\uDCDD Yaratish",
   "admin_view": "\uD83D\uDCC2 Ko'rish",
   "admin_create_category": "\uD83D\uDDC2 Bo'lim qo'shish",

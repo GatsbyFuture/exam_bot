@@ -134,7 +134,10 @@ class AdminMain {
                         await ctx.replyWithHTML(ctx.i18n.t(`admin_statistics_t`)
                             .replace("*{categories}*", statistics.total_categories)
                             .replace("*{sheets}*", statistics.total_sheets)
-                            .replace("*{answers}*", statistics.total_answers));
+                            .replace("*{answers}*", statistics.total_answers)
+                            .replace("*{active_users}*", statistics.total_active_users)
+                            .replace("*{current_date}*", statistics.current_time)
+                        );
                         break;
                     // 0.1
                     case ctx.i18n.t("admin_data"):

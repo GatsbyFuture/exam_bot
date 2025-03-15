@@ -9,7 +9,7 @@
   "admin_statistics": "\uD83D\uDCC8 Статистика",
   "admin_data": "\uD83D\uDCE6 Маълумотлар",
   "admin_settings": "⚙\uFE0F Созламалар",
-  "admin_sts_show": "\uD83D\uDCC8 Статистика\n\n БЎЛИМЛАР: *{categories}*\n ТEСТЛАР: *{sheets}*\n ЖАВОБЛАР: *{answers}*",
+  "admin_statistics_t": "\uD83D\uDCC8 Статистика\n\n БЎЛИМЛАР: *{categories}*\n ТEСТЛАР: *{sheets}*\n ЖАВОБЛАР: *{answers}*\n\n\uD83D\uDC64: *{active_users}*\n\n♻\uFE0F: *{current_date}*",
   "admin_create": "\uD83D\uDCDD Яратиш",
   "admin_view": "\uD83D\uDCC2 Кўриш",
   "admin_create_category": "\uD83D\uDDC2 Бўлим қўшиш",

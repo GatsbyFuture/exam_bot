@@ -10,6 +10,14 @@ class CoreService {
         };
     }
 
+    async readAllUsers() {
+        const users = await User.find({blocked: false})
+            .select("_id")
+            .lean();
+
+        return users.length;
+    }
+
     async findOne(chat_id) {
         const user = await User
             .findOne({chat_id: chat_id})
